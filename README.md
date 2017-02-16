@@ -11,7 +11,7 @@ Create software that will open a set of netstation files and process them using 
 The data will consist of one experiment's worth of EEG data. This will take the form of a single .RAW file for each participant in the experiment which contains the EEG recording voltages as well as event markers denoting specific conditions and their time of presentation. Each participant's data will be approximately 1.5GB and there will be 20 participants collected.
 
 ### File Management
-All data will be stored in a single folder with a consistent naming scheme. The namning scheme will take the form 'Participant0000.RAW' where the value 0000 increments for each individual as they are run
+All data will be stored in a single folder with a consistent naming scheme. The naming scheme will take the form 'Participant0000.RAW' where the value 0000 increments for each individual.
 
 ## Data output
 ### What data will be produced?
