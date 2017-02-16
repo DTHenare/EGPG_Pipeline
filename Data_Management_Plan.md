@@ -14,4 +14,4 @@ All data will be stored in a single folder with a consistent naming scheme. The 
 ## Data output
 ### What data will be produced?
 Output of the software will include:
-A cell array containing a labelled 3D matrix for each condition consisting of voltages that takes the structure [electrode x timepoint x participant]
+- A cell array containing a labelled 3D matrix for each condition consisting of voltages that takes the structure [electrode x timepoint x participant]
