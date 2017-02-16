@@ -14,4 +14,6 @@ All data will be stored in a single folder with a consistent naming scheme. The 
 ## Data output
 ### What data will be produced?
 Output of the software will include:
+- A text file containing a summary of the outcome of specific processing steps for all participants. This should provide details about; number of channels rejected, indices of channels rejected, number of epochs generated, total number of epochs rejected, number of epochs rejected per condition, number of epochs rejected by each test, number of components rejected)
 - A cell array containing a labelled 3D matrix for each condition consisting of voltages that takes the structure [electrode x timepoint x participant]
+- Matlab figures plotting grand average ERP at electrode of interest, average ERP for all conditions on single plot at electrode of interest, grand average topography at time point of interest, topography for each condition at time point of interest
