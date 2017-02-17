@@ -1,0 +1,11 @@
+Functions I need
+
+open trigger file and save indices
+5 = fopen('C:\Users\Dion\Desktop\dssr2017-DTHenare\triggerNames.txt')
+C = textscan(5, '%s')
+Blah = C{1,1}
+
+# popup navigates to file
+[testflie,testfolder] = uigetfile
+# finds all of the .RAW files in the folder that was navigated to
+dir(strcat(testfolder,'\*.RAW'))
