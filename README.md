@@ -29,12 +29,12 @@ To install the software you can clone the repository to your local machine or do
 
 # Dependencies
 
-Matlab
-Statistics toolbox
-EEGLAB toolbox
-ERPLAB toolbox
-ADJUST toolbox
-CleanLine toolbox
+MATLAB                                    http://www.mathworks.com/products/matlab.html
+Statistics and Machine Learning toolbox   https://www.mathworks.com/products/statistics.html
+EEGLAB toolbox                            https://sccn.ucsd.edu/eeglab/
+ERPLAB plugin for EEGLAB                  http://www.erpinfo.org/erplab.html
+ADJUST plugin for EEGLAB                  install through EEGLAB extensions manager
+CleanLine plugin for EEGLAB               install through EEGLAB extensions manager
 
 # Examples
 
