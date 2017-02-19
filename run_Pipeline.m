@@ -1,8 +1,17 @@
-[firstParticipant,dataFolder] = uigetfile;
+[selectedFile,dataFolder] = uigetfile({'*.*',  'All Files (*.*)'});
 
-[ fileNames ] = getRAWFileNames(dataFolder);
+%Create list of files that will be processed
+[ fileNames,fileExt ] = getMatchingFiles(strcat(dataFolder, selectedFile));
 
-%Preprocess each .RAW in the data folder
+%Check trigger file
+
+%Get path of pipeline folder
+pipelinePath = fileparts(mfilename('fullpath'));
+
+%Preprocess each file in the data folder
 for i = 1:size(fileNames,1)
-    pipeline(dataFolder,fileNames{i,1});
+    currentFile = strcat(dataFolder,fileNames{i,1},fileExt);
+    %pipeline(currentFile, pipelinePath);
+    disp(strcat('Ouput for loop ',int2str(i),'...'))
+    disp(currentFile)
 end
