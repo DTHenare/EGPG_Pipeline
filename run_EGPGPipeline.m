@@ -10,7 +10,7 @@ EGPGPath = fileparts(mfilename('fullpath'));
 [ fileNames,fileExt ] = getMatchingFiles(strcat(dataFolder, selectedFile));
 
 %Check setup is appropriate
-checkSetup(dataFolder);
+checkSetup(dataFolder, EGPGPath);
 
 %Preprocess each file in the data folder
 for i = 1:size(fileNames,1)
