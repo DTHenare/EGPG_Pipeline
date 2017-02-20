@@ -1,5 +1,5 @@
 [selectedFile,dataFolder] = uigetfile({'*.*',  'All Files (*.*)'});
-if (dataFolder == 0) && (selectedFile == 0) 
+if (dataFolder == 0) & (selectedFile == 0) 
         error('Input file is not selected!') 
 end
 
@@ -10,7 +10,7 @@ EGPGPath = fileparts(mfilename('fullpath'));
 [ fileNames,fileExt ] = getMatchingFiles(strcat(dataFolder, selectedFile));
 
 %Check setup is appropriate
-%checkSetup(dataFolder);
+checkSetup(dataFolder);
 
 %Preprocess each file in the data folder
 for i = 1:size(fileNames,1)
