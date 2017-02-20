@@ -12,5 +12,7 @@ function [ ALLEEG,EEG,CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, curr
 %Import data
 [ALLEEG,EEG,CURRENTSET] = importEEGData(ALLEEG, EEG, CURRENTSET, currentFile);
 
-end
+%Correct trigger latency
+[ALLEEG,EEG,CURRENTSET] = correctAmpDelay(ALLEEG, EEG, CURRENTSET);
 
+end

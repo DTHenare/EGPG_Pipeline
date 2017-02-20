@@ -14,16 +14,13 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 
 if PARAMETERS.runICA == 1
 %ICA preprocess, output weights
-disp('I''m running ICA right now')
 end
 
 %ERP preprocess
 [ ALLEEG,EEG,CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile);
 
 if PARAMETERS.runICA == 1
-%ERP ICA clean
-%%load ERP, add weights, clean
-disp('I''m cleaning with ICA right now')
+%ERP ICA clean - load ERP, add weights, clean
 end
 
 %Artificact rejection
