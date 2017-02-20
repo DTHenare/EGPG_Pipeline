@@ -6,6 +6,7 @@ function [  ] = checkSetup(dataFolder, EGPGPath)
 %will run through the pipeline
 
 %Check parameters file - present
+checkSetup_parameters(EGPGPath);
 
 %Check trigger file - present, has triggers, not default triggers
 checkSetup_triggers(dataFolder, EGPGPath);
