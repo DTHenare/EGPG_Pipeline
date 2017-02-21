@@ -1,3 +1,8 @@
+%This script provides a user friendly wrapper for the EGPG pipeline. When
+%run, it pops open a file explorer for the user to navigate to a data file.
+%It then runs the pipeilne for all matching files within the selected
+%folder. It also performs a number of checks on the data in order to check
+%that everything has been set up appropriately.
 [selectedFile,dataFolder] = uigetfile({'*.*',  'All Files (*.*)'});
 if (dataFolder == 0) & (selectedFile == 0) 
         error('Input file is not selected!') 
@@ -10,7 +15,7 @@ EGPGPath = fileparts(mfilename('fullpath'));
 [ fileNames,fileExt ] = getMatchingFiles(strcat(dataFolder, selectedFile));
 
 %Check setup is appropriate
-checkSetup(dataFolder, EGPGPath);
+checkSetup(dataFolder, EGPGPath, selectedFile);
 
 %Preprocess each file in the data folder
 for i = 1:size(fileNames,1)
