@@ -3,7 +3,9 @@ function [  ] = checkSetup(dataFolder, EGPGPath, selectedFile)
 %correctly in order to run the EGPG pipeline. Produces an error if anything
 %looks wrong.
 %Inputs:    dataFolder = Path of the folder which should hold all data that
-%will run through the pipeline
+%           will run through the pipeline
+%           EGPGPath = Path of the EGPG pipeline folder
+%           selectedFile = Name of the user selected file
 
 %Check parameters file - present
 checkSetup_parameters(EGPGPath);
