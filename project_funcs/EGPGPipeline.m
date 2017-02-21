@@ -17,7 +17,7 @@ if PARAMETERS.runICA == 1
 end
 
 %ERP preprocess
-[ ALLEEG,EEG,CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile);
+[ ALLEEG,EEG,CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath);
 
 if PARAMETERS.runICA == 1
 %ERP ICA clean - load ERP, add weights, clean
