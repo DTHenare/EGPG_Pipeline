@@ -1,14 +1,19 @@
-function [ testOutcome ] = checkSetup_triggersEdited( triggerNames, EGPGPath )
-%Checks whether the triggerNames pulled from the user's file have been
-%edited from the default file in the pipeline folder.
-%Inputs:    triggerNames = Cell array containing the trigger names that
-%           have been pulled from the users triggerNames.txt file
+function [ testOutcome ] = checkSetup_triggersEdited( dataFolder, EGPGPath )
+%Checks whether the contents of the user's triggerNames.txt file have been
+%edited from the default file given in the pipeline folder.
+%Inputs:    dataFolder = folder path of the location of the user's
+%           triggerNames.txt file
 %           EGPGPath = folder path for the EGPG pipeline which holds the
 %           default triggerNames.txt file which should have been edited
 %Outputs:   testOutcome = 1 if the triggers have been edited, 0 if they
 %           have not
 
-%Open default triggerNames.txt file
+%Open the user triggerNames.txt file and store contents in triggerNames
+FID = fopen(strcat(dataFolder,'\triggerNames.txt'));
+C = textscan(FID, '%s');
+triggerNames = C{1,1};
+
+%Open the default triggerNames.txt file and store contents in defaultNames
 FID = fopen(strcat(EGPGPath,'\triggerNames.txt'));
 C = textscan(FID, '%s');
 defaultNames = C{1,1};
