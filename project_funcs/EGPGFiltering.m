@@ -1,4 +1,4 @@
-function [ALLEEG, EEG, CURRENTSET] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, EGPGPath, filterType)
+function [ALLEEG, EEG, CURRENTSET] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, filterValue, filterType)
 %Filters eeglab data using the ERPLab filter function.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -12,12 +12,10 @@ function [ALLEEG, EEG, CURRENTSET] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, EGPG
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
 
-load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
-
 if filterType == 1
-    EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff',  PARAMETERS.ERPHighpass, 'Design', 'butter', 'Filter', 'highpass', 'Order',  2, 'RemoveDC', 'on' );
+    EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff',  filterValue, 'Design', 'butter', 'Filter', 'highpass', 'Order',  2, 'RemoveDC', 'on' );
 elseif filterType == 2
-    EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff',  PARAMETERS.ERPLowpass, 'Design', 'butter', 'Filter', 'lowpass', 'Order',  4, 'RemoveDC', 'on' );
+    EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff',  filterValue, 'Design', 'butter', 'Filter', 'lowpass', 'Order',  4, 'RemoveDC', 'on' );
 elseif filterType == 3
     error('function for bandpass filter not included yet')
 else

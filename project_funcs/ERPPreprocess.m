@@ -9,6 +9,9 @@ function [ ALLEEG,EEG,CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, curr
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
 
+%Load parameters
+load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
+
 %Import data
 [ALLEEG,EEG,CURRENTSET] = importEEGData(ALLEEG, EEG, CURRENTSET, currentFile);
 
@@ -19,6 +22,6 @@ function [ ALLEEG,EEG,CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, curr
 EEG=pop_chanedit(EEG, 'load',{strcat(EGPGPath,'\project_docs\GSN-HydroCel-129.sfp') 'filetype' 'autodetect'},'setref',{'4:132' 'Cz'},'changefield',{132 'datachan' 0});
 
 %High pass filter the data
-[ALLEEG, EEG, CURRENTSET] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, EGPGPath, 1);
+[ALLEEG, EEG, CURRENTSET] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, EGPGPath, PARAMETERS.ERPHighpass, 1);
 
 end
