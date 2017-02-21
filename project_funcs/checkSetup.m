@@ -1,4 +1,4 @@
-function [  ] = checkSetup(dataFolder, EGPGPath)
+function [  ] = checkSetup(dataFolder, EGPGPath, selectedFile)
 %Checks to ensure the the user has set up the data folder and trigger file
 %correctly in order to run the EGPG pipeline. Produces an error if anything
 %looks wrong.
@@ -12,7 +12,7 @@ checkSetup_parameters(EGPGPath);
 checkSetup_triggers(dataFolder, EGPGPath);
 
 %Check input file - extension appropriate
-
+checkSetup_datafile(selectedFile);
 
 end
 
