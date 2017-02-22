@@ -21,7 +21,7 @@ C = textscan(FID, '%s');
 triggerNames = C{1,1};
 
 %epoch around all triggerNames
-EEG = pop_epoch( EEG, triggerNames, [epochMin epochMax], 'newname', filename, 'epochinfo', 'yes');
+EEG = pop_epoch( EEG, triggerNames, [epochMin epochMax], 'newname', fileName, 'epochinfo', 'yes');
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, CURRENTSET, 'overwrite', 'on', 'gui', 'off');
 EEG = eeg_checkset( EEG );
 
