@@ -11,7 +11,7 @@ function [ALLEEG,EEG,CURRENTSET] = correctAmpDelay(ALLEEG, EEG, CURRENTSET)
 if EEG.srate == 1000
     delaySize = 8;
 elseif EEG.srate == 500
-    delatSize = 18;
+    delaySize = 18;
 elseif EEG.srate == 250
     delaySize = 36;
 else delaySize = 0;
