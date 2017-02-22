@@ -30,4 +30,10 @@ EEG = pop_reref( EEG, [],'refloc',struct('labels',{'Cz'},'Y',{0},'X',{5.4492e-16
 %Epoch the events
 [ALLEEG, EEG, CURRENTSET] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.epochMin, PARAMETERS.epochMax, currentFile );
 
+%Detect HEOG failures
+[ list ] = detectHorizFails( EEG, horizThresh );
+
+%reject bad epochs
+EEG = pop_rejepoch( EEG, list, 0);
+
 end
