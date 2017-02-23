@@ -1,6 +1,11 @@
 function [ALLEEG, EEG, CURRENTSET] = fixBadChannels( ALLEEG, EEG, CURRENTSET )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%Finds, removes, and interpolates bad channels in the data
+%Inputs:    ALLEEG = ALLEEG structure produced by eeglab
+%           EEG = EEG structure produced by eeglab
+%           CURRENTSET = CURRENTSET value provided by eeglab
+%Outputs:   ALLEEG = updated ALLEEG structure for eeglab
+%           EEG = updated EEG structure for eeglab
+%           CURRENTSET = updated CURRENTSET value for eeglab
 
 %Save current channel structure
 chanStruct = EEG.chanlocs;
@@ -12,7 +17,6 @@ chanStruct = EEG.chanlocs;
 EEG = pop_select( EEG,'nochannel',badChannels);
 
 %Interpolate missing channels
-EEG = pop_interp(EEG, chanStruct);
+EEG = pop_interp(EEG, chanStruct, 'spherical');
 
 end
-
