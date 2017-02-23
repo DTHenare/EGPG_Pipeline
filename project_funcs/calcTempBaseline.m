@@ -1,4 +1,4 @@
-function [ baselineValue ] = calcTempBaseline(channelIndex, epochNumber)
+function [ baselineValue ] = calcTempBaseline(EEG, channelIndex, epochNumber)
 %This function calculates the average value in a baseline period
 %Inputs:    channelIndex = integer of the channel index for which the
 %           baseline will be calculated

@@ -16,8 +16,8 @@ list = [];
 
 %Check each epoch and calculate a baseline value for each channel
 for i = 1:numEpochs
-    leftBaseline = calcTempBaseline(leftEye,i);
-    rightBaseline = calcTempBaseline(rightEye,i);
+    leftBaseline = calcTempBaseline(EEG, leftEye, i);
+    rightBaseline = calcTempBaseline(EEG, rightEye, i);
     %Check whether any time point exceeds the HEOG threshold in this epoch
     for j = 1:numSamplesInEpoch
         leftEyeVoltage = EEG.data(leftEye,j,i)-leftBaseline;
