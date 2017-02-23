@@ -15,7 +15,7 @@ baselineEnd = abs(EEG.xmin*EEG.srate);
 baselineValues = EEG.data(channelIndex, baselineStart:baselineEnd, epochNumber);
 
 %Calculate the average of this set of values
-mean(baselineValues);
+baslineValue = mean(baselineValues);
 
 end
 
