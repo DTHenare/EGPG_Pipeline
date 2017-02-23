@@ -11,7 +11,7 @@ function [ALLEEG, EEG, CURRENTSET] = fixBadChannels( ALLEEG, EEG, CURRENTSET )
 chanStruct = EEG.chanlocs;
 
 %Identify bad channels
-[ ALLEEG, EEG, CURRENTSET, badChannels ] = detectBadChannels( ALLEEG, EEG, CURRENTSET );
+[ badChannels ] = detectBadChannels( ALLEEG, EEG, CURRENTSET );
 
 %Remove bad channels
 EEG = pop_select( EEG,'nochannel',badChannels);
