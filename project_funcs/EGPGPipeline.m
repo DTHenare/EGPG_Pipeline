@@ -25,6 +25,7 @@ end
 
 %Artificact rejection
 
+
 %Extract conditions
 
 end
