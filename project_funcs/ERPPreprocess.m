@@ -5,6 +5,7 @@ function [ ALLEEG,EEG,CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, curr
 %           EEG = EEG structure produced by eeglab
 %           CURRENTSET = CURRENTSET value provided by eeglab
 %           currentFile = path of the EEG file which will be processed
+%           EGPGPath = path of the EGPG pipeline folder
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
