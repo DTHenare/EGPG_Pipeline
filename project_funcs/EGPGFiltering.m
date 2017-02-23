@@ -17,7 +17,7 @@ if filterType == 1
 elseif filterType == 2
     EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff',  filterValue, 'Design', 'butter', 'Filter', 'lowpass', 'Order',  4, 'RemoveDC', 'on' );
 elseif filterType == 3
-    error('function for bandpass filter not included yet')
+    EEG  = pop_basicfilter( EEG,  1:129 , 'Boundary', 'boundary', 'Cutoff', filterValue, 'Design', 'butter', 'Filter', 'bandpass', 'Order',  4 );
 else
     error('The filterType you selected is not valid. It must be either 1, 2, or 3.')
 end
