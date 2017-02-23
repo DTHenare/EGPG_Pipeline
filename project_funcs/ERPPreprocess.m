@@ -58,6 +58,6 @@ saveName = strcat(fileName,'_ERPpre');
 if ~exist(saveLocation, 'dir')
   mkdir('saveLocation');
 end
-saveOutput(ALLEEG, EEG, CURRENTSET, saveLocation, saveName);
+[ ALLEEG, EEG ] = saveOutput(ALLEEG, EEG, CURRENTSET, saveLocation, saveName);
 
 end
