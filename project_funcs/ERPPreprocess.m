@@ -56,7 +56,7 @@ end
 saveLocation = strcat(filePath,'\Output\');
 saveName = strcat(fileName,'_ERPpre');
 if ~exist(saveLocation, 'dir')
-  mkdir('saveLocation');
+  mkdir(saveLocation);
 end
 [ ALLEEG, EEG ] = saveOutput(ALLEEG, EEG, CURRENTSET, saveLocation, saveName);
 
