@@ -23,8 +23,8 @@ if PARAMETERS.runICA == 1
 %ERP ICA clean - load ERP, add weights, clean
 end
 
-%Artificact rejection
-
+%Run standard artificact rejection
+[ EEG ] = standardArtRej( EEG );
 
 %Extract conditions
 
