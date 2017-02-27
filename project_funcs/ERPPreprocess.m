@@ -1,4 +1,4 @@
-function [ ALLEEG,EEG,CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath)
+function [ ALLEEG,EEG,CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath)
 %Processes an EEG data set in a way which is optimal for the production of
 %ERPs
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -38,10 +38,10 @@ EEG = pop_reref( EEG, [],'refloc',struct('labels',{'Cz'},'Y',{0},'X',{5.4492e-16
 EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',1,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
 
 %Epoch the events
-[ALLEEG, EEG, CURRENTSET] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ERP.epochMin, PARAMETERS.ERP.epochMax, currentFile );
+[ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ERP.epochMin, PARAMETERS.ERP.epochMax, currentFile );
 
 %Detect HEOG failures
-[ list ] = detectHorizFails( EEG, PARAMETERS.horizThresh );
+[ list, horizFails ] = detectHorizFails( EEG, PARAMETERS.horizThresh );
 
 %reject bad epochs
 EEG = pop_rejepoch( EEG, list, 0);
@@ -50,9 +50,6 @@ EEG = pop_rejepoch( EEG, list, 0);
 if PARAMETERS.runICA == 1
 EEG = pop_select( EEG,'nochannel',{'E17'});
 end
-
-%Write processing stats to output file
-writeIndvOutput( badChannels );
 
 %save file
 [filePath, fileName] = fileparts(currentFile);
