@@ -20,12 +20,11 @@ end
 %Create file for saving processing statistics (if it doesn't exist)
 if ~exist(outputInvInfo, 'file')
    badChannels = [];
-   fileNum = [];
    epochNum = [];
    horizFails = [];
    numGenFails = [];
    meanHEOG = [];
-   IndividualInfo = table(  badChannels, fileNum, epochNum, horizFails, numGenFails, meanHEOG );
+   IndividualInfo = struct('badChannels',badChannels, 'epochNum',epochNum, 'horizFails',horizFails, 'numGenFails',numGenFails, 'meanHEOg',meanHEOG);
    save(strcat(outputLocation,'IndividualInfo.mat'),'IndividiualInfo')
 end
 
