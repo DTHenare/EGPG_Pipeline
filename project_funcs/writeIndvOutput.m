@@ -5,11 +5,15 @@ function [  ] = writeIndvOutput( currentFile, fileNum, badChannels, epochNum, ho
 %get the path to the data folder
 [filePath] = fileparts(currentFile);
 %load the indivbidual info table
-load(filePath,'\Output\IndividualInfo.mat');
+load(strcat(filePath,'\Output\IndividualInfo.mat'));
 
-%create a table for the current participant processing stats
-newTable = table(  badChannels, fileNum, epochNum, horizFails, numGenFails, meanHEOG );
-%Add the current participant to the relevant row of the main table
-IndividualInfo(fileNum,:) = newTable;
+%add current participant values to the IndividualInfo struct
+IndividualInfo.badChannels(fileNum,1) = badChannels;
+IndividualInfo.epochNum(fileNum,1) = epochNum;
+IndividualInfo.horizFails(fileNum,1) = horizFails;
+IndividualInfo.numGenFails(fileNum,1) = numGenFails;
+IndividualInfo.meanHEOG(fileNum,1) = meanHEOG;
+
+save(strcat(filePath,'\Output\IndividualInfo.mat'),'IndividualInfo')
 
 end
