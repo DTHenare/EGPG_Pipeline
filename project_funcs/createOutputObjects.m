@@ -25,7 +25,7 @@ if ~exist(outputInvInfo, 'file')
    numGenFails = [];
    meanHEOG = [];
    IndividualInfo = struct('badChannels',badChannels, 'epochNum',epochNum, 'horizFails',horizFails, 'numGenFails',numGenFails, 'meanHEOg',meanHEOG);
-   save(strcat(outputLocation,'IndividualInfo.mat'),'IndividualInfo')
+   save(strcat(outputLocation,'IndividualInfo.mat'),'IndividiualInfo')
 end
 
 end
