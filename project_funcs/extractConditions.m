@@ -21,7 +21,7 @@ if ~exist(saveLocation, 'dir')
 end
 
 for i = 1:length(triggerNames)
-    EEG = pop_epoch( EEG, { triggerNames{1} }, [EEG.xmin EEG.xmax], 'newname', strcat(fileName,'-',triggerNames{i}), 'epochinfo', 'yes');
+    EEG = pop_epoch( EEG,  triggerNames(i) , [EEG.xmin, EEG.xmax], 'newname', strcat(fileName,'-',triggerNames{i}), 'epochinfo', 'yes');
     [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'savenew',strcat(saveLocation,fileName,'-',triggerNames{i},'.set'),'gui','off');
     EEG = eeg_checkset( EEG );
     [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, CURRENTSET,'retrieve',1,'study',0);
