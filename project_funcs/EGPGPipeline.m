@@ -20,14 +20,14 @@ if PARAMETERS.runICA == 1
 end
 
 %ERP preprocess
-[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, fileNum);
+[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath );
 
 if PARAMETERS.runICA == 1
 %ERP ICA clean - load ERP, add weights, clean
 end
 
 %Run standard artificact rejection
-[ EEG, numGenFails, meanHEOG ] = standardArtRej( EEG );
+[ ALLEEG, EEG, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG );
 
 %Extract conditions
 extractConditions(ALLEEG, EEG, CURRENTSET, currentFile);
