@@ -1,4 +1,4 @@
-function [  EEG ] = standardArtRej( EEG )
+function [  EEG, numFails, meanHEOG ] = standardArtRej( EEG )
 %identifies epochs which contain artifact and removes them.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -14,6 +14,12 @@ function [  EEG ] = standardArtRej( EEG )
 allFails = extremFails;
 
 %Remove failed epochs
+
+%create variable to output number of rejected epochs
+numFails = length(allFails);
+%create3 variabel to output mean HEOG activity
+[ leftEye, rightEye ] = findHEOGChannels(EEG);
+meanHEOG = mean(mean(EEG.data(leftEye,:,:)-EEG.data(rightEye,:,:)));
 
 end
 
