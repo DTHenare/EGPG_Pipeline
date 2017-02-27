@@ -21,4 +21,10 @@ numFails = length(allFails);
 [ leftEye, rightEye ] = findHEOGChannels(EEG);
 meanHEOG = mean(mean(EEG.data(leftEye,:,:)-EEG.data(rightEye,:,:)));
 
+%Save file
+[filePath, fileName] = fileparts(currentFile);
+saveLocation = strcat(filePath,'\Output\');
+saveName = strcat(fileName,'_Cleaned');
+[ ALLEEG, EEG ] = saveOutput(ALLEEG, EEG, CURRENTSET, saveLocation, saveName);
+
 end
