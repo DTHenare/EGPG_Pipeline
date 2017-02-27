@@ -23,6 +23,6 @@ checkSetup(dataFolder, EGPGPath, selectedFile);
 for i = 1:size(fileNames,1)
     currentFile = strcat(dataFolder,fileNames{i,1},fileExt);
     eeglab;
-    [ ALLEEG,EEG,CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath);
+    [ ALLEEG,EEG,CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, i);
     %clear eeglab data
 end
