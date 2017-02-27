@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath)
+function [ ALLEEG, EEG, CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, fileNum)
 %This function runs the entire EGPG preprocessing pipeline.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -12,12 +12,15 @@ function [ ALLEEG, EEG, CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, cur
 %Load parameter file
 load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 
+%Create output folders and files
+createOutputObjects( currentFile );
+
 if PARAMETERS.runICA == 1
 %ICA preprocess, output weights
 end
 
 %ERP preprocess
-[ ALLEEG, EEG, CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath);
+[ ALLEEG, EEG, CURRENTSET ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, fileNum);
 
 if PARAMETERS.runICA == 1
 %ERP ICA clean - load ERP, add weights, clean
