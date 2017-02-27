@@ -7,13 +7,13 @@ function [ extremFails ] = identExtremeValues( EEG )
 %           failed
 
 %Convert baseline start to milliseconds
-blMin = EEG.xMin * 1000;
+blMin = EEG.xmin * 1000;
 
 %baseline the data
 EEG = pop_rmbase( EEG, [blMin 0]);
 
 %Identify artifact epochs
-[EEG, extremFails] = pop_eegthresh(EEG,1,[1:EEG.nbchan] ,-100,100,EEG.xMin,EEG.xMax,0,0);
+[EEG, extremFails] = pop_eegthresh(EEG,1,[1:EEG.nbchan] ,-100,100,EEG.xmin,EEG.xmax,0,0);
 
 end
 
