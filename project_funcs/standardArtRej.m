@@ -22,4 +22,3 @@ numFails = length(allFails);
 meanHEOG = mean(mean(EEG.data(leftEye,:,:)-EEG.data(rightEye,:,:)));
 
 end
-
