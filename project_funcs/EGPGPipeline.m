@@ -27,7 +27,7 @@ if PARAMETERS.runICA == 1
 end
 
 %Run standard artificact rejection
-[ ALLEEG, EEG, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG );
+[ ALLEEG, EEG, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG, currentFile );
 
 %Extract conditions
 extractConditions(ALLEEG, EEG, CURRENTSET, currentFile);
