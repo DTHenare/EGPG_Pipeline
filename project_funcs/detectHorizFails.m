@@ -1,4 +1,4 @@
-function [ list ] = detectHorizFails( EEG, horizThresh )
+function [ list, numFails ] = detectHorizFails( EEG, horizThresh )
 %Checks all epochs and returns a list of epochs which contain excessive
 %horizontal eye movements.
 %Inputs:    EEG = EEG structure produced by eeglab
@@ -29,5 +29,8 @@ for i = 1:numEpochs
         end
     end
 end
+
+%create variable to output the number of epochs which failed
+numFails = length(list);
 
 end
