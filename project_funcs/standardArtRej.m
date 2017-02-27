@@ -1,4 +1,4 @@
-function [  EEG, numFails, meanHEOG ] = standardArtRej( EEG )
+function [  WLLEEG, EEG, numFails, meanHEOG ] = standardArtRej(ALLEEG, EEG )
 %identifies epochs which contain artifact and removes them.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
