@@ -26,7 +26,7 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 EEG = pop_chanedit(EEG, 'load',{strcat(EGPGPath,'\project_docs\GSN-HydroCel-129.sfp') 'filetype' 'autodetect'},'setref',{'4:132' 'Cz'},'changefield',{132 'datachan' 0});
 
 %Interpolate bad channels
-[ALLEEG, EEG, CURRENTSET] = fixBadChannels( ALLEEG, EEG, CURRENTSET );
+[ALLEEG, EEG, CURRENTSET, badChannels] = fixBadChannels( ALLEEG, EEG, CURRENTSET );
 
 %High pass filter the data
 [ALLEEG, EEG, CURRENTSET] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ERP.highpass PARAMETERS.ERP.lowpass], 3 );
@@ -51,13 +51,13 @@ if PARAMETERS.runICA == 1
 EEG = pop_select( EEG,'nochannel',{'E17'});
 end
 
+%Write processing stats to output file
+writeIndvOutput( badChannels );
+
 %save file
 [filePath, fileName] = fileparts(currentFile);
 saveLocation = strcat(filePath,'\Output\');
 saveName = strcat(fileName,'_ERPpre');
-if ~exist(saveLocation, 'dir')
-  mkdir(saveLocation);
-end
 [ ALLEEG, EEG ] = saveOutput(ALLEEG, EEG, CURRENTSET, saveLocation, saveName);
 
 end
