@@ -4,8 +4,10 @@ function [  ] = writeIndvOutput( currentFile, fileNum, badChannels, epochNum, ho
 
 %get the path to the data folder
 [filePath] = fileparts(currentFile);
-%load the indivbidual info table
+%load the indivbidual info structure if it exists
+if exist(strcat(filePath,'\Output\IndividualInfo.mat'), 'file')
 load(strcat(filePath,'\Output\IndividualInfo.mat'));
+end
 
 %add current participant values to the IndividualInfo struct
 IndividualInfo.badChannels{fileNum,1} = badChannels;
