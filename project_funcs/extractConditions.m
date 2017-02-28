@@ -21,9 +21,11 @@ saveName = strcat(fileName,'_Cleaned');
 
 for i = 1:length(triggerNames)
     
-    EEG = pop_rmdat( EEG, {triggerNames(i)},[EEG.xmin EEG.xmax] ,0);
-    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'savenew',strcat(conditionsSaveLocation,fileName,'-',triggerNames{i},'.set'),'saveold',strcat(wholeSaveLocation,saveName,'.set'),'gui','off');
-    [ALLEEG EEG CURRENTSET] = eeg_store(ALLEEG, EEG, CURRENTSET);
+    EEG = pop_epoch( EEG, {  triggerNames{i}  }, [EEG.xmin EEG.xmax], 'newname', strcat(fileName,'-',triggerNames{i}), 'epochinfo', 'yes');
+    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'savenew',strcat(conditionsSaveLocation,fileName,'-',triggerNames{i},'.set'),'gui','off');
+    EEG = eeg_checkset( EEG );
+    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, CURRENTSET,'retrieve',1,'study',0);
+    EEG = eeg_checkset( EEG );
     
 end
 
