@@ -8,9 +8,9 @@ function [  ] = writeIndvOutput( currentFile, fileNum, badChannels, epochNum, ho
 load(strcat(filePath,'\Output\IndividualInfo.mat'));
 
 %add current participant values to the IndividualInfo struct
-IndividualInfo.badChannels(fileNum,1) = badChannels;
+IndividualInfo.badChannels{fileNum,1} = badChannels;
 IndividualInfo.epochNum(fileNum,1) = epochNum;
-IndividualInfo.horizFails(fileNum,1) = horizFails;
+IndividualInfo.horizFails{fileNum,1} = horizFails;
 IndividualInfo.numGenFails(fileNum,1) = numGenFails;
 IndividualInfo.meanHEOG(fileNum,1) = meanHEOG;
 
