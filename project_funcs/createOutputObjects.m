@@ -17,15 +17,4 @@ if ~exist(outputConditionsLocation, 'dir')
   mkdir(outputConditionsLocation);
 end
 
-%Create file for saving processing statistics (if it doesn't exist)
-if ~exist(outputInvInfo, 'file')
-   badChannels = {};
-   epochNum = [];
-   horizFails = {};
-   numGenFails = [];
-   meanHEOG = [];
-   IndividualInfo = struct('badChannels',badChannels, 'epochNum',epochNum, 'horizFails',horizFails, 'numGenFails',numGenFails, 'meanHEOG',meanHEOG);
-   save(strcat(outputLocation,'IndividualInfo.mat'),'IndividualInfo')
-end
-
 end
