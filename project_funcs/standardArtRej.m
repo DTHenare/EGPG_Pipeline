@@ -3,9 +3,12 @@ function [  ALLEEG, EEG, CURRENTSET, numFails, meanHEOG ] = standardArtRej(ALLEE
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
 %           CURRENTSET = CURRENTSET value provided by eeglab
+%           currentFile = path of the input file
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
+%           numFails = number of epochs that were marked as bad
+%           meanHEOG = average voltage of the HEOG
 
 %Reject epochs with extreme values
 [ extremFails ] = identExtremeValues( EEG );

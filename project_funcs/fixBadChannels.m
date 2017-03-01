@@ -3,6 +3,7 @@ function [ALLEEG, EEG, CURRENTSET, badChannels] = fixBadChannels( ALLEEG, EEG, C
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
 %           CURRENTSET = CURRENTSET value provided by eeglab
+%           badChannels = list of channels that were marked as bad
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab

@@ -6,6 +6,7 @@ function [ list, numFails ] = detectHorizFails( EEG, horizThresh )
 %           horizontal eye movement is deemed excessive
 %Outputs:   list - list of indices for those epochs which failed the test
 %           and therefore have excessive eye movement (need to be rejected)
+%           numFails = number of epochs which failed the test
 
 numSamplesInEpoch = size(EEG.data,2);
 numEpochs = size(EEG.data,3);

@@ -11,6 +11,7 @@ function [ALLEEG,EEG,CURRENTSET, epochNum] = epochEvents(ALLEEG, EEG, CURRENTSET
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
+%           epochNum = number of epochs which were generated
 
 %Extract file parts
 [filePath, fileName, fileExt] = fileparts(currentFile);
