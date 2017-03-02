@@ -57,10 +57,4 @@ if PARAMETERS.runICA == 1
 EEG = pop_select( EEG,'nochannel',{'E17'});
 end
 
-%save file
-[filePath, fileName] = fileparts(currentFile);
-saveLocation = strcat(filePath,'\Output\');
-saveName = strcat(fileName,'_ERPpre');
-[ ALLEEG, EEG ] = saveOutput(ALLEEG, EEG, CURRENTSET, saveLocation, saveName);
-
 end
