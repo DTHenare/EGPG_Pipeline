@@ -2,11 +2,11 @@
 
 # Project Description
 
-This software opens a set of netstation files and processes them using best practice procedures with minimal user input. The user will only need to run the script, navigate to the location of the first file, and enter a small amount of information in dialog boxes at the start. Each participant's data will be opened, converted to a .set file, filtered, noisy channels interpolated, average referenced, epoched, artifact rejected, split into conditions and averaged for each condition. The software will output details about the results of various steps of the processing (number and identity of interpolated channels, number of epochs generated, number of epochs rejected for each condition as well as total, and number of components rejected), as well as the a .set for each condition for each data file.
+This software opens a set of netstation files and processes them using best practice procedures with minimal user input. The user will only need to run the script, navigate to the location of the first file, and enter a small amount of information in dialog boxes at the start. Each participant's data will be opened, filtered, noisy channels interpolated, average referenced, epoched, artifact rejected, split into conditions and averaged for each condition. The software will output details about the results of various steps of the processing (number and identity of interpolated channels, number of epochs generated, number of epochs rejected for each condition as well as total, and number of components rejected), as well as a .set for each condition for each data file.
 
 # How to use
 
-To run the pipeline you will need to create a folder which holds all of the input files which will be run through the pipeline. This will take the form of a single .RAW file or .set for each participant in the experiment, and all of these files will be in the same folder.
+To run the pipeline you will need to create a folder which holds all of the EEG files which will be run through the pipeline. This will take the form of a single .RAW file or .set for each participant in the experiment, and all of these files will be in the same folder.
 
 Once this is set up, right click the run_EGPGPipeline.m file in the dssr2017-DTHenare folder and click run. Matlab will open and the file explorer will popup. Navigate to the first participant file and click 'open'. The software will now process all files in the folder and save each participant's in an output folder which will be stored in the location of the input data.
 
