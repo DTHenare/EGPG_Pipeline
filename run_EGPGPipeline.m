@@ -16,6 +16,9 @@ EGPGPath = fileparts(mfilename('fullpath'));
 %Create list of files that will be processed
 [ fileNames,fileExt ] = getMatchingFiles(strcat(dataFolder, selectedFile));
 
+%Pop-up list of triggers for user selection
+[ triggerNames ] = getTriggerNames(dataFolder, selectedFile);
+
 %Check setup is appropriate
 checkSetup(dataFolder, EGPGPath, selectedFile);
 
@@ -23,6 +26,6 @@ checkSetup(dataFolder, EGPGPath, selectedFile);
 for i = 1:size(fileNames,1)
     currentFile = strcat(dataFolder,fileNames{i,1},fileExt);
     eeglab;
-    [ ALLEEG,EEG,CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, i);
+    [ ALLEEG,EEG,CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, i, triggerNames);
     %clear eeglab data
 end

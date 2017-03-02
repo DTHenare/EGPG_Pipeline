@@ -1,30 +1,25 @@
-function [  ] = extractConditions(ALLEEG, EEG, CURRENTSET, currentFile)
+function [  ] = extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames)
 %Separates a file into a set of conditions. Creates a separate file for
 %each trigger name and saves to the OutputConditions folder.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
 %           CURRENTSET = CURRENTSET value provided by eeglab
 %           currentFile = path of the EEG file which will be processed
+%           triggeNames = cell array containing list of event names that
+%           will be epoched
 
 %Get path information from current file
 [ filePath, fileName ] = fileparts(currentFile);
-
-%Open the user triggerNames.txt file and store contents in triggerNames
-FID = fopen(strcat(filePath,'\triggerNames.txt'));
-C = textscan(FID, '%s');
-triggerNames = C{1,1};
 
 %Find paths for saving everything
 conditionsSaveLocation = strcat(filePath,'\OutputConditions\');
 
 for i = 1:length(triggerNames)
-    
     EEG = pop_epoch( EEG, {  triggerNames{i}  }, [EEG.xmin EEG.xmax], 'newname', strcat(fileName,'-',triggerNames{i}), 'epochinfo', 'yes');
     [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'savenew',strcat(conditionsSaveLocation,fileName,'-',triggerNames{i},'.set'),'gui','off');
     EEG = eeg_checkset( EEG );
     [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, CURRENTSET,'retrieve',1,'study',0);
     EEG = eeg_checkset( EEG );
-    
 end
 
 end

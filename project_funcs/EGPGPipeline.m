@@ -1,10 +1,12 @@
-function [ ALLEEG, EEG, CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, fileNum)
+function [ ALLEEG, EEG, CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, fileNum, triggerNames)
 %This function runs the entire EGPG preprocessing pipeline.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
 %           CURRENTSET = CURRENTSET value provided by eeglab
 %           currentFile = path of the EEG file which will be processed
 %           EGPGPath = path of the EGPG pipeline folder
+%           triggeNames = cell array containing list of event names that
+%           will be epoched
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
@@ -20,7 +22,7 @@ if PARAMETERS.runICA == 1
 end
 
 %ERP preprocess
-[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath );
+[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames);
 
 if PARAMETERS.runICA == 1
 %ERP ICA clean - load ERP, add weights, clean
@@ -30,7 +32,7 @@ end
 [ ALLEEG, EEG, CURRENTSET, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG, CURRENTSET, currentFile );
 
 %Extract conditions
-extractConditions(ALLEEG, EEG, CURRENTSET, currentFile);
+extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames);
 
 %Write processing stats to output file
 writeIndvOutput( currentFile, fileNum, badChannels, epochNum, horizFails, numGenFails, meanHEOG);

@@ -1,4 +1,4 @@
-function [ ALLEEG,EEG,CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath)
+function [ ALLEEG,EEG,CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames)
 %Processes an EEG data set in a way which is optimal for the production of
 %ERPs
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -6,6 +6,8 @@ function [ ALLEEG,EEG,CURRENTSET, badChannels, epochNum, horizFails ] = ERPPrepr
 %           CURRENTSET = CURRENTSET value provided by eeglab
 %           currentFile = path of the EEG file which will be processed
 %           EGPGPath = path of the EGPG pipeline folder
+%           triggeNames = cell array containing list of event names that
+%           will be epoched
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
@@ -44,7 +46,7 @@ EEG = pop_reref( EEG, [],'refloc',struct('labels',{'Cz'},'Y',{0},'X',{5.4492e-16
 EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',1,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
 
 %Epoch the events
-[ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ERP.epochMin, PARAMETERS.ERP.epochMax, currentFile );
+[ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ERP.epochMin, PARAMETERS.ERP.epochMax, currentFile, triggerNames );
 
 %Detect HEOG failures
 [ list, horizFails ] = detectHorizFails( EEG, PARAMETERS.horizThresh );

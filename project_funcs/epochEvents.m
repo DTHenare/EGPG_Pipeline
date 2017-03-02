@@ -1,4 +1,4 @@
-function [ALLEEG,EEG,CURRENTSET, epochNum] = epochEvents(ALLEEG, EEG, CURRENTSET, epochMin, epochMax, currentFile)
+function [ALLEEG,EEG,CURRENTSET, epochNum] = epochEvents(ALLEEG, EEG, CURRENTSET, epochMin, epochMax, currentFile, triggerNames)
 %Epochs around the relevant events in the EEG data.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -8,6 +8,8 @@ function [ALLEEG,EEG,CURRENTSET, epochNum] = epochEvents(ALLEEG, EEG, CURRENTSET
 %           epochMax = time point relative to the event that the epoch
 %           should end
 %           currentFile = path of the EEG file which will be processed
+%           triggeNames = cell array containing list of event names that
+%           will be epoched
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
@@ -15,11 +17,6 @@ function [ALLEEG,EEG,CURRENTSET, epochNum] = epochEvents(ALLEEG, EEG, CURRENTSET
 
 %Extract file parts
 [filePath, fileName, fileExt] = fileparts(currentFile);
-
-%Open the user triggerNames.txt file and store contents in triggerNames
-FID = fopen(strcat(filePath,'\triggerNames.txt'));
-C = textscan(FID, '%s');
-triggerNames = C{1,1};
 
 %epoch around all triggerNames
 EEG = pop_epoch( EEG, triggerNames, [epochMin epochMax], 'newname', fileName, 'epochinfo', 'yes');
