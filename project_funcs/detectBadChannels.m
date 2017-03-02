@@ -12,9 +12,14 @@ function [ badChannels ] = detectBadChannels( EEG )
 %allFails = union(specFails,otherThingsWhichIWillHaveOneDay)
 allFails = specFails;
 
-index = 1;
-for i = allFails
-    badChannels{index} = EEG.chanlocs(i).labels;
-    index = index+1;
+%If there are any bad channels, get their labels
+if ~isempty(allFails)
+    index = 1;
+    for i = allFails
+        badChannels{index} = EEG.chanlocs(i).labels;
+        index = index+1;
+    end
+else
+    badChannels = {};
 end
-
+end
