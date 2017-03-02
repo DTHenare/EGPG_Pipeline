@@ -14,10 +14,12 @@ chanStruct = EEG.chanlocs;
 %Identify bad channels
 [ badChannels ] = detectBadChannels( EEG );
 
-%Remove bad channels
-EEG = pop_select( EEG,'nochannel',badChannels);
-
-%Interpolate missing channels
-EEG = pop_interp(EEG, chanStruct, 'spherical');
-
+%If there are any bad channels, remove and interpolate them
+if ~isempty(badChannels)
+    %Remove bad channels
+    EEG = pop_select( EEG,'nochannel',badChannels);
+    
+    %Interpolate missing channels
+    EEG = pop_interp(EEG, chanStruct, 'spherical');
+end
 end
