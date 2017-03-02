@@ -16,8 +16,6 @@ triggerNames = C{1,1};
 
 %Find paths for saving everything
 conditionsSaveLocation = strcat(filePath,'\OutputConditions\');
-wholeSaveLocation = strcat(filePath,'\Output\');
-saveName = strcat(fileName,'_Cleaned');
 
 for i = 1:length(triggerNames)
     
