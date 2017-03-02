@@ -20,7 +20,7 @@ allFails = extremFails;
 
 %create variable to output number of rejected epochs
 numFails = length(allFails);
-%create3 variabel to output mean HEOG activity
+%create variable to output mean HEOG activity
 [ leftEye, rightEye ] = findHEOGChannels(EEG);
 meanHEOG = mean(mean(EEG.data(leftEye,:,:)-EEG.data(rightEye,:,:)));
 
