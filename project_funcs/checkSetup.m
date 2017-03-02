@@ -14,7 +14,7 @@ checkSetup_parameters(EGPGPath);
 checkSetup_triggers(dataFolder, EGPGPath);
 
 %Check input file - extension appropriate
-checkSetup_datafile(selectedFile);
+%checkSetup_datafile(selectedFile);
 
 end
 
