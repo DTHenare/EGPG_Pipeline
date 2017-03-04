@@ -5,7 +5,7 @@ function [  ] = createOutputObjects( currentFile )
 
 [filePath] = fileparts(currentFile);
 outputLocation = strcat(filePath,'\Output\');
-outputConditionsLocation = strcat(filePath,'\OutputConditions\');
+outputInfoLocation = strcat(filePath,'\Output\ProcessingInfo\');
 
 %create folder for outputting participant data (if it doesn't exist)
 if ~exist(outputLocation, 'dir')
@@ -13,8 +13,8 @@ if ~exist(outputLocation, 'dir')
 end
 
 %create folder for epoched data (if it doesn't exist)
-if ~exist(outputConditionsLocation, 'dir')
-  mkdir(outputConditionsLocation);
+if ~exist(outputInfoLocation, 'dir')
+  mkdir(outputInfoLocation);
 end
 
 end

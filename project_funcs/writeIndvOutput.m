@@ -1,4 +1,4 @@
-function [  ] = writeIndvOutput( currentFile, fileNum, badChannels, epochNum, horizFails, numGenFails, meanHEOG)
+function [ IndividualInfo ] = writeIndvOutput( currentFile, badChannels, epochNum, horizFails, numGenFails, meanHEOG)
 %Writes summary statistics of the preprocessing procedure to a .mat file
 %Inputs:    currentFile = path of the input file
 %           fileNum = number indicating which file form the current
@@ -13,19 +13,15 @@ function [  ] = writeIndvOutput( currentFile, fileNum, badChannels, epochNum, ho
 %           meanHROG = mean voltage value in the HEOG channel
 
 %get the path to the data folder
-[filePath] = fileparts(currentFile);
-%load the indivbidual info structure if it exists
-if exist(strcat(filePath,'\Output\IndividualInfo.mat'), 'file')
-load(strcat(filePath,'\Output\IndividualInfo.mat'));
-end
+[filePath, fileName] = fileparts(currentFile);
 
 %add current participant values to the IndividualInfo struct
-IndividualInfo.badChannels{fileNum,1} = badChannels;
-IndividualInfo.epochNum(fileNum,1) = epochNum;
-IndividualInfo.horizFails{fileNum,1} = horizFails;
-IndividualInfo.numGenFails(fileNum,1) = numGenFails;
-IndividualInfo.meanHEOG(fileNum,1) = meanHEOG;
+IndividualInfo.badChannels = badChannels;
+IndividualInfo.epochNum = epochNum;
+IndividualInfo.horizFails = horizFails;
+IndividualInfo.numGenFails = numGenFails;
+IndividualInfo.meanHEOG = meanHEOG;
 
-save(strcat(filePath,'\Output\IndividualInfo.mat'),'IndividualInfo')
+save(strcat(filePath,'\Output\ProcessingInfo\',fileName,'-IndividualInfo.mat'),'IndividualInfo')
 
 end

@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, fileNum, triggerNames)
+function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames)
 %This function runs the entire EGPG preprocessing pipeline.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -35,7 +35,7 @@ end
 extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames);
 
 %Write processing stats to output file
-writeIndvOutput( currentFile, fileNum, badChannels, epochNum, horizFails, numGenFails, meanHEOG);
+IndividualInfo = writeIndvOutput( currentFile, badChannels, epochNum, horizFails, numGenFails, meanHEOG);
 
 end
 
