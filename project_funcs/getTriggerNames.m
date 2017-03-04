@@ -9,12 +9,6 @@ function [ triggerNames ] = getTriggerNames(dataFolder, selectedFile)
 
 %path of the current file
 currentFile = strcat(dataFolder,selectedFile);
-%eopn eeglab
-eeglab;
-%Create the input variables for importing
-ALLEEG = [];
-EEG = [];
-CURRENTSET = 0;
 
 [path, file, fileExt]=fileparts(currentFile);
 
