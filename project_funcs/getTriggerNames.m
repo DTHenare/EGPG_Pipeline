@@ -16,10 +16,16 @@ ALLEEG = [];
 EEG = [];
 CURRENTSET = 0;
 
-%Read in data from file
-[ Head, tempdata ] = readegi(currentFile);
-%Save event codes in allTriggers
-allTriggers = cellstr(Head.eventcode);
+[path, file, fileExt]=fileparts(currentFile);
+
+if strcmp(fileExt,'.RAW')
+    %Read in data from file
+    [ Head, ~ ] = readegi(currentFile);
+    %Save event codes in allTriggers
+    allTriggers = cellstr(Head.eventcode);
+else
+    error('cannot read events from this file type')
+end
 
 STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 
