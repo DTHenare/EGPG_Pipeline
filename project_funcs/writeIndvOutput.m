@@ -10,7 +10,8 @@ function [ IndividualInfo ] = writeIndvOutput( currentFile, badChannels, epochNu
 %           containing excessive eye movements
 %           numGenFails = number of epochs which were identified as
 %           containing excessive artifact
-%           meanHROG = mean voltage value in the HEOG channel
+%           meanHEOG = mean voltage value in the HEOG channel
+%Outputs:   IndividualInfo = struct which holds all of the input variables
 
 %get the path to the data folder
 [filePath, fileName] = fileparts(currentFile);
@@ -22,6 +23,7 @@ IndividualInfo.horizFails = horizFails;
 IndividualInfo.numGenFails = numGenFails;
 IndividualInfo.meanHEOG = meanHEOG;
 
+%Save into the processingInfo folder
 save(strcat(filePath,'\Output\ProcessingInfo\',fileName,'-IndividualInfo.mat'),'IndividualInfo')
 
 end
