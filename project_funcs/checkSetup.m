@@ -11,10 +11,10 @@ function [  ] = checkSetup(dataFolder, EGPGPath, selectedFile)
 checkSetup_parameters(EGPGPath);
 
 %Check trigger file - present, has triggers, not default triggers
-checkSetup_triggers(dataFolder, EGPGPath);
+%checkSetup_triggers(dataFolder, EGPGPath);
 
 %Check input file - extension appropriate
-%checkSetup_datafile(selectedFile);
+checkSetup_datafile(selectedFile);
 
 end
 
