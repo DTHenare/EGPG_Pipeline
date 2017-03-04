@@ -12,14 +12,18 @@ function [  ] = extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerN
 [ filePath, fileName ] = fileparts(currentFile);
 
 %Find paths for saving everything
-conditionsSaveLocation = strcat(filePath,'\OutputConditions\');
+conditionsSaveLocation = strcat(filePath,'\Output\');
 
 for i = 1:length(triggerNames)
-    EEG = pop_epoch( EEG, {  triggerNames{i}  }, [EEG.xmin EEG.xmax], 'newname', strcat(fileName,'-',triggerNames{i}), 'epochinfo', 'yes');
-    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'savenew',strcat(conditionsSaveLocation,fileName,'-',triggerNames{i},'.set'),'gui','off');
-    EEG = eeg_checkset( EEG );
-    [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, CURRENTSET,'retrieve',1,'study',0);
-    EEG = eeg_checkset( EEG );
+    try
+        EEG = pop_epoch( EEG, {  triggerNames{i}  }, [EEG.xmin EEG.xmax], 'newname', strcat(fileName,'-',triggerNames{i}), 'epochinfo', 'yes');
+        [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'savenew',strcat(conditionsSaveLocation,fileName,'-',triggerNames{i},'.set'),'gui','off');
+        EEG = eeg_checkset( EEG );
+        [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, CURRENTSET,'retrieve',1,'study',0);
+        EEG = eeg_checkset( EEG );
+    catch
+        disp(strcat('No remaining epochs have the event type: ', triggerNames{i}))
+    end
 end
 
 end
