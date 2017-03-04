@@ -16,11 +16,11 @@ ALLEEG = [];
 EEG = [];
 CURRENTSET = 0;
 
-%Import the selected file
-[ALLEEG, EEG, CURRENTSET] = importEEGData( ALLEEG, EEG, CURRENTSET, currentFile );
-%create list of triggers in the data
-allTriggers = unique({EEG.event(:).type});
-%clear the data
+%Read in data from file
+[ Head, tempdata ] = readegi(currentFile);
+%Save event codes in allTriggers
+allTriggers = cellstr(Head.eventcode);
+
 STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 
 %Present list of triggers to the user for selection
