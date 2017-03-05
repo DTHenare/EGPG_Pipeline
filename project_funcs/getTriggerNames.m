@@ -17,6 +17,10 @@ if strcmp(fileExt,'.RAW')
     [ Head, ~ ] = readegi(currentFile);
     %Save event codes in allTriggers
     allTriggers = cellstr(Head.eventcode);
+elseif strcmp(fileExt,'.set')
+    EEG = pop_loadset('filename','LenoreData_Cleaned.set','filepath','C:\\Users\\dhen061\\Desktop\\New folder\\Output\\');
+    [ALLEEG, EEG, CURRENTSET] = eeg_store( ALLEEG, EEG, 0 );
+    allTriggers = unique({EEG.event(:).type})
 else
     error('cannot read events from this file type')
 end
@@ -32,4 +36,3 @@ end
 %store selected triggers in triggerNames
 triggerNames = allTriggers(UserSelection);
 end
-
