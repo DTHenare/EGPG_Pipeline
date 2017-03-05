@@ -10,6 +10,8 @@ function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG,
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
+%           IndividualInfo = struct containing proessing statistics for
+%           individuals
 
 %Load parameter file
 load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
