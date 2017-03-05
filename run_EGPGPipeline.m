@@ -27,5 +27,5 @@ for i = 1:size(fileNames,1)
     currentFile = strcat(dataFolder,fileNames{i,1},fileExt);
     eeglab;
     [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames);
-    writeGroupOutput( currentFile, IndividualInfo, i )
+    writeGroupOutput( currentFile, IndividualInfo, i, triggerNames, fileNames )
 end

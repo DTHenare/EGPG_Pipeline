@@ -1,4 +1,4 @@
-function [  ] = writeGroupOutput( currentFile, IndividualInfo, fileNum )
+function [  ] = writeGroupOutput( currentFile, IndividualInfo, fileNum, triggerNames, fileNames )
 %Writes summary statistics of the preprocessing procedure to a .mat file
 %Inputs:    currentFile = path of the input file
 %           IndividualInfo = struct containing an individual's processing
@@ -14,6 +14,8 @@ load(strcat(filePath,'\Output\ProcessingInfo\GroupInfo.mat'));
 end
 
 %add current participant values to the group struct
+GroupInfo.triggerNames = triggerNames;
+GroupInfo.fileNames = fileNames;
 GroupInfo.badChannels{fileNum,1} = IndividualInfo.badChannels;
 GroupInfo.epochNum(fileNum,1) = IndividualInfo.epochNum;
 GroupInfo.horizFails{fileNum,1} = IndividualInfo.horizFails;
