@@ -36,3 +36,5 @@ for i = 1:size(fileNames,1)
     %clear eeglab
     STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 end
+
+[ STUDY, ALLEEG, EEG, CURRENTSET ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames);
