@@ -27,8 +27,12 @@ checkSetup(dataFolder, EGPGPath, selectedFile);
 
 %Preprocess each file in the data folder
 for i = 1:size(fileNames,1)
+    %create path of current file
     currentFile = strcat(dataFolder,fileNames{i,1},fileExt);
+    %Run pipeline
     [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames);
+    %Add current file's output to the group data
     writeGroupOutput( currentFile, IndividualInfo, i, triggerNames, fileNames )
+    %clear eeglab
     STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 end
