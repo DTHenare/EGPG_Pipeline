@@ -23,13 +23,15 @@ segPresent = 0;
 %Always store the first file in finalNames
 fileNames{1,1} = allMatches(1,1).name(1:end-extLength);
 j=2;
+curTest=1;
 %for all other files, only store them if they don't look like segments of
 %the previous file
 for i = 2:fileNum
-    if strcmp(allMatches(i,1).name(1:end-7),allMatches(i-1,1).name(1:end-7)) && strcmp(allMatches(i,1).date(1:end-5),allMatches(i-1,1).date(1:end-5))
+    if strcmp(allMatches(i,1).name(1:end-7),allMatches(curTest,1).name(1:end-7)) && strcmp(allMatches(i,1).date(1:end-8),allMatches(curTest,1).date(1:end-8))
         segPresent = 1;
     else
         fileNames{j,1} = allMatches(i,1).name(1:end-extLength);
+        curTest = i;
         j=j+1;
     end
 end
@@ -38,7 +40,7 @@ end
 %all of the fileNames should end in 1 otherwise they won't load
 if segPresent == 1
     for i = 1:length(fileNames)
-        if fileNames{1}(end) ~= 1
+        if str2num(fileNames{1}(end)) ~= 1
             error('The files in your data folder look like they''re segmented netsstation files, but not all participants have a file ending in 1')
         end
     end
