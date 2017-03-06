@@ -20,7 +20,7 @@ if strcmp('.RAW',fileExt)
         [ALLEEG EEG] = eeg_store(ALLEEG, EEG, CURRENTSET);
         EEG = eeg_checkset(EEG);
     elseif segPresent == 1
-        EEG = pop_readsegegi('C:\Users\Dion\Google Drive\P23_segmented_RAWs\P23001.RAW');
+        EEG = pop_readsegegi(currentFile);
         [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 0,'gui','off');
     end
 elseif strcmp('.set',fileExt)
