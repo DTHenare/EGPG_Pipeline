@@ -1,4 +1,4 @@
-function [ ALLEEG,EEG,CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames)
+function [ ALLEEG,EEG,CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent)
 %Processes an EEG data set in a way which is optimal for the production of
 %ERPs
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -22,7 +22,7 @@ function [ ALLEEG,EEG,CURRENTSET, badChannels, epochNum, horizFails ] = ERPPrepr
 load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 
 %Import data
-[ALLEEG, EEG, CURRENTSET] = importEEGData( ALLEEG, EEG, CURRENTSET, currentFile );
+[ALLEEG, EEG, CURRENTSET] = importEEGData( ALLEEG, EEG, CURRENTSET, currentFile, segPresent );
 
 %Correct trigger latency
 [ALLEEG, EEG, CURRENTSET] = correctAmpDelay( ALLEEG, EEG, CURRENTSET );
