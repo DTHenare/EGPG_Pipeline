@@ -2,27 +2,29 @@
 
 # Project Description
 
-This software opens a set of EEG files and processes them using best practice procedures with minimal user input. The user will only need to run the script, navigate to the location of the first file, and enter a small amount of information in dialog boxes at the start. Each participant's data will be opened, filtered, noisy channels interpolated, average referenced, epoched, artifact rejected, split into conditions and averaged for each condition. The software will output details about the results of various steps of the processing (number and identity of interpolated channels, number of epochs generated, number of epochs rejected for each condition as well as total, and number of components rejected), as well as a .set for each condition for each data file.
+This software opens a set of EEG files and processes them with minimal user input. The user will only need to run the script, navigate to the location of the first file, and enter a small amount of information in dialog boxes at the start. Each participant's data will be opened, filtered, noisy channels interpolated, average referenced, epoched, artifact rejected, split into conditions and averaged for each condition. The software will output details about the results of various steps of the processing (number and identity of interpolated channels, number of epochs generated, number of epochs rejected for each condition as well as total, and number of components rejected), as well as a .set for each condition for each data file. It will also create a STUDY in eeglab which contains all participants and all conditions.
+
+# Installation
+
+To install the software you can clone the repository to your local machine or download and unzip the files. Make sure you add the pipeline folder (with subfolders) to your matlab path before you run.
 
 # How to use
 
-To run the pipeline you will need to create a folder which holds all of the EEG files which will be run through the pipeline. This will take the form of a single .RAW file or .set for each participant in the experiment, and all of these files will be in the same folder.
+To run the pipeline you will need to create a folder which holds all of the EEG files which will be run through the pipeline. Currently these files must be either .RAW or .set files.
 
-Once this is set up, right click the run_EGPGPipeline.m file in the EGPG_Pipeline folder and click run. Matlab will open and the file explorer will popup. Navigate to the first participant file and click 'open'. The software will now ask you to select the event labels that you would like to epoch around. It will then process all files in the folder and save each participant's output in an output folder which will be stored in the location of the input data.
+Once this is set up, right click the run_EGPGPipeline.m file in the EGPG_Pipeline folder and click run. Matlab will open and the file explorer will popup. Navigate to any one of the files in the folder and click 'open'. The software will now ask you to select the event labels that you would like to epoch around. It will then process all files in the folder and save each participant's output in an output folder which will be stored in the location of the input data.
 
 # Interpreting output
 
 Output of the software will include:
 - A matlab file containing a summary of the outcome of specific processing steps for all participants. This will provide details about; number of channels rejected, indices of channels rejected, number of epochs generated, total number of epochs rejected, number of epochs rejected per condition, number of epochs rejected by each test, number of components rejected)
-- A .set file containing the cleaned and processed epochs for each condition per participant.
+- A .set file containing the cleaned and processed epochs for each participant named "[filename]-cleaned.set".
+- A .set file for each condition, for each participant named "[filename]-[triggername].set"
+- A .study file which allows you to open all of the data in an eeglab STUDY for group analysis named Experiment-STUDY.study
 
 # Contributing
 
 If you would like to contribute to this project then send me an email (dhen061@aucklanduni.ac.nz) and let me know what you'd like to do.
-
-# Installation
-
-To install the software you can clone the repository to your local machine or download and unzip the files. Make sure you add the pipeline folder (with subfolders) to your matlab path before you run.
 
 # Dependencies
 
