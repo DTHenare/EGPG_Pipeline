@@ -30,7 +30,7 @@ end
 STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 
 %Present list of triggers to the user for selection
-[UserSelection, OK] = listdlg('ListString',allTriggers);
+[UserSelection, OK] = listdlg('promptstring','Select the triggers you''d like to epoch','ListString',allTriggers);
 if OK==0
     error('you must select at least one event for epoching')
 end
