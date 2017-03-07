@@ -37,4 +37,4 @@ for i = 1:size(fileNames,1)
     STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 end
 
-[ STUDY, ALLEEG, EEG, CURRENTSET ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames);
+[ STUDY, ALLEEG, EEG, CURRENTSET ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder );
