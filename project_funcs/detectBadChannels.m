@@ -5,6 +5,9 @@ function [ badChannels ] = detectBadChannels( EEG )
 %Outputs:   badChannels = cell array containing the names of all electrodes
 %           identified as bad
 
+%Save original channel structure
+tempLocs = EEG.chanlocs;
+
 %Reject channels with abnormal spectrum
 [EEG, specFails] = pop_rejchanspec( EEG, 'freqlims', [0 35], 'stdthresh', [-15 3], 'plotchans', 'off');
 
@@ -16,7 +19,7 @@ allFails = specFails;
 if ~isempty(allFails)
     index = 1;
     for i = allFails
-        badChannels{index} = EEG.chanlocs(i).labels;
+        badChannels{index} = tempLocs(i).labels;
         index = index+1;
     end
 else
