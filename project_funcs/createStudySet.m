@@ -1,22 +1,20 @@
-function [ STUDY, ALLEEG, EEG, CURRENTSET ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames)
+function [ STUDY, ALLEEG, EEG, CURRENTSET ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
-
-
 
 k=1;
 for i = 1:length(fileNames)
     for j = 1:length(triggerNames)
-        allFiles{k} = strcat(fileName(i),'-',triggerNames(j),'.set');
-        currentCell = {'index' k 'condition' triggerName(j) 'subject' fileName(i)};
-        studyCells{k} = currentCell;
+        allFiles(k) = strcat(fileNames(i),'-',triggerNames(j),'.set');
+        currentCell = {'index' k 'condition' triggerNames(j) 'subject' fileNames(i)};
+        studyCells(k) = currentCell;
         k=k+1;
     end
 end
 
-EEG = pop_loadset('filename',allFiles,'filepath','C:\\Users\\dhen061\\Google Drive\\sampleExpData\\Output\\');
+EEG = pop_loadset('filename',allFiles,'filepath',strcat(dataFolder,'Output\'));
 [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 0,'study',0);
-[STUDY, ALLEEG] = std_checkset(STUDY, ALLEEG);
+%[STUDY, ALLEEG] = std_checkset(STUDY, ALLEEG);
 [STUDY ALLEEG] = std_editset( STUDY, ALLEEG, 'name','Experiment-STUDY','commands',studyCells,'updatedat','on','savedat','on' );
 CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
 
