@@ -30,14 +30,14 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 %Downsample the data
 [ALLEEG, EEG, CURRENTSET] = downsampleData( ALLEEG, EEG, CURRENTSET, PARAMETERS.ICA.downsampleRate );
 
+%High pass filter the data
+[ALLEEG, EEG, CURRENTSET] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ICA.highpass PARAMETERS.ICA.lowpass], 3 );
+
 %Load channel structure
 EEG = pop_chanedit(EEG, 'load',{strcat(EGPGPath,'\project_docs\GSN-HydroCel-129.sfp') 'filetype' 'autodetect'},'setref',{'4:132' 'Cz'},'changefield',{132 'datachan' 0});
 
 %Interpolate bad channels
 [ALLEEG, EEG, CURRENTSET, badChannels] = fixBadChannels( ALLEEG, EEG, CURRENTSET );
-
-%High pass filter the data
-[ALLEEG, EEG, CURRENTSET] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ICA.highpass PARAMETERS.ICA.lowpass], 3 );
 
 %Average reference the data
 EEG = pop_reref( EEG, [],'refloc',struct('labels',{'Cz'},'Y',{0},'X',{5.4492e-16},'Z',{8.8992},'sph_theta',{0},'sph_phi',{90},'sph_radius',{8.8992},'theta',{0},'radius',{0},'type',{''},'ref',{'Cz'},'urchan',{132},'datachan',{0}));
@@ -52,8 +52,9 @@ if epochAble
 %Epoch the events
 [ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ICA.epochMin, PARAMETERS.ICA.epochMax, currentFile, triggerNames );
 %identify bad epochs
+[ extremFails ] = identExtremeValues( EEG, -500, 500 );
 %reject bad epochs
-EEG = pop_rejepoch( EEG, list, 0);
+EEG = pop_rejepoch( EEG, extremFails, 0);
 
 else
     %do continuous cleaning
@@ -65,6 +66,8 @@ end
 EEG = pop_select( EEG,'nochannel',{'E17'});
 
 %run ICA
+EEG = pop_runica(EEG, 'extended',1,'interupt','on');
+EEG = eeg_checkset(EEG);
 
 %Save ICA weights to output variable
 ICAStruct.icaweights = EEG.icaweights;
