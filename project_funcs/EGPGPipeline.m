@@ -20,7 +20,7 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 createOutputObjects( currentFile );
 
 if PARAMETERS.runICA == 1
-%ICA preprocess, output weights
+[ ICAStruct, ICAbadChannels, ICAepochNum, ICAhorizFails ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent);
 end
 
 %ERP preprocess
@@ -28,6 +28,7 @@ end
 
 if PARAMETERS.runICA == 1
 %ERP ICA clean - load ERP, add weights, clean
+[ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct );
 end
 
 %Run standard artificact rejection
