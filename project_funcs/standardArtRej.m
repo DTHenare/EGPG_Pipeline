@@ -11,7 +11,7 @@ function [  ALLEEG, EEG, CURRENTSET, numFails, meanHEOG ] = standardArtRej(ALLEE
 %           meanHEOG = average voltage of the HEOG
 
 %Reject epochs with extreme values
-[ extremFails ] = identExtremeValues( EEG );
+[ extremFails ] = identExtremeValues( EEG, -100, 100 );
 
 %Create single list of all failed epochs
 allFails = extremFails;
