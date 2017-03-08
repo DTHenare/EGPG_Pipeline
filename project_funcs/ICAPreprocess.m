@@ -45,10 +45,10 @@ EEG = pop_reref( EEG, [],'refloc',struct('labels',{'Cz'},'Y',{0},'X',{5.4492e-16
 % Remove line noise using CleanLine
 EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
 
-%Check whether there is enough of an SOA to epoch -1 to 2 and either do
-%that or process continuous data.
+%% Check whether to epoch or run ICA on continuous
+[ epochAble ] = isEpochingAppropriate(EEG, triggerNames);
 
-if timeBetweenStimTrigs > 3seconds & numDataPointsPostEpoch > nbchans^2*30
+if epochAble
 %Epoch the events
 [ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ICA.epochMin, PARAMETERS.ICA.epochMax, currentFile, triggerNames );
 %identify bad epochs
@@ -60,6 +60,7 @@ else
     
 end
 
+%%
 %Throw out one channel to reduce data rank
 EEG = pop_select( EEG,'nochannel',{'E17'});
 
