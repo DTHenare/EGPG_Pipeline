@@ -1,4 +1,4 @@
-function [ ICAStruct, badChannels, epochNum, horizFails ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent)
+function [ ICAStruct, badChannels, epochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent)
 %Processes an EEG data set in a way which is optimal for the performance of
 %independent components analysis
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -58,7 +58,7 @@ EEG = pop_rejepoch( EEG, extremFails, 0);
 
 else
     %do continuous cleaning
-    
+    epochNum = [];
 end
 
 %%

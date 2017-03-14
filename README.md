@@ -34,6 +34,7 @@ EEGLAB toolbox                            https://sccn.ucsd.edu/eeglab/
 ERPLAB plugin for EEGLAB                  http://www.erpinfo.org/erplab.html
 ADJUST plugin for EEGLAB                  install through EEGLAB extensions manager
 CleanLine plugin for EEGLAB               install through EEGLAB extensions manager
+Fieldtrip-lite                            install through EEGLAB extensions manager
 
 # Examples
 

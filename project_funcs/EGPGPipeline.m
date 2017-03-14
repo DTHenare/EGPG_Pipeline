@@ -20,7 +20,7 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 createOutputObjects( currentFile );
 
 if PARAMETERS.runICA == 1
-[ ICAStruct, ICAbadChannels, ICAepochNum, ICAhorizFails ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent);
+[ ICAStruct, ICAbadChannels, ICAepochNum, ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent);
 end
 
 %ERP preprocess
