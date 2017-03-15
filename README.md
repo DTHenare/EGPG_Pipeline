@@ -29,15 +29,15 @@ If you would like to contribute to this project then send me an email (dhen061@a
 # Dependencies
 
 ## Essential
-MATLAB                                    http://www.mathworks.com/products/matlab.html
-Statistics and Machine Learning toolbox   https://www.mathworks.com/products/statistics.html
-EEGLAB toolbox                            https://sccn.ucsd.edu/eeglab/
+MATLAB                                    http://www.mathworks.com/products/matlab.html  
+Statistics and Machine Learning toolbox   https://www.mathworks.com/products/statistics.html  
+EEGLAB toolbox                            https://sccn.ucsd.edu/eeglab/  
 
 ## Recommended:
-ERPLAB plugin for EEGLAB                  http://www.erpinfo.org/erplab.html
-ADJUST plugin for EEGLAB                  install through EEGLAB extensions manager
-CleanLine plugin for EEGLAB               install through EEGLAB extensions manager
-Fieldtrip-lite                            install through EEGLAB extensions manager
+ERPLAB plugin for EEGLAB                  http://www.erpinfo.org/erplab.html  
+ADJUST plugin for EEGLAB                  install through EEGLAB extensions manager  
+CleanLine plugin for EEGLAB               install through EEGLAB extensions manager  
+Fieldtrip-lite                            install through EEGLAB extensions manager  
 
 # Examples
 
