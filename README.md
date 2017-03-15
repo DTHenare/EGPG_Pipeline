@@ -6,7 +6,7 @@ This software opens a set of EEG files and processes them with minimal user inpu
 
 # Installation
 
-To install the software you can clone the repository to your local machine or download and unzip the files. Make sure you add the pipeline folder (with subfolders) to your matlab path before you run.
+To install the software you can clone the repository to your local machine or download and unzip the files. Make sure you add the pipeline folder (with subfolders) to your matlab path before you run. Make sure you also install all of the dependencies listed below
 
 # How to use
 
@@ -28,9 +28,11 @@ If you would like to contribute to this project then send me an email (dhen061@a
 
 # Dependencies
 
+## Essential
 MATLAB                                    http://www.mathworks.com/products/matlab.html
 Statistics and Machine Learning toolbox   https://www.mathworks.com/products/statistics.html
 EEGLAB toolbox                            https://sccn.ucsd.edu/eeglab/
+## Recommended:
 ERPLAB plugin for EEGLAB                  http://www.erpinfo.org/erplab.html
 ADJUST plugin for EEGLAB                  install through EEGLAB extensions manager
 CleanLine plugin for EEGLAB               install through EEGLAB extensions manager
