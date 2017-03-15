@@ -6,11 +6,11 @@ This software opens a set of EEG files and processes them with minimal user inpu
 
 # Installation
 
-To install the software you can clone the repository to your local machine or download and unzip the files. Make sure you add the pipeline folder (with subfolders) to your matlab path before you run. Make sure you also install the of the dependencies listed below (if you do not have the essential dependencies then the pipeline will not run, if you do not have the recommended dependencies then the pipeline will run but the output data will not be as clean).
+To install the software you can clone the repository to your local machine or download and unzip the files. Make sure you add the pipeline folder (with subfolders) to your matlab path before you run. Make sure you also install the dependencies listed below (if you do not have the essential dependencies then the pipeline will not run, if you do not have the recommended dependencies then the pipeline will run but the output data will not be as clean).
 
 # How to use
 
-To run the pipeline you will need to create a folder which holds all of the EEG files which will be run through the pipeline. Currently these files must be either .RAW or .set files.
+To run the pipeline you will need to create a folder which holds all of the EEG files which will be run through the pipeline. Currently these files must be either .RAW or .set files. If you have multiple files for each person that's fine, just put everything in one folder and the software will figure out which files belong to which participant.
 
 Once this is set up, right click the run_EGPGPipeline.m file in the EGPG_Pipeline folder and click run. Matlab will open and the file explorer will popup. Navigate to any one of the files in the folder and click 'open'. The software will now ask you to select the event labels that you would like to epoch around. It will then process all files in the folder and save each participant's output in an output folder which will be stored in the location of the input data.
 
