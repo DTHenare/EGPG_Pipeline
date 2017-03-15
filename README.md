@@ -6,7 +6,7 @@ This software opens a set of EEG files and processes them with minimal user inpu
 
 # Installation
 
-To install the software you can clone the repository to your local machine or download and unzip the files. Make sure you add the pipeline folder (with subfolders) to your matlab path before you run. Make sure you also install all of the dependencies listed below.
+To install the software you can clone the repository to your local machine or download and unzip the files. Make sure you add the pipeline folder (with subfolders) to your matlab path before you run. Make sure you also install the of the dependencies listed below (if you do not have the essential dependencies then the pipeline will not run, if you do not have the recommended dependencies then the pipeline will run but the output data will not be as clean).
 
 # How to use
 
