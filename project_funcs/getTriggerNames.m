@@ -1,4 +1,4 @@
-function [ triggerNames ] = getTriggerNames(dataFolder, selectedFile)
+function [ triggerNames ] = getTriggerNames(EGPGPath, dataFolder, selectedFile)
 %Loads one data file and pops up a list of all possible triggers for a user
 %to select from. Returns a cell array holding hte names of their selected
 %triggers.
@@ -12,6 +12,9 @@ currentFile = strcat(dataFolder,selectedFile);
 
 [path, file, fileExt]=fileparts(currentFile);
 
+%load parameters
+load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
+
 if strcmp(fileExt,'.RAW')
     %Read in data from file
     [ Head, ~ ] = readegi(currentFile);
@@ -22,6 +25,9 @@ elseif strcmp(fileExt,'.set')
     EEG=[];
     EEG = pop_loadset('filename',strcat(file,fileExt),'filepath',strcat(path,'\'));
     [ALLEEG, EEG, CURRENTSET] = eeg_store( ALLEEG, EEG, 0 );
+    if PARAMETERS.amp == 300
+        EEG.event=combineMultipleTriggers(EEG.event);
+    end
     allTriggers = unique({EEG.event(:).type});
 else
     error('cannot read events from this file type')
