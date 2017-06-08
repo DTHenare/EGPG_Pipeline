@@ -20,7 +20,7 @@ EGPGPath = fileparts(mfilename('fullpath'));
 eeglab;
 
 %Pop-up list of triggers for user selection
-[ triggerNames ] = getTriggerNames(dataFolder, selectedFile);
+[ triggerNames ] = getTriggerNames(EGPGPath, dataFolder, selectedFile);
 
 %Check setup is appropriate
 checkSetup(dataFolder, EGPGPath, selectedFile);
