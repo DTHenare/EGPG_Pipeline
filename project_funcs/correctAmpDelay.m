@@ -1,4 +1,4 @@
-function [ALLEEG,EEG,CURRENTSET] = correctAmpDelay(ALLEEG, EEG, CURRENTSET)
+function [ALLEEG,EEG,CURRENTSET] = correctAmpDelay(ALLEEG, EEG, CURRENTSET, amp)
 %Corrects trigger latencies to account for the netstation amp delay.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -14,7 +14,13 @@ elseif EEG.srate == 500
     delaySize = 18;
 elseif EEG.srate == 250
     delaySize = 36;
-else delaySize = 0;
+else delaySize = 0; 
+end
+
+%If using 300amp set delay to 16ms
+if amp == 300
+    delaySize=16;
+end
 
 %Converts ms delay to sampling point delay
 samplingRateFix = 1000/EEG.srate;
