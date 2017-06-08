@@ -24,8 +24,13 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 %Import data
 [ALLEEG, EEG, CURRENTSET] = importEEGData( ALLEEG, EEG, CURRENTSET, currentFile, segPresent );
 
+%Combine triggers if using 300amp
+if PARAMETERS.amp == 300
+    EEG.event=combineMultipleTriggers(EEG.event);
+end
+
 %Correct trigger latency
-[ALLEEG, EEG, CURRENTSET] = correctAmpDelay( ALLEEG, EEG, CURRENTSET );
+[ALLEEG, EEG, CURRENTSET] = correctAmpDelay( ALLEEG, EEG, CURRENTSET, PARAMETERS.amp );
 
 %Downsample the data
 [ALLEEG, EEG, CURRENTSET] = downsampleData( ALLEEG, EEG, CURRENTSET, PARAMETERS.ERP.downsampleRate );
@@ -44,7 +49,7 @@ EEG = pop_reref( EEG, [],'refloc',struct('labels',{'Cz'},'Y',{0},'X',{5.4492e-16
 
 % Attempt to remove line noise using CleanLine
 try
-EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
+    EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
 catch
 end
 
@@ -59,7 +64,7 @@ EEG = pop_rejepoch( EEG, list, 0);
 
 %Throw out one channel to reduce data rank (only if ICA is being performed)
 if PARAMETERS.runICA == 1
-EEG = pop_select( EEG,'nochannel',{'E17'});
+    EEG = pop_select( EEG,'nochannel',{'E17'});
 end
 
 end
