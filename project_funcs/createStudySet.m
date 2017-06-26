@@ -12,10 +12,22 @@ function [  ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fil
 %Create the cell array required for the std_editset function
 k=1;
 for i = 1:length(fileNames)
+    %Check that this participant has a file for every condition
+    allFiles = 1;
     for j = 1:length(triggerNames)
-        currentLoadPath = strcat(dataFolder,'Output\',fileNames{i},'-',triggerNames{j},'.set');
-        studyCells{k} = { 'index', k, 'load', currentLoadPath, 'subject', fileNames{i}, 'condition', triggerNames{j}};
-        k=k+1;
+        if exist(strcat(dataFolder,'Output\',fileNames{i},'-',triggerNames{j},'.set'), 'file') == 2
+        else
+            allFiles = 0;
+        end
+    end
+    
+    %If participant has all necessary files, add them to the study
+    if allFiles = 1
+        for j = 1:length(triggerNames)
+            currentLoadPath = strcat(dataFolder,'Output\',fileNames{i},'-',triggerNames{j},'.set');
+            studyCells{k} = { 'index', k, 'load', currentLoadPath, 'subject', fileNames{i}, 'condition', triggerNames{j}};
+            k=k+1;
+        end
     end
 end
 
