@@ -22,7 +22,7 @@ for i = 1:length(fileNames)
     end
     
     %If participant has all necessary files, add them to the study
-    if allFiles = 1
+    if allFiles == 1
         for j = 1:length(triggerNames)
             currentLoadPath = strcat(dataFolder,'Output\',fileNames{i},'-',triggerNames{j},'.set');
             studyCells{k} = { 'index', k, 'load', currentLoadPath, 'subject', fileNames{i}, 'condition', triggerNames{j}};
