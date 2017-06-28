@@ -1,9 +1,9 @@
 # Parameter file information
-EGPG uses information stored in the parameters file to choose the specific values that will be used for different processing steps.
-For example filter values and epoching lengths a dictated by values stored in the Parameters file.
-This document provides specific information about what each variable in the Parameters file represents.
+EGPG uses information stored in the Parameters.mat file to choose the specific values that will be used for different processing steps.
+For example filter values and epoching lengths are dictated by values stored in the Parameters.mat file.
+This document provides specific information about what each variable in the Parameters.mat file represents.
 
-The Parameters.m file contains a single variable called PARAMETERS which is a struct. This struct holds all relevant variables.
+The Parameters.mat file contains a single variable called PARAMETERS which is a struct. This struct holds all relevant variables.
 
 # Variables
 **runICA** - This variable should be either a 0 or a 1 and tells the pipeline whether it should run ICA and apply automated methods for detecting and removing artifact components.
@@ -23,9 +23,9 @@ This is a struct variable which holds a number of values used during the preproc
 
 **ERP.epochMin** - The time in seconds that an epoch will begin, relative to the event trigger.
 
-**ERP.epochMax** - The time in seconds that an epoch will begin, relative to the event trigger.
+**ERP.epochMax** - The time in seconds that an epoch will end, relative to the event trigger.
 
-**ERP.downsampleRate** - The sampling rate in Hz that will be used for resampling at the beginning of the pipeline.
+**ERP.downsampleRate** - The data is resampled to this frequency before processing begins.
 
 ## ICA
 This is a struct variable which holds a number of values used during the preprocessing of the data which will be used to run ICA and generate ICA components.
@@ -36,6 +36,6 @@ This is a struct variable which holds a number of values used during the preproc
 
 **ICA.epochMin** - The time in seconds that an epoch will begin, relative to the event trigger.
 
-**ICA.epochMax** - The time in seconds that an epoch will begin, relative to the event trigger.
+**ICA.epochMax** - The time in seconds that an epoch will end, relative to the event trigger.
 
-**ICA.downsampleRate** - The sampling rate in Hz that will be used for resampling at the beginning of the pipeline.
+**ICA.downsampleRate** - The data is resampled to this frequency before processing begins.
