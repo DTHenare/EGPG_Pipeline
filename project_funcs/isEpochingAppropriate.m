@@ -1,10 +1,13 @@
-function [ epochAble ] = isEpochingAppropriate(EEG, triggerNames)
+function [ epochAble ] = isEpochingAppropriate(EEG, EGPGPath, triggerNames)
 %Runs a number of checks on the data in order to determine whether the data
 %should be epoched before ICA is run, or whetehr it should remain
 %continuous.
 %Inputs:    EEG = EEG structure produced by eeglab.
 %Outputs:   epochAble = a 1 or a 0 indicating whether the data sould be
 %epoched (1), or not (0).
+
+%Load parameters
+load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 
 %Check how many epochs will be created
 eventNames = {EEG.event(:).type};
@@ -13,7 +16,8 @@ epochNum = sum(cell2mat(epochsForConds));
 
 %Calculate how many data points you'll have
 sampAdj = 1000/EEG.srate;
-numberOfms = epochNum * 3000;
+epochLength = (abs(PARAMETERS.ICA.epochMin)+abs(PARAMETERS.ICA.epochMax))*1000;
+numberOfms = epochNum * epochLength;
 numberOfSamples = numberOfms/sampAdj;
 
 %Check whether number of data points is sufficient
@@ -24,7 +28,8 @@ else
     sufficientDataPoints = 0;
 end
 
-%Check whether there is enough space for 3 second epochs
+%Check whether there is enough space for epochs of the length given by the
+%parameters file
 j=1;
 for i = 1:size(EEG.event,2)
     if sum(strcmp({EEG.event(i).type},triggerNames))>0
@@ -36,7 +41,7 @@ end
 %What proportion of the triggers don't have 3 seconds of space
 numberOfFails = 0;
 for i = 1:(size(triggerTimes,2)-1)
-    if (triggerTimes(i+1)-triggerTimes(i)) < 3000
+    if (triggerTimes(i+1)-triggerTimes(i)) < epochLength
         numberOfFails = numberOfFails+1;
     end
 end
