@@ -1,6 +1,10 @@
 function [ epochAble ] = isEpochingAppropriate(EEG, triggerNames)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%Runs a number of checks on the data in order to determine whether the data
+%should be epoched before ICA is run, or whetehr it should remain
+%continuous.
+%Inputs:    EEG = EEG structure produced by eeglab.
+%Outputs:   epochAble = a 1 or a 0 indicating whether the data sould be
+%epoched (1), or not (0).
 
 %Check how many epochs will be created
 eventNames = {EEG.event(:).type};
@@ -44,7 +48,7 @@ else
     sufficientSpace = 1;
 end
 
-%If there is enough data dn space between triggers, return epochAble
+%If there is enough data and space between triggers, return epochAble
 if sufficientDataPoints && sufficientSpace
     epochAble = 1;
 else
