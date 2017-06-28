@@ -46,7 +46,7 @@ EEG = pop_reref( EEG, [],'refloc',struct('labels',{'Cz'},'Y',{0},'X',{5.4492e-16
 EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
 
 %% Check whether to epoch or run ICA on continuous
-[ epochAble ] = isEpochingAppropriate(EEG, triggerNames);
+[ epochAble ] = isEpochingAppropriate(EEG, EGPGPath, triggerNames);
 
 if epochAble
 %Epoch the events
