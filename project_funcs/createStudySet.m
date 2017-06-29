@@ -1,4 +1,4 @@
-function [  ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder )
+function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder )
 %Create the study structure used for group analysis in eeglab
 %Inputs:    STUDY = STUDY structure produced by eeglab
 %           ALLEEG = ALLEEG structure produced by eeglab
@@ -11,6 +11,7 @@ function [  ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fil
 
 %Create the cell array required for the std_editset function
 k=1;
+part=1;
 for i = 1:length(fileNames)
     %Check that this participant has a file for every condition
     allFiles = 1;
@@ -28,6 +29,9 @@ for i = 1:length(fileNames)
             studyCells{k} = { 'index', k, 'load', currentLoadPath, 'subject', fileNames{i}, 'condition', triggerNames{j}};
             k=k+1;
         end
+    else
+        failedFiles{part} = fileNames{i};
+        part=part+1;
     end
 end
 
