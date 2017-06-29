@@ -1,6 +1,9 @@
-function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct )
+function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
+
+%% Extract output path and filename
+[ folderPath, fileName, fileExt ] = fileparts(currentFile);
 
 %% Import ICA data
 EEG.icaweights = ICAStruct.icaweights;
@@ -49,5 +52,18 @@ totalNumberOfFails = rvSize+locSize;
 catch
     totalNumberOfFails=[];
 end
+
+%% Reject with ADJUST
+try
+    %Set output file location
+    saveAdjust = strcat(folderPath,'\Output\ProcessingInfo\',fileName,'.txt');
+    [ ADJUSTarts ] = ADJUST(EEG,saveAdjust);
+    numADJUSTFails = length(ADJUSTarts);
+catch
+    ADJUSTarts = [];
+    numADJUSTFails = 0;
+end
+
+totalNumberOfFails = totalNumberOfFails + numADJUSTFails;
 end
 
