@@ -23,6 +23,7 @@ for dipNum=1:size(EEG.icaweights,1)
         rvFails = [rvFails dipNum];
     end
 end
+%Remove identified components
 if ~isempty(rvFails)
     EEG = pop_subcomp( EEG, rvFails, 0);
 end
@@ -34,6 +35,7 @@ for dipNum=1:size(EEG.icaact,1)
         locFails = [ locFails dipNum];
     end
 end
+%Remove identified components
 if ~isempty(locFails)
     EEG = pop_subcomp( EEG, locFails, 0);
 end
