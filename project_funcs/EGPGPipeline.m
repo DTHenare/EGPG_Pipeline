@@ -28,7 +28,7 @@ end
 
 if PARAMETERS.runICA == 1
 %ERP ICA clean - load ERP, add weights, clean
-[ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct );
+[ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile );
 end
 
 %Run standard artificact rejection
