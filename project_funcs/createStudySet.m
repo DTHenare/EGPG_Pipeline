@@ -1,4 +1,4 @@
-function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder )
+function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder, EGPGPath )
 %Create the study structure used for group analysis in eeglab
 %Inputs:    STUDY = STUDY structure produced by eeglab
 %           ALLEEG = ALLEEG structure produced by eeglab
@@ -8,6 +8,9 @@ function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, trigge
 %           will be epoched
 %           fileNames = cell array containing list of participant files
 %           dataFolder = path to the user data folder
+
+%Load parameter file
+load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 
 %Create the cell array required for the std_editset function
 k=1;
@@ -38,7 +41,21 @@ end
 %create study and save into the output folder
 [STUDY ALLEEG] = std_editset( STUDY, ALLEEG, 'filename','Experiment-Study.study','filepath',strcat(dataFolder,'Output\'), 'resave', 'on','name','Experiment-STUDY','updatedat','off','commands',studyCells );
 
-%clear eeglab
+%% Create useful output
+[STUDY ALLEEG] = std_precomp(STUDY, ALLEEG, {},'interp','on','recompute','on','erp','on','erpparams',{'rmbase' [(PARAMETERS.ERP.epochMin*1000) 0] });
+CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
+EEG = eeg_checkset( EEG );
+[STUDY EEG] = pop_savestudy( STUDY, EEG, 'savemode','resave');
+CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
+
+channelList = {STUDY.changrp(:).name};
+
+[ STUDY, allData, erpTimes ] = std_erpplot(STUDY,ALLEEG,'channels',channelList);
+CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
+
+save(strcat(dataFolder,'Output\STUDY-Output.mat'),'allData', 'erpTimes');
+
+%% Clear eeglab
 STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 
 end
