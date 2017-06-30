@@ -11,6 +11,7 @@ EEG.icawinv = ICAStruct.icawinv;
 EEG.icasphere = ICAStruct.icasphere;
 EEG.icachansind = ICAStruct.icachansind;
 
+if false
 try
     %% Fit Dipoles for components
     %C:\Program Files\MATLAB\R2013a\toolbox\eeglab13_1_1b\plugins\dipfit2.2\standard_BESA\
@@ -53,6 +54,7 @@ catch
     totalNumberOfFails=[];
 end
 
+end
 %% Reject with ADJUST
 try
     %Set output file location
