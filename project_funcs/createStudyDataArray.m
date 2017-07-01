@@ -13,6 +13,8 @@ function [ studyCells, failedFiles, acceptedFiles ] = createStudyDataArray(trigg
 
 k=1;
 part=1;
+acceptedFiles = {};
+failedFiles = {};
 for i = 1:length(fileNames)
     %Check that this participant has a file for every condition
     hasConditions = checkAllConditions( triggerNames, fileNames{i}, dataFolder );
