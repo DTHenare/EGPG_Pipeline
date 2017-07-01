@@ -1,4 +1,4 @@
-function [ ICAStruct, badChannels, epochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent)
+function [ ICAStruct, badChannels, epochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize)
 %Processes an EEG data set in a way which is optimal for the performance of
 %independent components analysis
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -8,6 +8,9 @@ function [ ICAStruct, badChannels, epochNum ] = ICAPreprocess(ALLEEG, EEG, CURRE
 %           EGPGPath = path of the EGPG pipeline folder
 %           triggeNames = cell array containing list of event names that
 %           will be epoched
+%           segPresent = A 1 or 0 indicating whether the participant's data
+%           is segmented into many files(1) or not(0)
+%           delaySize = size of the timing delay in milliseconds
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
@@ -25,7 +28,7 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 [ALLEEG, EEG, CURRENTSET] = importEEGData( ALLEEG, EEG, CURRENTSET, currentFile, segPresent );
 
 %Correct trigger latency
-[ALLEEG, EEG, CURRENTSET] = correctAmpDelay( ALLEEG, EEG, CURRENTSET, PARAMETERS.amp );
+[ALLEEG, EEG, CURRENTSET] = correctAmpDelay( ALLEEG, EEG, CURRENTSET, delaySize );
 
 %Downsample the data
 [ALLEEG, EEG, CURRENTSET] = downsampleData( ALLEEG, EEG, CURRENTSET, PARAMETERS.ICA.downsampleRate );

@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent)
+function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize)
 %This function runs the entire EGPG preprocessing pipeline.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -7,6 +7,9 @@ function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG,
 %           EGPGPath = path of the EGPG pipeline folder
 %           triggeNames = cell array containing list of event names that
 %           will be epoched
+%           segPresent = A 1 or 0 indicating whether the participant's data
+%           is segmented into many files(1) or not(0)
+%           delaySize = size of the timing delay in milliseconds
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
@@ -20,11 +23,11 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 createOutputObjects( currentFile );
 
 if PARAMETERS.runICA == 1
-[ ICAStruct, ICAbadChannels, ICAepochNum, ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent);
+[ ICAStruct, ICAbadChannels, ICAepochNum, ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize);
 end
 
 %ERP preprocess
-[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent);
+[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize);
 
 if PARAMETERS.runICA == 1
 %ERP ICA clean - load ERP, add weights, clean

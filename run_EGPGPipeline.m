@@ -22,6 +22,9 @@ eeglab;
 %Pop-up list of triggers for user selection
 [ triggerNames ] = getTriggerNames(EGPGPath, dataFolder, selectedFile);
 
+%Ask for the size of the delay
+delaySize = inputdlg('Input the total timing delay (in ms)');
+
 %Check setup is appropriate
 checkSetup(dataFolder, EGPGPath, selectedFile);
 
@@ -30,7 +33,7 @@ for i = 1:size(fileNames,1)
     %create path of current file
     currentFile = strcat(dataFolder,fileNames{i,1},fileExt);
     %Run pipeline
-    [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent);
+    [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize);
     %Add current file's output to the group data
     writeGroupOutput( currentFile, IndividualInfo, i, triggerNames, fileNames )
     %clear eeglab
