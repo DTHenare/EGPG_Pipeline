@@ -15,54 +15,16 @@ function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, trigge
 load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 
 %Create the cell array required for the std_editset function
-k=1;
-part=1;
-for i = 1:length(fileNames)
-    %Check that this participant has a file for every condition
-    allFiles = 1;
-    for j = 1:length(triggerNames)
-        if exist(strcat(dataFolder,'Output\',fileNames{i},'-',triggerNames{j},'.set'), 'file') == 2
-        else
-            allFiles = 0;
-        end
-    end
-    
-    %If participant has all necessary files, add them to the study
-    if allFiles == 1
-        for j = 1:length(triggerNames)
-            currentLoadPath = strcat(dataFolder,'Output\',fileNames{i},'-',triggerNames{j},'.set');
-            studyCells{k} = { 'index', k, 'load', currentLoadPath, 'subject', fileNames{i}, 'condition', triggerNames{j}};
-            acceptedFiles{1,k} = fileNames{i};
-            k=k+1;
-        end
-    else
-        failedFiles{part} = fileNames{i};
-        part=part+1;
-    end
-end
+[ studyCells, failedFiles, acceptedFiles ] = createStudyDataArray(triggerNames, fileNames, dataFolder);
 
-%create study and save into the output folder
-[STUDY ALLEEG] = std_editset( STUDY, ALLEEG, 'filename','Experiment-Study.study','filepath',strcat(dataFolder,'Output\'), 'resave', 'on','name','Experiment-STUDY','updatedat','off','commands',studyCells );
+%Save fails
+save(strcat(dataFolder,'Output\subjectsExcluded.mat'),'failedFiles');
+
+%create study
+[ STUDY, ALLEEG ] = std_editset( STUDY, ALLEEG, 'filename','Experiment-Study.study','filepath',strcat(dataFolder,'Output\'), 'resave', 'on','name','Experiment-STUDY','updatedat','off','commands',studyCells );
 
 %% Create useful output
-channelList = {STUDY.changrp(:).name};
-
-STUDY = std_makedesign(STUDY, ALLEEG, 2, 'variable1','condition','variable2','','name','GrandAverage','pairing1','on','pairing2','on','delfiles','off','defaultdesign','off','values1',{triggerNames'},'subjselect',acceptedFiles);
-[STUDY EEG] = pop_savestudy( STUDY, ALLEEG, 'savemode','resave');
-CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
-[STUDY ALLEEG] = std_precomp(STUDY, ALLEEG, {},'interp','on','recompute','on','erp','on','erpparams',{'rmbase' [(PARAMETERS.ERP.epochMin*1000) 0] });
-CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
-
-[ STUDY, allData, erpTimes ] = std_erpplot(STUDY,ALLEEG,'channels',channelList);
-CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
-
-plottable = mean(allData{1,1},3);
-gfp=std(plottable,0,2);
-
-save(strcat(dataFolder,'Output\STUDY-Output.mat'),'allData', 'erpTimes');
-saveas(gcf,strcat(dataFolder,'Output\GrandAveragePlot.fig'));
-plot(gfp)
-saveas(gcf,strcat(dataFolder,'Output\GlobalFieldPower.fig'));
+createStudyOutput( STUDY, ALLEEG, triggerNames, acceptedFiles, dataFolder, PARAMETERS.ERP.epochMin );
 
 %% Clear eeglab
 STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
