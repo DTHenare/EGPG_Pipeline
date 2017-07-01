@@ -23,7 +23,7 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 createOutputObjects( currentFile );
 
 if PARAMETERS.runICA == 1
-[ ICAStruct, ICAbadChannels, ICAepochNum, ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize);
+[ ICAStruct, ICAbadChannels, ICAepochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize);
 end
 
 %ERP preprocess
@@ -41,7 +41,7 @@ end
 extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames);
 
 %Write processing stats to output file
-IndividualInfo = writeIndvOutput( currentFile, badChannels, epochNum, horizFails, numGenFails, meanHEOG);
+IndividualInfo = writeIndvOutput( currentFile, badChannels, epochNum, horizFails, numGenFails, meanHEOG, ICAbadChannels, ICAepochNum, numberCompsRejected);
 
 end
 
