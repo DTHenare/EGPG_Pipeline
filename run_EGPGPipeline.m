@@ -24,6 +24,10 @@ eeglab;
 
 %Ask for the size of the delay
 delaySize = inputdlg('Input the total timing delay (in ms)');
+delaySize = str2num(delaySize{1});
+if length(delaySize)>1
+    error('You entered more than one value for the timing delay. Enter the total delay only.')
+end
 
 %Check setup is appropriate
 checkSetup(dataFolder, EGPGPath, selectedFile);
