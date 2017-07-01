@@ -17,16 +17,16 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 %Create the cell array required for the std_editset function
 [ studyCells, failedFiles, acceptedFiles ] = createStudyDataArray(triggerNames, fileNames, dataFolder);
 
+%Create study
+[ STUDY, ALLEEG ] = std_editset( STUDY, ALLEEG, 'filename','Experiment-Study.study','filepath',strcat(dataFolder,'Output\'), 'resave', 'on','name','Experiment-STUDY','updatedat','off','commands',studyCells );
+
+%Create useful output
+createStudyOutput( STUDY, ALLEEG, triggerNames, acceptedFiles, dataFolder, PARAMETERS.ERP.epochMin );
+
 %Save fails
 save(strcat(dataFolder,'Output\subjectsExcluded.mat'),'failedFiles');
 
-%create study
-[ STUDY, ALLEEG ] = std_editset( STUDY, ALLEEG, 'filename','Experiment-Study.study','filepath',strcat(dataFolder,'Output\'), 'resave', 'on','name','Experiment-STUDY','updatedat','off','commands',studyCells );
-
-%% Create useful output
-createStudyOutput( STUDY, ALLEEG, triggerNames, acceptedFiles, dataFolder, PARAMETERS.ERP.epochMin );
-
-%% Clear eeglab
+%Clear eeglab
 STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 
 end

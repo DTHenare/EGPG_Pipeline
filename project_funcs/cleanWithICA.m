@@ -1,6 +1,16 @@
 function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%Automatically detects and removes artifact ICA components using a number
+%of criteria.
+%Inputs:    ALLEEG = ALLEEG structure produced by eeglab
+%           EEG = EEG structure produced by eeglab
+%           CURRENTSET = CURRENTSET value provided by eeglab
+%           ICAStruct = Struct containing component weights
+%           currentFile = Full file path of the current participant file
+%Outputs:   ALLEEG = Updated ALLEEG structure for eeglab
+%           EEG = Updated EEG structure for eeglab
+%           CURRENTSET = Updated CURRENTSET value for eeglab
+%           totalNumberOFFails = the number of components that were
+%           rejected
 
 %% Extract output path and filename
 [ folderPath, fileName, fileExt ] = fileparts(currentFile);
@@ -53,22 +63,26 @@ try
 catch
     totalNumberOfFails=[];
 end
-
 end
+
 %% Reject with ADJUST
 try
     %Set output file location
     saveAdjust = strcat(folderPath,'\Output\ProcessingInfo\',fileName,'.txt');
     [ ADJUSTarts ] = ADJUST(EEG,saveAdjust);
     numADJUSTFails = length(ADJUSTarts);
+    
+    %If any components have been identified as bad, reject them
     if ~isempty(ADJUSTarts)
         EEG = pop_subcomp( EEG, ADJUSTarts, 0);
     end
 catch
+    %If something fails, just set everything to 0 and carry on.
     ADJUSTarts = [];
     numADJUSTFails = 0;
 end
 
+%Calculate the total number of rejected components
 totalNumberOfFails = totalNumberOfFails + numADJUSTFails;
 end
 
