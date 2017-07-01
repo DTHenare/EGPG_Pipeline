@@ -32,6 +32,8 @@ participantCollapsed = mean(allData{1,1},3);
 gfp=std(participantCollapsed,0,2);
 %Plot the global field power
 figure;plot(gfp)
+%Save GFP data
+save(strcat(dataFolder,'Output\GFP.mat'),'gfp');
 %Save the figure to the output folder
 saveas(gcf,strcat(dataFolder,'Output\GlobalFieldPower.fig'));
 
