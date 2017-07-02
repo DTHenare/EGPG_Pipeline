@@ -23,9 +23,6 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 %Create useful output
 createStudyOutput( STUDY, ALLEEG, triggerNames, acceptedFiles, dataFolder, PARAMETERS.ERP.epochMin );
 
-%Save fails
-save(strcat(dataFolder,'Output\subjectsExcluded.mat'),'failedFiles');
-
 %Clear eeglab
 STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 
