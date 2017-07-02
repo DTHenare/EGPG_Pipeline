@@ -6,15 +6,21 @@ function [  ] = createOutputObjects( currentFile )
 [filePath] = fileparts(currentFile);
 outputLocation = strcat(filePath,'\Output\');
 outputInfoLocation = strcat(filePath,'\Output\ProcessingInfo\');
+outputPlotLocation = strcat(filePath,'\Output\StudyPlots\');
 
 %create folder for outputting participant data (if it doesn't exist)
 if ~exist(outputLocation, 'dir')
   mkdir(outputLocation);
 end
 
-%create folder for epoched data (if it doesn't exist)
+%create folder for processing info (if it doesn't exist)
 if ~exist(outputInfoLocation, 'dir')
   mkdir(outputInfoLocation);
+end
+
+%create folder for study plots (if it doesn't exist)
+if ~exist(outputPlotLocatio, 'dir')
+  mkdir(outputPlotLocatio);
 end
 
 end
