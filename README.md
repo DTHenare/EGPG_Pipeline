@@ -12,12 +12,13 @@ To install the software you can clone the repository to your local machine or do
 
 To run the pipeline you will need to create a folder which holds all of the EEG files which will be run through the pipeline. Currently these files must be either .RAW or .set files. If you have multiple files for each person that's fine, just put everything in one folder and the software will figure out which files belong to which participant.
 
-Once this is set up, right click the run_EGPGPipeline.m file in the EGPG_Pipeline folder and click run. Matlab will open and the file explorer will popup. Navigate to any one of the files in the folder and click 'open'. The software will now ask you to select the event labels that you would like to epoch around. It will then process all files in the folder and save each participant's output in an output folder which will be stored in the location of the input data.
+Once this is set up, right click the run_EGPGPipeline.m file in the EGPG_Pipeline folder and click run. Matlab will open and the file explorer will popup. Navigate to any one of the files in the folder and click 'open'. The software will now ask you to select the event labels that you would like to epoch around, as well as enter the event latency that needs to be corrected. It will then process all files in the folder and save each participant's output in an output folder which will be stored in the location of the input data.
 
 # Interpreting output
-
-Output of the software will include:
-- A matlab file containing a summary of the outcome of specific processing steps for all participants. This will provide details about; number of channels rejected, indices of channels rejected, number of epochs generated, total number of epochs rejected, number of epochs rejected per condition, number of epochs rejected by each test, number of components rejected)
+Output of the software will be placed in an output folder which will appear in the location of the data file you selected at run time:
+It will include:
+- A ProcessingInfo folder which contains details about what happened during processing. There will be a file for each participant as well as a GroupInfo file which summarises all participants. It will contain a GFP file which holds the global field power calculated form the study, as well as a participantsExcludedFromSTUDY file which holds the names of any participant file that couldn't be loaded in the final STUDY as a result of missing conditions (usually due to excessive artifact causing rejection of all epochs).
+- A StudyPlots folder which contains some output of the STUDY that could be used to guide the selection of time windows and electrodes for statistical analyses. A GrandAveragePlot shows an average ERP for across all conditions at each electrode in its scalp location. The GFP-guided-topos shows the global field power of this data, with the 5 most prominent peaks marked, as well as a topography for each peak.
 - A .set file containing the cleaned and processed epochs for each participant named "[filename]-cleaned.set".
 - A .set file for each condition, for each participant named "[filename]-[triggername].set"
 - A .study file which allows you to open all of the data in an eeglab STUDY for group analysis named Experiment-STUDY.study
@@ -29,7 +30,7 @@ If you would like to contribute to this project then send me an email (dhen061@a
 # Dependencies
 
 ## Essential
-MATLAB                                    http://www.mathworks.com/products/matlab.html  
+MATLAB 2014b or greater                   http://www.mathworks.com/products/matlab.html  
 Statistics and Machine Learning toolbox   https://www.mathworks.com/products/statistics.html  
 EEGLAB toolbox                            https://sccn.ucsd.edu/eeglab/  
 
