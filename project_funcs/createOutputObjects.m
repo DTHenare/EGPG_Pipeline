@@ -19,8 +19,8 @@ if ~exist(outputInfoLocation, 'dir')
 end
 
 %create folder for study plots (if it doesn't exist)
-if ~exist(outputPlotLocatio, 'dir')
-  mkdir(outputPlotLocatio);
+if ~exist(outputPlotLocation, 'dir')
+  mkdir(outputPlotLocation);
 end
 
 end
