@@ -36,12 +36,12 @@ participantCollapsed = mean(allData{1,1},3);
 gfp=std(participantCollapsed,0,2);
 
 %Extract peak values, locations, widths, and prominence for poststim GFP
-[peaks,locs,w,p]=findpeaks(gfp(end-postStimLength-1:end));
+[peaks,locs,w,p]=findpeaks(gfp(end-(postStimLength-1):end));
 %Sort by prominence
 [sortedP, sortIndP ]= sort(p, 'descend');
 %plot 5 most prominent peaks on GFP
 figure;subplot(2,5,2:4)
-findpeaks(gfp(end-postStimLength-1:end),postStimX,'MinPeakProminence',sortedP(5),'Annotate','extents')
+findpeaks(gfp(end-(postStimLength-1):end),postStimX,'MinPeakProminence',sortedP(5),'Annotate','extents')
 
 %Extract location of the 5 most prominent peaks and their widths
 top5Locs = locs(sortIndP(1:5))*(1000/EEG(1).srate);
@@ -52,7 +52,7 @@ top5Widths = flipud(top5Widths);
 
 for i = 1:5
     %Get time window for topography from the peaks
-    topoTimePoint = top5Locs(i)+(blMin*1000);
+    topoTimePoint = top5Locs(i)+abs(blMin*1000);
     topoHalfWidth = floor(top5Widths(i)/2);
     
     %Set parameters for plotting topography
