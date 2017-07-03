@@ -1,11 +1,10 @@
 function [userData] = getContraDesign( conditionLabels )
-f=figure;
-userData={};
-
-%Define sizes for padding, cell width, and cell height
+%Create output variable place holder
+userData = {};
+%Define the sizes for padding, cell width, and cell height
 spacer = 50;
 cellWidth = 99;
-cellHeight = 50;
+cellHeight = 30;
 
 %Define properties of the table which displays possible triggers
 allTableColName = {'PossibleTriggers'};
@@ -19,9 +18,34 @@ allTablePosY = spacer;
 userTableColName = {'Condition Name'; 'Left Event' ; 'Right Event'};
 userTableData = cell(length(conditionLabels)/2,3);
 userTableWidth = cellWidth*length(userTableColName)+2;
-userTableHeight = cellHeight*3;
+userTableHeight = ceil(allTableHeight/2);
 userTablePosX = spacer+allTableWidth+spacer;
 userTablePosY = spacer+allTableHeight-userTableHeight;
+
+%Define properties of text instructions
+textWidth = allTableWidth + spacer + userTableWidth;
+textHeight = cellHeight*2;
+textPosX = allTablePosX;
+textPosY = allTablePosY+allTableHeight;
+textStr = 'Use the box on the right to define you contralateral control design. Type the event labels into the appropriate boxes and give each condition a name.';
+
+%Define properties of the figure which will hold all objects
+scrsz = get(groot,'ScreenSize');
+figWidth = spacer + allTableWidth + spacer + userTableWidth + spacer;
+figHeight = spacer + allTableHeight + textHeight + spacer;
+figX = (scrsz(3)/2)-floor(figWidth/2);
+figY = scrsz(4)/2;
+
+%Create figure
+f = figure('Name','Create the contralateral design',...
+    'NumberTitle','off',...
+    'MenuBar', 'none',...
+    'Position',[figX figY figWidth figHeight]);
+
+%Create text instructions
+mTextBox = uicontrol('style','text',...
+    'String',textStr,...
+    'Position', [ textPosX textPosY textWidth textHeight ]);
 
 %Create table which displays possible triggers
 allOptions = uitable('Parent', f,...
@@ -42,7 +66,7 @@ userInput = uitable('Parent', f,...
     'ColumnEditable', [true true true]);
 
 %Create button which closes figure
-ButtonH=uicontrol('Parent',f,'Style','pushbutton','String','Done','Position',[userTablePosX userTablePosY-userTableHeight 100 50],'Units','pixels','Visible','on','Callback','close(gcf)');
+ButtonH=uicontrol('Parent',f,'Style','pushbutton','String','Done','Position',[userTablePosX allTablePosY cellWidth cellHeight],'Units','pixels','Visible','on','Callback','close(gcf)');
 
 %Store data when user closes the figure
 set(f,'CloseRequestFcn',@myCloseFcn)
