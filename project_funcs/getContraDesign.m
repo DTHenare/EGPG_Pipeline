@@ -1,5 +1,6 @@
-function [userData] = getContraDesign()
+function [userData] = getContraDesign( conditionLabels )
 f=figure;
+userData={};
 
 %Define sizes for padding, cell width, and cell height
 spacer = 50;
@@ -8,7 +9,7 @@ cellHeight = 50;
 
 %Define properties of the table which displays possible triggers
 allTableColName = {'PossibleTriggers'};
-allOptionsData = { 'left1' 'left2' 'left3' 'right1' 'right2' 'right3' }';
+allOptionsData = conditionLabels';
 allTableWidth = cellWidth*length(allTableColName)+2;
 allTableHeight = cellHeight*length(allOptionsData);
 allTablePosX = spacer;
@@ -16,7 +17,7 @@ allTablePosY = spacer;
 
 %Define properties of the table which the user edits
 userTableColName = {'Condition Name'; 'Left Event' ; 'Right Event'};
-userTableData = cell(3,3);
+userTableData = cell(length(conditionLabels)/2,3);
 userTableWidth = cellWidth*length(userTableColName)+2;
 userTableHeight = cellHeight*3;
 userTablePosX = spacer+allTableWidth+spacer;
@@ -29,7 +30,8 @@ allOptions = uitable('Parent', f,...
     'RowName',({}),...
     'ColumnWidth',{99},...
     'ColumnName',allTableColName,...
-    'ColumnEditable', [false]);
+    'ColumnEditable', false);
+
 %Create table which the user edits
 userInput = uitable('Parent', f,...
     'Data', userTableData,...
