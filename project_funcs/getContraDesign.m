@@ -1,4 +1,4 @@
-function [userData] = getContraDesign( conditionLabels )
+function [ f ] = getContraDesign( conditionLabels )
 %Create output variable place holder
 userData = {};
 %Define the sizes for padding, cell width, and cell height
