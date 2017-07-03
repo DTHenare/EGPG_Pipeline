@@ -13,10 +13,17 @@ CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
 %Get necessary parameters
 
 %Get contralateral design from user
-[ contraDesign ] = getContraDesign(STUDY.condition);
+f = getContraDesign(STUDY.condition);
+uiwait(f)
 
 %Check that the contraDesign is valid
+[isValid, reasonFailed ] = isContraValid( userData );
+if ~isValid
+    disp(reasonFailed)
+else
+
 
 %Perform contralateral control
 
 %Save output
+end
