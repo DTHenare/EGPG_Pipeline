@@ -13,6 +13,7 @@ function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, trigge
 
 %Load parameter file
 load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
+nlMin = PARAMETERS.ERP.epochMin;
 
 %Create the cell array required for the std_editset function
 [ studyCells, failedFiles, acceptedFiles ] = createStudyDataArray(triggerNames, fileNames, dataFolder);
@@ -20,8 +21,21 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 %Create study
 [ STUDY, ALLEEG ] = std_editset( STUDY, ALLEEG, 'filename','Experiment-Study.study','filepath',strcat(dataFolder,'Output\'), 'resave', 'on','name','Experiment-STUDY','updatedat','off','commands',studyCells );
 
-%Create useful output
-createStudyOutput( STUDY, ALLEEG, triggerNames, acceptedFiles, dataFolder, PARAMETERS.ERP.epochMin );
+%precompute the new study design and save it
+[STUDY, ALLEEG] = std_precomp(STUDY, ALLEEG, {},'interp','on','recompute','on','erp','on','erpparams',{'rmbase' [(blMin*1000) 0] });
+CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
+[STUDY EEG] = pop_savestudy( STUDY, EEG, 'filename','Experiment-Study.study','filepath',strcat(dataFolder,'Output\'));
+CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
+
+%Create output object with all data for stats analysis
+conditions = STUDY.condition';
+Output = createOutputSheet( STUDY, ALLEEG, channelList, conditions );
+
+%Save output data
+save(strcat(studyFolder,'defaultOutput.mat'),'Output')
+
+%Create useful plots for time and electrode selection
+createStudyOutput( STUDY, ALLEEG, triggerNames, acceptedFiles, dataFolder, blMin );
 
 %Clear eeglab
 STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
