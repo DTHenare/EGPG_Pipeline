@@ -8,7 +8,7 @@ cellHeight = 30;
 
 %Define properties of the table which displays possible triggers
 allTableColName = {'PossibleTriggers'};
-allOptionsData = conditionLabels';
+allOptionsData = conditionLabels;
 allTableWidth = cellWidth*length(allTableColName)+2;
 allTableHeight = cellHeight*length(allOptionsData);
 allTablePosX = spacer;
