@@ -13,7 +13,7 @@ function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, trigge
 
 %Load parameter file
 load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
-nlMin = PARAMETERS.ERP.epochMin;
+blMin = PARAMETERS.ERP.epochMin;
 
 %Create the cell array required for the std_editset function
 [ studyCells, failedFiles, acceptedFiles ] = createStudyDataArray(triggerNames, fileNames, dataFolder);
