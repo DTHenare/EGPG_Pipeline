@@ -17,8 +17,10 @@ function [  ALLEEG, EEG, CURRENTSET, numFails, meanHEOG ] = standardArtRej(ALLEE
 allFails = extremFails;
 
 %Remove failed epochs
+try
 EEG = pop_rejepoch( EEG, allFails, 0);
-
+catch
+end
 %create variable to output number of rejected epochs
 numFails = length(allFails);
 %create variable to output mean HEOG activity
