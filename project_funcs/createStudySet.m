@@ -29,10 +29,11 @@ CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
 
 %Create output object with all data for stats analysis
 conditions = STUDY.condition';
+channelList = {STUDY.changrp(:).name};
 Output = createOutputSheet( STUDY, ALLEEG, channelList, conditions );
 
 %Save output data
-save(strcat(studyFolder,'defaultOutput.mat'),'Output')
+save(strcat(dataFolder,'Output\defaultOutput.mat'),'Output')
 
 %Create useful plots for time and electrode selection
 createStudyOutput( STUDY, ALLEEG, triggerNames, acceptedFiles, dataFolder, blMin );
