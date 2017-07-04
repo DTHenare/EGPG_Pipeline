@@ -1,3 +1,4 @@
+function run_EGPGPipeline()
 %This script provides a user friendly wrapper for the EGPG pipeline. When
 %run, it pops open a file explorer for the user to navigate to a data file.
 %It then runs the pipeilne for all matching files within the selected
@@ -47,3 +48,4 @@ end
 %Create the study!
 [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder, EGPGPath );
 save(strcat(dataFolder,'/Output/ProcessingInfo/participantsExcludedFromSTUDY.mat'),'failedFiles');
+end
