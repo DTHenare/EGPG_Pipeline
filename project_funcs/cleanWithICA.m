@@ -22,7 +22,6 @@ EEG.icasphere = ICAStruct.icasphere;
 EEG.icachansind = ICAStruct.icachansind;
 
 if false
-try
     %% Fit Dipoles for components
     %C:\Program Files\MATLAB\R2013a\toolbox\eeglab13_1_1b\plugins\dipfit2.2\standard_BESA\
     EEG = pop_dipfit_settings( EEG, 'hdmfile','C:\\Program Files\\MATLAB\\R2013a\\toolbox\\eeglab13_1_1b\\plugins\\dipfit2.2\\standard_BESA\\standard_BESA.mat','coordformat','Spherical','mrifile','C:\\Program Files\\MATLAB\\R2013a\\toolbox\\eeglab13_1_1b\\plugins\\dipfit2.2\\standard_BESA\\avg152t1.mat','chanfile','C:\\Program Files\\MATLAB\\R2013a\\toolbox\\eeglab13_1_1b\\plugins\\dipfit2.2\\standard_BESA\\standard-10-5-cap385.elp','coord_transform',[-0.25423 0 -8.4081 0 0.0027253 0 8.5946 -10.9643 10.4963] ,'chansel',[1:128] );
@@ -60,11 +59,8 @@ try
     rvSize = size(rvFails,2);
     locSize = size(locFails,2);
     totalNumberOfFails = rvSize+locSize;
-catch
-    totalNumberOfFails=[];
 end
-end
-
+totalNumberOfFails=[];
 %% Reject with ADJUST
 try
     %Set output file location
