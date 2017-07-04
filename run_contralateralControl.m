@@ -1,4 +1,3 @@
-function run_contralateralControl()
 %Pop up the file explorer for the user to select their study file
 [studyFile,studyFolder] = uigetfile('*.study', 'Select a study file');
 if (studyFolder == 0) & (studyFile == 0)
@@ -32,15 +31,14 @@ if isValid
     electrodePairs = createElectrodeList( chanlocs );
     
     %Create output object
-    Output = createOutputSheet(STUDY, ALLEEG, blMin, channelList, conditions);
+    Output = createOutputSheet(STUDY, ALLEEG, channelList, conditions);
     
     %Perform contralateral control
     Output = doubleSubtraction(Output, userData, electrodePairs);
     
     %Save output
-    save(strcat(studyFolder,'doubleSubOutput.mat'))
+    save(strcat(studyFolder,'doubleSubOutput.mat'),'Output')
 else
     disp(reasonFailed)
-end
 end
 
