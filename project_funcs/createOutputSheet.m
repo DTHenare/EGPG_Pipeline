@@ -7,7 +7,7 @@ function [ Output ] = createOutputSheet( STUDY, ALLEEG, channelList, conditions 
 close(gcf);
 
 %Average across participants
-Output.allData = cellfun(@(x) mean(x,3),Output.allData,'un',0);
+%Output.allData = cellfun(@(x) mean(x,3),Output.allData,'un',0);
 
 %Add condition labels to output
 Output.conditions = conditions;
