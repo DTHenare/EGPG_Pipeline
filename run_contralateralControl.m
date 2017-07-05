@@ -10,7 +10,6 @@ if (studyFolder == 0) & (studyFile == 0)
 end
 
 eeglab;
-close(gcf);
 
 %Load study
 [STUDY ALLEEG] = pop_loadstudy('filename', studyFile, 'filepath', studyFolder);
