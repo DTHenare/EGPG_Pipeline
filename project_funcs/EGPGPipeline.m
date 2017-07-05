@@ -22,8 +22,14 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 %Create output folders and files
 createOutputObjects( currentFile );
 
-%Run ICA if parameters say to, otherwise assign outputs NaN
-if PARAMETERS.runICA == 1
+%Check that ICA is possible
+adjustMissing = isempty(which('ADJUST'));
+fieldtripMissing = isempty(which('ft_analysispipeline'));
+eitherMissing = max([adjustMissing fieldtripMissing]);
+
+%Run ICA if parameters say to, and toolboxes are available otherwise assign
+%outputs NaN
+if PARAMETERS.runICA == 1 && ~eitherMissing
 [ ICAStruct, ICAbadChannels, ICAepochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize);
 else
     ICAbadChannels = nan;
@@ -34,7 +40,7 @@ end
 [ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize);
 
 %Use ICA cleaning if parameters say to, otherwise assign outputs NaN
-if PARAMETERS.runICA == 1
+if PARAMETERS.runICA == 1 && ~eitherMissing
 %ERP ICA clean - load ERP, add weights, clean
 [ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile );
 else
