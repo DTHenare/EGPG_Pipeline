@@ -27,19 +27,19 @@ for i = 1:size(userDesign,1)
     %first subtraction
     firstSubtraction = leftData-rightData;
     
-    leftHem = firstSubtraction(:,electrodePairs(:,1));
-    rightHem = firstSubtraction(:,electrodePairs(:,2));
+    leftHem = firstSubtraction(:,electrodePairs(:,1),:);
+    rightHem = firstSubtraction(:,electrodePairs(:,2),:);
     
     %Second subtraction
     secondSubtraction = (rightHem -leftHem)/2;
     
     %Mirror back onto full scalp
-    mirroredData(:,electrodePairs(:,1)) = secondSubtraction;
-    mirroredData(:,electrodePairs(:,2)) = secondSubtraction;
+    mirroredData(:,electrodePairs(:,1),:) = secondSubtraction;
+    mirroredData(:,electrodePairs(:,2),:) = secondSubtraction;
     
     %Store data
-    Output.allData{i,1} = mirroredData';
-    Output.conditions{i,1} = curLabel';
+    Output.allData{i,1} = mirroredData;
+    Output.conditions{i,1} = curLabel;
 end
 end
 
