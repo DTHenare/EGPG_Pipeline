@@ -27,6 +27,11 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 %Import data
 [ALLEEG, EEG, CURRENTSET] = importEEGData( ALLEEG, EEG, CURRENTSET, currentFile, segPresent );
 
+%Combine triggers if using 300amp
+if PARAMETERS.amp == 300
+    EEG.event=combineMultipleTriggers(EEG.event);
+end
+
 %Correct trigger latency
 [ALLEEG, EEG, CURRENTSET] = correctAmpDelay( ALLEEG, EEG, CURRENTSET, delaySize );
 
