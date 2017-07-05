@@ -16,23 +16,25 @@ function [  ALLEEG, EEG, CURRENTSET, numFails, meanHEOG ] = standardArtRej(ALLEE
 %Create single list of all failed epochs
 allFails = extremFails;
 
-%Remove failed epochs (if all epochs are bad, keep one to prevent error)
-if length(allFails) < length(EEG.epoch)
+%Remove failed epochs (if all epochs are bad then skip file)
+try
     EEG = pop_rejepoch( EEG, allFails, 0);
-else
-    EEG = pop_rejepoch( EEG, allFails(1:end-1), 0);
+    
+    %create variable to output number of rejected epochs
+    numFails = length(allFails);
+    %create variable to output mean HEOG activity
+    [ leftEye, rightEye ] = findHEOGChannels(EEG);
+    meanHEOG = mean(mean(EEG.data(leftEye,:,:)-EEG.data(rightEye,:,:)));
+    
+    %% Save file
+    [filePath, fileName] = fileparts(currentFile);
+    saveLocation = strcat(filePath,'\Output\');
+    saveName = strcat(fileName,'_Cleaned');
+    [ ALLEEG, EEG ] = saveOutput(ALLEEG, EEG, CURRENTSET, saveLocation, saveName);
+catch
+    numFails = length(allFails);
+    meanHEOG = nan;
+    disp(strcat('All files rejected for ',fileName,'_Cleaned'))
 end
-
-%create variable to output number of rejected epochs
-numFails = length(allFails);
-%create variable to output mean HEOG activity
-[ leftEye, rightEye ] = findHEOGChannels(EEG);
-meanHEOG = mean(mean(EEG.data(leftEye,:,:)-EEG.data(rightEye,:,:)));
-
-%% Save file
-[filePath, fileName] = fileparts(currentFile);
-saveLocation = strcat(filePath,'\Output\');
-saveName = strcat(fileName,'_Cleaned');
-[ ALLEEG, EEG ] = saveOutput(ALLEEG, EEG, CURRENTSET, saveLocation, saveName);
 
 end
