@@ -27,7 +27,6 @@ for i = 1:size(userDesign,1)
     %first subtraction
     firstSubtraction = leftData-rightData;
     
-    
     leftHem = firstSubtraction(:,electrodePairs(:,1));
     rightHem = firstSubtraction(:,electrodePairs(:,2));
     
@@ -39,8 +38,8 @@ for i = 1:size(userDesign,1)
     mirroredData(:,electrodePairs(:,2)) = secondSubtraction;
     
     %Store data
-    Output.allData{i} = mirroredData';
-    Output.conditions{i} = curLabel';
+    Output.allData{i,1} = mirroredData';
+    Output.conditions{i,1} = curLabel';
 end
 end
 
