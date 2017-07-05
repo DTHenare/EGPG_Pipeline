@@ -1,6 +1,12 @@
 function [ isValid, errorMsg ] = isContraValid( contraDesign )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%Runs a series of checks on a user's contralateral control design to snsure
+%they've provided something that can be used to perform a double
+%subtraction
+%Inputs:    contraDesign = a cell array which holds the design that the
+%           user entered
+%Outputs:   isValid = boolean which returns whether the design has passed
+%           the tests (true) or not (false)
+%           errorMsg = a string which details why the design failed
 
 %Set validity to true
 isValid = true;
