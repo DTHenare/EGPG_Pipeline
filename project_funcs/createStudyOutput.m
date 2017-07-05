@@ -27,7 +27,7 @@ postStimX = 0:sampInt:epochEnd;
 postStimLength = length(postStimX);
 
 %Plot all electrodes on the scalp
-[ STUDY, allData, erpTimes ] = std_erpplot(STUDY,ALLEEG,'channels',channelList);
+[ STUDY, allData ] = std_erpplot(STUDY,ALLEEG,'channels',channelList);
 CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
 %Save the figure into the output folder
 saveas(gcf,strcat(dataFolder,'Output\StudyPlots\GrandAveragePlot.fig'));
@@ -43,10 +43,10 @@ gfp=std(participantCollapsed,0,2);
 %plot 5 most prominent peaks on GFP
 figure;subplot(2,5,2:4)
 findpeaks(gfp(end-(postStimLength-1):end),postStimX,'MinPeakProminence',sortedP(5),'Annotate','extents')
-%Label the peaks with their latency
-locsText = locs(sortIndP(1:5))*sampInt;
-textLabels=int2str(locsText);
-text((locs(sortIndP(1:5))*sampInt)-10,peaks(sortIndP(1:5))+0.3,textLabels)
+%Set y axis limits
+ymin = 0;
+ymax = floor(peaks(sortIndP(1))+1);
+ylim([ymin ymax]);
 
 %Extract location of the 5 most prominent peaks and their widths
 top5Locs = locs(sortIndP(1:5))*sampInt;
@@ -58,6 +58,7 @@ top5Widths = flipud(top5Widths);
 for i = 1:5
     %Get time window for topography from the peaks
     topoTimePoint = top5Locs(i)+abs(blMin*1000);
+    topoLabel = num2str(topoTimePoint);
     topoHalfWidth = floor(top5Widths(i)/2);
     
     %Set parameters for plotting topography
@@ -69,7 +70,7 @@ for i = 1:5
     %plot topography on subplot
     subplot(2,5,i+5)
     topoplot(curTopoData, chanLocs);
-    title(strcat('Peak-',int2str(i)));
+    title(strcat('Peak-',int2str(i)),'(',topoLabel,'ms)');
 end
 
 %Save GFP data
