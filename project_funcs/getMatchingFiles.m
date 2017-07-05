@@ -27,7 +27,15 @@ curTest=1;
 %for all other files, only store them if they don't look like segments of
 %the previous file
 for i = 2:fileNum
-    if strcmp(allMatches(i,1).name(1:end-7),allMatches(curTest,1).name(1:end-7)) && strcmp(allMatches(i,1).date(1:end-8),allMatches(curTest,1).date(1:end-8))
+    %does the start of the file names match?
+    startMatch = strcmp(allMatches(i,1).name(1:end-7),allMatches(curTest,1).name(1:end-7));
+    %Does the date recorded match?
+    dateMatch = strcmp(allMatches(i,1).date(1:end-8),allMatches(curTest,1).date(1:end-8));
+    %does the curTest end in 3 integers?
+    preMatchEGITemplate = ~isempty(str2num(allMatches(curTest,1).name(end-7:end-4)));
+    %does the file i end in 3 integers?
+    iMatchEGITemplate = ~isempty(str2num(allMatches(i,1).name(end-7:end-4)));
+    if startMatch && dateMatch && preMatchEGITemplate && iMatchEGITemplate
         segPresent = 1;
     else
         fileNames{j,1} = allMatches(i,1).name(1:end-extLength);
