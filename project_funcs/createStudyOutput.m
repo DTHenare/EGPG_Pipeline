@@ -22,7 +22,8 @@ CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
 channelList = {STUDY.changrp(:).name};
 chanLocs = EEG(1).chanlocs;
 epochEnd = EEG(1).xmax*1000;
-postStimX = 0:(1000/EEG(1).srate):epochEnd;
+sampInt = 1000/EEG(1).srate;
+postStimX = 0:sampInt:epochEnd;
 postStimLength = length(postStimX);
 
 %Plot all electrodes on the scalp
@@ -42,6 +43,9 @@ gfp=std(participantCollapsed,0,2);
 %plot 5 most prominent peaks on GFP
 figure;subplot(2,5,2:4)
 findpeaks(gfp(end-(postStimLength-1):end),postStimX,'MinPeakProminence',sortedP(5),'Annotate','extents')
+locsText = locs(sortIndP(1:5))*sampInt;
+textLabels=int2str(locsText);
+text((locs(sortIndP(1:5))*sampInt)-10,peaks(sortIndP(1:5))+0.3,textLabels)
 
 %Extract location of the 5 most prominent peaks and their widths
 top5Locs = locs(sortIndP(1:5))*(1000/EEG(1).srate);
