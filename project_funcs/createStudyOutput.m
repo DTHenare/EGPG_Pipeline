@@ -70,7 +70,7 @@ for i = 1:5
     %plot topography on subplot
     subplot(2,5,i+5)
     topoplot(curTopoData, chanLocs);
-    title(strcat('Peak-',int2str(i)),'(',topoLabel,'ms)');
+    title(strcat('Peak-',int2str(i),'(',topoLabel,'ms)'));
 end
 
 %Save GFP data
