@@ -1,3 +1,8 @@
+%asks the user for a study file and allows them to perform contralateral
+%control on the data in the study. The user specifies the contralateral
+%design based on the conditions available in the study and outputs a .mat
+%file which contains the double subtracted data.
+
 %Pop up the file explorer for the user to select their study file
 [studyFile,studyFolder] = uigetfile('*.study', 'Select a study file');
 if (studyFolder == 0) & (studyFile == 0)
