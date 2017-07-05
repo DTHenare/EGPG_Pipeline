@@ -43,12 +43,13 @@ gfp=std(participantCollapsed,0,2);
 %plot 5 most prominent peaks on GFP
 figure;subplot(2,5,2:4)
 findpeaks(gfp(end-(postStimLength-1):end),postStimX,'MinPeakProminence',sortedP(5),'Annotate','extents')
+%Label the peaks with their latency
 locsText = locs(sortIndP(1:5))*sampInt;
 textLabels=int2str(locsText);
 text((locs(sortIndP(1:5))*sampInt)-10,peaks(sortIndP(1:5))+0.3,textLabels)
 
 %Extract location of the 5 most prominent peaks and their widths
-top5Locs = locs(sortIndP(1:5))*(1000/EEG(1).srate);
+top5Locs = locs(sortIndP(1:5))*sampInt;
 top5Widths = w(sortIndP(1:5));
 %flip to ascending order
 top5Locs = flipud(top5Locs);
