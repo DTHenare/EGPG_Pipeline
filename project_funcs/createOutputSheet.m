@@ -8,8 +8,7 @@ function [ Output ] = createOutputSheet( STUDY, ALLEEG, channelList, conditions 
 %Outputs:   Output = struct holding all of the data
 
 %[STUDY ALLEEG] = std_precomp(STUDY, ALLEEG, {},'interp','on','recompute','on','erp','on','erpparams',{'rmbase' [blMin 0] });
-[ ~, Output.allData, Output.erpTimes ] = std_erpplot(STUDY,ALLEEG,'channels',channelList);
-close(gcf);
+[ ~, Output.allData, Output.erpTimes ] = std_erpplot(STUDY,ALLEEG,'channels',channelList, 'noplot', 'on');
 
 %Average across participants
 %Output.allData = cellfun(@(x) mean(x,3),Output.allData,'un',0);
