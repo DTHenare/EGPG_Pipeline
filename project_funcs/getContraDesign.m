@@ -1,5 +1,12 @@
 function [ f ] = getContraDesign( conditionLabels )
-%Create output variable place holder
+%Pops up a GUI that allows the user to specify the contralateral control
+%design of their experiment.
+%Inputs:    conditionLabels = cell array containing a list of the event
+%           labels in a study
+%Outputs:   f = handle of the figure that the participant is editing
+%           userData = the design that the user specifies. Outputted using
+%           assignin rather than as a formal output
+
 userData = {};
 %Define the sizes for padding, cell width, and cell height
 spacer = 50;
