@@ -1,6 +1,13 @@
 function [ Output ] = doubleSubtraction(input, userDesign, electrodePairs)
-%UNTITLED5 Summary of this function goes here
-%   Detailed explanation goes here
+%Performs contralateral control usinga double subtraction based on the
+%contralateral design specified by the user.
+%Inputs:    input = struct holding the data output by a study
+%           userDesign = cell array containing the contralateral control
+%           design
+%           electrodePairs = list of electrodes organised in two columns
+%           showing their left/right homologous pairing
+%Outputs:   Output = struct holding the result of the double subtraction in
+%           the same structure as the input data
 
 for i = 1:size(userDesign,1)
     %Get labels for current subtraction from userData
