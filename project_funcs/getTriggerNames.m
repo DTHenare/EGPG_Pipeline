@@ -16,13 +16,17 @@ currentFile = strcat(dataFolder,selectedFile);
 load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 
 if strcmp(fileExt,'.RAW')
-    if PARAMETERS.amp == 300
-        allTriggers = { 'DIN1' 'DIN2' 'DIN3' 'DIN4' 'DIN5' 'DIN6' 'DIN7' 'DIN8' 'DIN9' 'DIN10' 'DIN11' 'DIN12' 'DIN13' 'DIN14' 'DIN15' };
-    else
-        %Read in data from file
-        [ Head, ~ ] = readegi(currentFile);
-        %Save event codes in allTriggers
-        allTriggers = cellstr(Head.eventcode);
+    %Read in data from file
+    [ Head, ~ ] = readegi(currentFile);
+    %Save event codes in allTriggers
+    allTriggers = cellstr(Head.eventcode);
+    try
+        defaultDINS = { 'DIN1' 'DIN2' 'DIN4' 'DIN8' };
+        testFor300 = strcmp(sort(allTriggers), defaultDINS);
+        if sum(testFor300) == 4
+            allTriggers = { 'DIN1' 'DIN2' 'DIN3' 'DIN4' 'DIN5' 'DIN6' 'DIN7' 'DIN8' 'DIN9' 'DIN10' 'DIN11' 'DIN12' 'DIN13' 'DIN14' 'DIN15' };
+        end
+    catch
     end
 elseif strcmp(fileExt,'.set')
     ALLEEG = [];
