@@ -1,20 +1,30 @@
-%Open data
-load('C:\Users\Dion\Google Drive\sampleExpData\Output\doubleSubOutput.mat')
-saveFile = 'C:\Users\Dion\Google Drive\sampleExpData\Output\doubleSubOutput.txt';
-data = Output.allData;
-conditions = Output.conditions;
+%Pop up the file explorer for the user to select their output file
+[dataFile,dataFolder] = uigetfile('*.mat', 'Select an output file');
+if (dataFolder == 0) & (dataFile == 0)
+    error('Input file is not selected!')
+end
+
+%Create save file
+[~, fileName, fileExt] = fileparts(dataFile);
+saveFile = strcat(dataFolder, fileName, '.txt');
+
+%Open data and extract necessary values
+Output = load(strcat(dataFolder,dataFile));
+data = Output.Output.allData;
+conditions = Output.Output.conditions;
 numCond = length(conditions);
 blMin = -200;
 sampRate = 250;
-N = size(Output.allData{1,1},3);
+N = size(data{1,1},3);
 
 %Create output text file
 fid = fopen(saveFile,'wt');
 
 %Get info from user
-elec = [58,96];
-compLatencyms = 350;
-compWidth = 25;
+userInput = inputdlg({'Electrode Number','Component Latency', 'Component width'},'dialog',1,{'elec','compLatency','compWidth'});
+elec = str2double(userInput(1));
+compLatencyms = str2double(userInput(2));
+compWidth = str2double(userInput(3));
 
 %Check user input is usable
 
