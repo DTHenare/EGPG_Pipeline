@@ -25,7 +25,7 @@ userInput = inputdlg({'Electrode Number','Component Latency', 'Component width'}
 elec = str2double(userInput(1));
 compLatencyms = str2double(userInput(2));
 compWidth = str2double(userInput(3));
-
+                      
 %Check user input is usable
 
 %Convert user values into data values
