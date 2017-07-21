@@ -21,7 +21,7 @@ N = size(data{1,1},3);
 fid = fopen(saveFile,'wt');
 
 %Get info from user
-userInput = inputdlg({'Electrode Number','Component Latency', 'Component width'},'dialog',1,{'elec','compLatency','compWidth'});
+userInput = inputdlg({'Electrode Number','Component Latency (ms)', 'Component width (ms)'},'Define electrode and time window',1);
 elec = str2double(userInput(1));
 compLatencyms = str2double(userInput(2));
 compWidth = str2double(userInput(3));
