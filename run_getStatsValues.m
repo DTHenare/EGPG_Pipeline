@@ -25,7 +25,7 @@ userInput = inputdlg({'Electrode Number','Component Latency (ms)', 'Component wi
 elec = str2double(userInput(1));
 compLatencyms = str2double(userInput(2));
 compWidth = str2double(userInput(3));
-                      
+
 %Check user input is usable
 
 %Convert user values into data values
@@ -61,3 +61,17 @@ for pNum = 1:N
 end
 
 %Create output plots
+xAxis = -200:4:792;
+figure;
+plot(xAxis,mean(data{1}(:,elec,:),3),'linewidth', 2)
+line([compLatencyms compLatencyms], [-1.5 1.5], 'LineWidth', 25, 'Color', [0.75 0.75 0.75])
+line([0 0], [-1.5 1.5], 'LineWidth', 2, 'Color', [0 0 0])
+line([-200 800], [0 0], 'LineWidth', 2, 'Color', [0 0 0])
+hold on
+for cond = 2:numCond
+    plot(xAxis,mean(data{cond}(:,elec,:),3),'linewidth', 2)
+end
+title('ERPs')
+xlabel('Time(ms)')
+ylabel('Amplitude(µV)','linewidth', 2)
+legend(conditions,'Location', 'southeast')
