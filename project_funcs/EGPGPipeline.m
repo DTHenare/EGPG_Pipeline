@@ -50,6 +50,9 @@ end
 %Run standard artificact rejection
 [ ALLEEG, EEG, CURRENTSET, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG, CURRENTSET, currentFile );
 
+%Rereference
+EEG = pop_reref( EEG, [56 99] ,'keepref','on');
+
 %Extract conditions
 extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames);
 
