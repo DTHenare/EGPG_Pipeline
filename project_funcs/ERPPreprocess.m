@@ -65,9 +65,4 @@ end
 %reject bad epochs
 EEG = pop_rejepoch( EEG, list, 0);
 
-%Throw out one channel to reduce data rank (only if ICA is being performed)
-if PARAMETERS.runICA == 1
-    EEG = pop_select( EEG,'nochannel',{'E17'});
-end
-
 end
