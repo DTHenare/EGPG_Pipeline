@@ -52,7 +52,7 @@ EEG = pop_reref( EEG, [],'refloc',struct('labels',{'Cz'},'Y',{0},'X',{5.4492e-16
 
 % Attempt to remove line noise using CleanLine
 try
-EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
+    EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
 catch
 end
 
@@ -60,24 +60,23 @@ end
 [ epochAble ] = isEpochingAppropriate(EEG, EGPGPath, triggerNames);
 
 if epochAble
-%Epoch the events
-[ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ICA.epochMin, PARAMETERS.ICA.epochMax, currentFile, triggerNames );
-%identify bad epochs
-[ extremFails ] = identExtremeValues( EEG, -500, 500 );
-%reject bad epochs
-EEG = pop_rejepoch( EEG, extremFails, 0);
-
+    %Epoch the events
+    [ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ICA.epochMin, PARAMETERS.ICA.epochMax, currentFile, triggerNames );
+    %identify bad epochs
+    [ extremFails ] = identExtremeValues( EEG, -500, 500 );
+    %reject bad epochs
+    EEG = pop_rejepoch( EEG, extremFails, 0);
 else
     %do continuous cleaning
     epochNum = [];
 end
 
-%%
-%Throw out one channel to reduce data rank
-EEG = pop_select( EEG,'nochannel',{'E17'});
+%% ICA
+%Calculate data rank
+dataRank = EEG.nbchan - (length(badChannels) + 1);
 
 %run ICA
-EEG = pop_runica(EEG, 'extended',1,'interupt','on');
+EEG = pop_runica(EEG, 'extended',1,'interupt','on', 'pca', [dataRank]);
 EEG = eeg_checkset(EEG);
 
 %Save ICA weights to output variable
