@@ -66,6 +66,8 @@ if epochAble
     [ extremFails ] = identExtremeValues( EEG, -500, 500 );
     %reject bad epochs
     EEG = pop_rejepoch( EEG, extremFails, 0);
+    %Apply improbability test
+    EEG = pop_jointprob(EEG,1,[1:EEG.nbchan] ,6,2,0,1,0,[],0);
 else
     %do continuous cleaning
     epochNum = [];
