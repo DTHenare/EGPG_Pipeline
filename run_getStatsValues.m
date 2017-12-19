@@ -68,7 +68,7 @@ line([compLatencyms compLatencyms], [-1.5 1.5], 'LineWidth', 25, 'Color', [0.75 
 line([0 0], [-1.5 1.5], 'LineWidth', 2, 'Color', [0 0 0])
 line([-200 800], [0 0], 'LineWidth', 2, 'Color', [0 0 0])
 hold on
-for cond = 2:numCond
+for cond = 1:numCond
     plot(xAxis,mean(data{cond}(:,elec,:),3),'linewidth', 2)
 end
 title('ERPs')
