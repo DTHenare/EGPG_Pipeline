@@ -54,9 +54,9 @@ fprintf(fid, '\n');
 %Add data
 for pNum = 1:N
     for cond = 1:numCond-1
-        fprintf(fid, '%s\t',num2str(dataValues(pNum,cond)));
+        fprintf(fid, '%s\t',num2str(round(dataValues(pNum,cond),2)));
     end
-    fprintf(fid, '%s',num2str(dataValues(pNum,numCond)));
+    fprintf(fid, '%s',num2str(round(dataValues(pNum,numCond),2)));
     fprintf(fid, '\n');
 end
 
