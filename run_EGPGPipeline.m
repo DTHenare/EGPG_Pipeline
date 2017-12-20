@@ -49,6 +49,7 @@ for i = 1:size(fileNames,1)
     %clear eeglab
     STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
 end
+fclose(fid);
 
 %Create the study!
 [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder, EGPGPath );
