@@ -30,8 +30,8 @@ compWidth = str2double(userInput(3));
 
 %Convert user values into data values
 compLatencyms = compLatencyms+abs(blMin);
-compWinMin = compLatencyms - (compWidth/2);
-compWinMax = compLatencyms + (compWidth/2);
+compWinMin = (compLatencyms+abs(blMin)) - (compWidth/2);
+compWinMax = (compLatencyms+abs(blMin)) + (compWidth/2);
 compWinMin = ceil(compWinMin/4);
 compWinMax = floor(compWinMax/4);
 
@@ -64,7 +64,7 @@ end
 xAxis = -200:4:792;
 figure;
 plot(xAxis,mean(data{1}(:,elec,:),3),'linewidth', 2)
-line([compLatencyms compLatencyms], [-1.5 1.5], 'LineWidth', 25, 'Color', [0.75 0.75 0.75])
+line([compLatencyms compLatencyms], [-1.5 1.5], 'LineWidth', compWidth, 'Color', [0.75 0.75 0.75])
 line([0 0], [-1.5 1.5], 'LineWidth', 2, 'Color', [0 0 0])
 line([-200 800], [0 0], 'LineWidth', 2, 'Color', [0 0 0])
 hold on
