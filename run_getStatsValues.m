@@ -29,7 +29,7 @@ compWidth = str2double(userInput(3));
 %Check user input is usable
 
 %Convert user values into data values
-compLatencyms = compLatencyms+abs(blMin);
+compLatencyms = compLatencyms;
 compWinMin = (compLatencyms+abs(blMin)) - (compWidth/2);
 compWinMax = (compLatencyms+abs(blMin)) + (compWidth/2);
 compWinMin = ceil(compWinMin/4);
