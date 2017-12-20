@@ -36,14 +36,14 @@ checkSetup(dataFolder, EGPGPath, selectedFile);
 for i = 1:size(fileNames,1)
     % if running the last person, write the methods section
     if i == size(fileNames,1)
-        writeMethods = 1;
+        fid = fopen([dataFolder '/Output/ProcessingInfo/Methods.txt'],'wt');
     else
-        writeMethods = 0;
+        fid = -1;
     end
     %create path of current file
     currentFile = strcat(dataFolder,fileNames{i,1},fileExt);
     %Run pipeline
-    [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, writeMethods);
+    [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
     %Add current file's output to the group data
     writeGroupOutput( currentFile, IndividualInfo, i, triggerNames, fileNames )
     %clear eeglab

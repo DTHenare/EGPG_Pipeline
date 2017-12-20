@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize)
+function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid)
 %This function runs the entire EGPG preprocessing pipeline.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -10,6 +10,7 @@ function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG,
 %           segPresent = A 1 or 0 indicating whether the participant's data
 %           is segmented into many files(1) or not(0)
 %           delaySize = size of the timing delay in milliseconds
+%           fid = file ID for the methods file
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
@@ -30,7 +31,7 @@ eitherMissing = max([adjustMissing fieldtripMissing]);
 %Run ICA if parameters say to, and toolboxes are available otherwise assign
 %outputs NaN
 if PARAMETERS.runICA == 1 && ~eitherMissing
-[ ICAStruct, ICAbadChannels, ICAepochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize);
+[ ICAStruct, ICAbadChannels, ICAepochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
 else
     ICAbadChannels = nan;
     ICAepochNum = nan;

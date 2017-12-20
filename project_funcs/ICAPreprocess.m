@@ -1,4 +1,4 @@
-function [ ICAStruct, badChannels, epochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize)
+   function [ ICAStruct, badChannels, epochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid)
 %Processes an EEG data set in a way which is optimal for the performance of
 %independent components analysis
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -11,6 +11,7 @@ function [ ICAStruct, badChannels, epochNum ] = ICAPreprocess(ALLEEG, EEG, CURRE
 %           segPresent = A 1 or 0 indicating whether the participant's data
 %           is segmented into many files(1) or not(0)
 %           delaySize = size of the timing delay in milliseconds
+%           fid  = file ID for the methods file
 %Outputs:   ALLEEG = updated ALLEEG structure for eeglab
 %           EEG = updated EEG structure for eeglab
 %           CURRENTSET = updated CURRENTSET value for eeglab
@@ -37,9 +38,11 @@ end
 
 %Downsample the data
 [ALLEEG, EEG, CURRENTSET] = downsampleData( ALLEEG, EEG, CURRENTSET, PARAMETERS.ICA.downsampleRate );
+appendMethods(fid, ['Data were downsampled to ' int2str(PARAMETERS.ICA.downsampleRate)  'Hz.']);
 
 %High pass filter the data
-[ALLEEG, EEG, CURRENTSET] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ICA.highpass PARAMETERS.ICA.lowpass], 3 );
+[ALLEEG, EEG, CURRENTSET, filtText] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ICA.highpass PARAMETERS.ICA.lowpass], 3 );
+appendMethods(fid, filtText);
 
 %Load channel structure
 EEG = pop_chanedit(EEG, 'load',{strcat(EGPGPath,'\project_docs\GSN-HydroCel-129.sfp') 'filetype' 'autodetect'},'setref',{'4:132' 'Cz'},'changefield',{132 'datachan' 0});

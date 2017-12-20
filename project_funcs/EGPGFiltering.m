@@ -1,4 +1,4 @@
-function [ALLEEG, EEG, CURRENTSET] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, filterValue, filterType)
+function [ALLEEG, EEG, CURRENTSET, text] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, filterValue, filterType)
 %Filters eeglab data using the ERPLab filter function. If ERPLab filter
 %doesn't work, it trys to use the new eeglab filter. If that doesn't work,
 %it uses the legacy eeglab filter.
@@ -18,16 +18,19 @@ function [ALLEEG, EEG, CURRENTSET] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, filt
 
 if filterType == 1
     EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff',  filterValue, 'Design', 'butter', 'Filter', 'highpass', 'Order',  4, 'RemoveDC', 'on' );
+    text = ['High pass filtered with a ' int2str(filterValue) 'Hz butterworth filter.'];
 elseif filterType == 2
     EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff',  filterValue, 'Design', 'butter', 'Filter', 'lowpass', 'Order',  4, 'RemoveDC', 'on' );
+    text = ['Low pass filtered with a ' int2str(filterValue) 'Hz butterworth filter.'];
 elseif filterType == 3
     try
         EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff', filterValue, 'Design', 'butter', 'Filter', 'bandpass', 'Order',  4, 'RemoveDC', 'on' );
+        text = ['Band pass filtered between ' int2str(filterValue(1)) ' and ' int2str(filterValue(2)) 'Hz butterworth filter.'];
     catch
         try
-            EEG = pop_eegfiltnew(EEG, 0.1, 30);
+            EEG = pop_eegfiltnew(EEG, filterValue(1), filterValue(2));
         catch
-            EEG = pop_eegfilt( EEG, 0.1, 30, [], [0], 0, 0, 'fir1', 0);
+            EEG = pop_eegfilt( EEG, filterValue(1), filterValue(2), [], [0], 0, 0, 'fir1', 0);
         end
     end
 else
