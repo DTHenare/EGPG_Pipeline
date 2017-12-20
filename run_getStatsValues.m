@@ -63,15 +63,15 @@ end
 %Create output plots
 xAxis = -200:4:792;
 figure;
-plot(xAxis,mean(data{1}(:,elec,:),3),'linewidth', 2)
-line([compLatencyms compLatencyms], [-1.5 1.5], 'LineWidth', compWidth, 'Color', [0.75 0.75 0.75])
-line([0 0], [-1.5 1.5], 'LineWidth', 2, 'Color', [0 0 0])
-line([-200 800], [0 0], 'LineWidth', 2, 'Color', [0 0 0])
+h1 = plot(xAxis,mean(data{1}(:,elec,:),3),'linewidth', 2);
+h2 = line([compLatencyms compLatencyms], [-1.5 1.5], 'LineWidth', compWidth, 'Color', [0.75 0.75 0.75]);
+h3 = line([0 0], [-1.5 1.5], 'LineWidth', 2, 'Color', [0 0 0]);
+h4 = line([-200 800], [0 0], 'LineWidth', 2, 'Color', [0 0 0]);
 hold on
 for cond = 1:numCond
-    plot(xAxis,mean(data{cond}(:,elec,:),3),'linewidth', 2)
+    ERPhand(cond) = plot(xAxis,mean(data{cond}(:,elec,:),3),'linewidth', 2);
 end
 title('ERPs')
 xlabel('Time(ms)')
 ylabel('Amplitude(µV)','linewidth', 2)
-legend(conditions,'Location', 'southeast')
+legend(ERPhand,conditions,'Location', 'southeast')
