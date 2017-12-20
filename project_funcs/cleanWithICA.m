@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile )
+function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid )
 %Automatically detects and removes artifact ICA components using a number
 %of criteria.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -6,6 +6,7 @@ function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG,
 %           CURRENTSET = CURRENTSET value provided by eeglab
 %           ICAStruct = Struct containing component weights
 %           currentFile = Full file path of the current participant file
+%           fid = File ID for methods.txt
 %Outputs:   ALLEEG = Updated ALLEEG structure for eeglab
 %           EEG = Updated EEG structure for eeglab
 %           CURRENTSET = Updated CURRENTSET value for eeglab
@@ -20,6 +21,7 @@ EEG.icaweights = ICAStruct.icaweights;
 EEG.icawinv = ICAStruct.icawinv;
 EEG.icasphere = ICAStruct.icasphere;
 EEG.icachansind = ICAStruct.icachansind;
+appendMethods(fid, [' ICA weights were then copied over to this set of data in order to perform artifact correction.']);
 
 if false
     %% Fit Dipoles for components
@@ -67,6 +69,7 @@ try
     saveAdjust = strcat(folderPath,'\Output\ProcessingInfo\',fileName,'.txt');
     [ ADJUSTarts ] = ADJUST(EEG,saveAdjust);
     numADJUSTFails = length(ADJUSTarts);
+    appendMethods(fid, [' The ADJUST toolbox was used in order to identify artifact components. All components identified as artifacts by ADJUST were removed from the data.'];
     
     %If any components have been identified as bad, reject them
     if ~isempty(ADJUSTarts)

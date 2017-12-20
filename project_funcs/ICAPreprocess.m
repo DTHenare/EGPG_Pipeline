@@ -38,7 +38,7 @@ end
 
 %Downsample the data
 [ALLEEG, EEG, CURRENTSET] = downsampleData( ALLEEG, EEG, CURRENTSET, PARAMETERS.ICA.downsampleRate );
-appendMethods(fid, ['Data were downsampled to ' int2str(PARAMETERS.ICA.downsampleRate)  'Hz.']);
+appendMethods(fid, [' Data were downsampled to ' int2str(PARAMETERS.ICA.downsampleRate)  'Hz.']);
 
 %High pass filter the data
 [ALLEEG, EEG, CURRENTSET, filtText] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ICA.highpass PARAMETERS.ICA.lowpass], 3 );
@@ -46,16 +46,20 @@ appendMethods(fid, filtText);
 
 %Load channel structure
 EEG = pop_chanedit(EEG, 'load',{strcat(EGPGPath,'\project_docs\GSN-HydroCel-129.sfp') 'filetype' 'autodetect'},'setref',{'4:132' 'Cz'},'changefield',{132 'datachan' 0});
+appendMethods(fid, [' Channel locations were loaded.']);
 
 %Interpolate bad channels
 [ALLEEG, EEG, CURRENTSET, badChannels] = fixBadChannels( ALLEEG, EEG, CURRENTSET );
+appendMethods(fid, [' Bad channels were detected, removed, and replaced with a spherical interpolation of surrounding electrodes.']);
 
 %Average reference the data
 EEG = pop_reref( EEG, [],'refloc',struct('labels',{'Cz'},'Y',{0},'X',{5.4492e-16},'Z',{8.8992},'sph_theta',{0},'sph_phi',{90},'sph_radius',{8.8992},'theta',{0},'radius',{0},'type',{''},'ref',{'Cz'},'urchan',{132},'datachan',{0}));
+appendMethods(fid, [' Data were then rereferenced to the average of all electrodes.']);
 
 % Attempt to remove line noise using CleanLine
 try
     EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
+    appendMethods(fid, [' Line noise was removed using the CleanLine toolbox.']);
 catch
 end
 
@@ -65,12 +69,15 @@ end
 if epochAble
     %Epoch the events
     [ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ICA.epochMin, PARAMETERS.ICA.epochMax, currentFile, triggerNames );
+    appendMethods(fid, [' Data were then epoched from ' int2str(PARAMETERS.ICA.epochMin) ' prestimulus to ' int2str(PARAMETERS.ICA.epochMax) ' poststimulus.']);
     %identify bad epochs
     [ extremFails ] = identExtremeValues( EEG, -500, 500 );
+    appendMethods(fid, [' Epochs containing gross artifact (+/-500 microvolts in any channel) were removed.']);
     %reject bad epochs
     EEG = pop_rejepoch( EEG, extremFails, 0);
     %Apply improbability test
     EEG = pop_jointprob(EEG,1,[1:EEG.nbchan] ,6,2,0,1,0,[],0);
+    appendMethods(fid, [' An improbability test was applied to the data and epochs which failed were removed.']);
 else
     %do continuous cleaning
     epochNum = [];
@@ -83,12 +90,13 @@ dataRank = EEG.nbchan - (length(badChannels) + 1);
 %run ICA
 EEG = pop_runica(EEG, 'extended',1,'interupt','on', 'pca', [dataRank]);
 EEG = eeg_checkset(EEG);
+appendMethods(fid, [' ICA was then performed on the data, using the PCA option to reduce dimensions to account for the number of interpolated channels.']);
 
 %Save ICA weights to output variable
 ICAStruct.icaweights = EEG.icaweights;
 ICAStruct.icawinv = EEG.icawinv;
 ICAStruct.icasphere = EEG.icasphere;
 ICAStruct.icachansind = EEG.icachansind;
-
+appendMethods(fid, [' ICA weights were then stored in order to be applied to data which had been preprocessed for the production of ERPs.']);
 end
 

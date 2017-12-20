@@ -1,4 +1,4 @@
-function [  ALLEEG, EEG, CURRENTSET, numFails, meanHEOG ] = standardArtRej(ALLEEG, EEG, CURRENTSET, currentFile )
+function [  ALLEEG, EEG, CURRENTSET, numFails, meanHEOG ] = standardArtRej(ALLEEG, EEG, CURRENTSET, currentFile, fid )
 %identifies epochs which contain artifact and removes them.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -12,6 +12,7 @@ function [  ALLEEG, EEG, CURRENTSET, numFails, meanHEOG ] = standardArtRej(ALLEE
 
 %Reject epochs with extreme values
 [ extremFails ] = identExtremeValues( EEG, -100, 100 );
+appendMethods(fid, [' Epochs were rejected if they contained any activity above or below 100 mivrovolts.']);
 
 %Create single list of all failed epochs
 allFails = extremFails;

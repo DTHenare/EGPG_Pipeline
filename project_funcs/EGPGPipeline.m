@@ -38,21 +38,21 @@ else
 end
 
 %ERP preprocess
-[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize);
+[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
 
 %Use ICA cleaning if parameters say to, otherwise assign outputs NaN
 if PARAMETERS.runICA == 1 && ~eitherMissing
 %ERP ICA clean - load ERP, add weights, clean
-[ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile );
+[ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid );
 else
     numberCompsRejected = nan;
 end
 
 %Run standard artificact rejection
-[ ALLEEG, EEG, CURRENTSET, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG, CURRENTSET, currentFile );
+[ ALLEEG, EEG, CURRENTSET, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG, CURRENTSET, currentFile, fid );
 
 %Rereference
-EEG = pop_reref( EEG, [56 99] ,'keepref','on');
+%EEG = pop_reref( EEG, [56 99] ,'keepref','on');
 
 %Extract conditions
 extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames);
