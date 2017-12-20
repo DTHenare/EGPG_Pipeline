@@ -97,6 +97,6 @@ ICAStruct.icaweights = EEG.icaweights;
 ICAStruct.icawinv = EEG.icawinv;
 ICAStruct.icasphere = EEG.icasphere;
 ICAStruct.icachansind = EEG.icachansind;
-appendMethods(fid, [' ICA weights were then stored in order to be applied to data which had been preprocessed for the production of ERPs.']);
+appendMethods(fid, [' ICA weights were then stored in order to be applied to data which had been preprocessed for the production of ERPs.\n']);
 end
 
