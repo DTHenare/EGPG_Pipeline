@@ -41,7 +41,7 @@ end
 appendMethods(fid, [' Data were downsampled to ' int2str(PARAMETERS.ERP.downsampleRate)  'Hz.']);
 
 %High pass filter the data
-[ALLEEG, EEG, CURRENTSET] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ERP.highpass PARAMETERS.ERP.lowpass], 3 );
+[ALLEEG, EEG, CURRENTSET, filtText] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ERP.highpass PARAMETERS.ERP.lowpass], 3 );
 appendMethods(fid, filtText);
 
 %Load channel structure
