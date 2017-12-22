@@ -32,11 +32,10 @@ compWinMin = convertMsToSamp((compLatencyms-compWidth/2), blMin, sampFreq);
 compWinMax = convertMsToSamp((compLatencyms+compWidth/2), blMin, sampFreq);
 
 %Create values table
-for cond = 1:numCond
-    condValues = mean(data{cond}(compWinMin:compWinMax,elec,:),2);
-    condValues = mean(condValues,1);
-    condValues = permute(condValues,[3,2,1]);
-    dataValues(:,cond) = condValues;
+if indvPeaks == 0
+    statsValues = getStatsFromGroupWindow(data, conditions, compWinMin, compWinMax, elec);
+elseif indvPeaks == 1
+    statsValues = getStatsFromIndvWindow(data, conditions, compWinMin, compWinMax, elec);
 end
 
 %Write stats values to txt
@@ -50,9 +49,9 @@ fprintf(fid, '\n');
 %Add data
 for pNum = 1:N
     for cond = 1:numCond-1
-        fprintf(fid, '%s\t',num2str(round(dataValues(pNum,cond),2)));
+        fprintf(fid, '%s\t',num2str(round(statsValues(pNum,cond),2)));
     end
-    fprintf(fid, '%s',num2str(round(dataValues(pNum,numCond),2)));
+    fprintf(fid, '%s',num2str(round(statsValues(pNum,numCond),2)));
     fprintf(fid, '\n');
 end
 
