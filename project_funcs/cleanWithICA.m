@@ -69,7 +69,7 @@ try
     saveAdjust = strcat(folderPath,'\Output\ProcessingInfo\',fileName,'.txt');
     [ ADJUSTarts ] = ADJUST(EEG,saveAdjust);
     numADJUSTFails = length(ADJUSTarts);
-    appendMethods(fid, [' The ADJUST toolbox was used in order to identify artifact components. All components identified as artifacts by ADJUST were removed from the data.'];
+    appendMethods(fid, [' The ADJUST toolbox was used in order to identify artifact components. All components identified as artifacts by ADJUST were removed from the data.']);
     
     %If any components have been identified as bad, reject them
     if ~isempty(ADJUSTarts)
