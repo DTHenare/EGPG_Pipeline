@@ -7,6 +7,7 @@ end
 %Create save file
 [~, fileName, fileExt] = fileparts(dataFile);
 saveFile = strcat(dataFolder, fileName, '.txt');
+fid = fopen(saveFile,'wt');
 
 %Open data and extract necessary values
 Output = load(strcat(dataFolder,dataFile));
@@ -14,31 +15,26 @@ data = Output.Output.allData;
 conditions = Output.Output.conditions;
 numCond = length(conditions);
 blMin = -200;
-sampRate = 250;
+sampFreq = 250;
 N = size(data{1,1},3);
 
-%Create output text file
-fid = fopen(saveFile,'wt');
-
 %Get info from user
-userInput = inputdlg({'Electrode Number','Component Latency (ms)', 'Component width (ms)'},'Define electrode and time window',1);
-elec = str2double(userInput(1));
+userInput = inputdlg({'Electrode Number','Component Latency (ms)', 'Component width (ms)', 'Use individual peaks? 1 = yes, 0 = no'},'Define electrode and time window',1);
+elec = str2num(userInput{1});
 compLatencyms = str2double(userInput(2));
 compWidth = str2double(userInput(3));
+indvPeaks = str2double(userInput(4));
 
 %Check user input is usable
 
 %Convert user values into data values
-compLatencyms = compLatencyms;
-compWinMin = (compLatencyms+abs(blMin)) - (compWidth/2);
-compWinMax = (compLatencyms+abs(blMin)) + (compWidth/2);
-compWinMin = ceil(compWinMin/4);
-compWinMax = floor(compWinMax/4);
+compWinMin = convertMsToSamp((compLatencyms-compWidth/2), blMin, sampFreq);
+compWinMax = convertMsToSamp((compLatencyms+compWidth/2), blMin, sampFreq);
 
 %Create values table
 for cond = 1:numCond
-    condValues = mean(data{cond}(compWinMin:compWinMax,elec,:),1);
-    condValues = mean(condValues,2);
+    condValues = mean(data{cond}(compWinMin:compWinMax,elec,:),2);
+    condValues = mean(condValues,1);
     condValues = permute(condValues,[3,2,1]);
     dataValues(:,cond) = condValues;
 end
@@ -64,7 +60,8 @@ end
 xAxis = -200:4:792;
 figure;
 for cond = 1:numCond
-    ERPhand(cond) = plot(xAxis,mean(data{cond}(:,elec,:),3),'linewidth', 2);
+    plotData = mean(data{cond}(:,elec,:),2);
+    ERPhand(cond) = plot(xAxis,mean(plotData(:,:,:),3),'linewidth', 2);
     hold on
 end
 %reapply automatic axis limits
