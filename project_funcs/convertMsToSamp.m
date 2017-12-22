@@ -5,7 +5,7 @@ function [ samplepoint ] = convertMsToSamp( timepoint, baseline, samplingFreq )
 %           baseline = The start of the baseline period in ms
 %           samplingFreq = The current sampling frequency of the data
 %Outputs:   samplepoint = the sample point that corresponds to the
-%t          imepoint inputted
+%           timepoint inputted
 
 samplingRate = 1000/samplingFreq;
 samplepoint = (timepoint + abs(baseline))/samplingRate;
