@@ -15,7 +15,7 @@ function [ statsValues ] = getStatsFromIndvWindow(data, conditions, compWinMin, 
 %           elec = The electrode number where the component will be
 %           measured
 %Outputs:   statsValues = a participant by condition matrix holding the
-%                                    calculate component amplitudes.
+%           component amplitudes.
 
 numCond = length(conditions);
 numSubj = size(data{1},3);
@@ -24,7 +24,7 @@ statsValues  = zeros(numSubj,numCond);
 for subj = 1:numSubj
     for cond = 1:numCond
         condValues = mean(data{cond}(:,elec,subj),2);
-        [ ~, indvPeak ] = findpeaks(condValues(compWinMin:compWinMax), 'SortStr', 'descend', 'NPeaks', 1);
+         [ ~, indvPeak ] = findpeaks(condValues(compWinMin:compWinMax), 'SortStr', 'descend', 'NPeaks', 1);
         if isempty(indvPeak)
             [ ~, indvPeak ] = max(condValues(compWinMin:compWinMax));
         end
