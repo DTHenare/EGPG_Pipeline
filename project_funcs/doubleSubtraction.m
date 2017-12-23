@@ -38,8 +38,12 @@ for i = 1:size(userDesign,1)
     mirroredData(:,electrodePairs(:,2),:) = secondSubtraction;
     
     %Store data
-    Output.allData{i,1} = mirroredData;
-    Output.conditions{i,1} = curLabel;
+    allData{i,1} = mirroredData;
+    conditions{i,1} = curLabel;
 end
+
+input.allData = allData;
+input.conditions  = conditions;
+Output = input;
 end
 
