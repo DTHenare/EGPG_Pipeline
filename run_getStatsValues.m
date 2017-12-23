@@ -13,7 +13,6 @@ fid = fopen(saveFile,'wt');
 Output = load(strcat(dataFolder,dataFile));
 data = Output.Output.allData;
 conditions = Output.Output.conditions;
-numCond = length(conditions);
 blMin = -200;
 sampFreq = 250;
 N = size(data{1,1},3);
@@ -40,44 +39,8 @@ end
 
 %Write stats values to txt
 %Add header with condition names
-for cond = 1:numCond-1
-    fprintf(fid, '%s\t',conditions{cond});
-end
-fprintf(fid, '%s',conditions{numCond});
-fprintf(fid, '\n');
-
-%Add data
-for pNum = 1:N
-    for cond = 1:numCond-1
-        fprintf(fid, '%s\t',num2str(round(statsValues(pNum,cond),2)));
-    end
-    fprintf(fid, '%s',num2str(round(statsValues(pNum,numCond),2)));
-    fprintf(fid, '\n');
-end
+writeMatrixToTxt( conditions, statsValues, fid);
 
 %Create output plots
 xAxis = -200:4:792;
-figure;
-for cond = 1:numCond
-    plotData = mean(data{cond}(:,elec,:),2);
-    ERPhand(cond) = plot(xAxis,mean(plotData(:,:,:),3),'linewidth', 2);
-    hold on
-end
-%reapply automatic axis limits
-xlim auto
-ylim auto
-%extract automatic axis limits
-xl = xlim;
-yl = ylim;
-%draw axis lines and line marking component of interest
-h1 = line([compLatencyms compLatencyms], [yl(1) yl(2)], 'LineWidth', compWidth, 'Color', [0.75 0.75 0.75]);
-h2 = line([0 0], [yl(1) yl(2)], 'LineWidth', 2, 'Color', [0 0 0]);
-h3 = line([xl(1) xl(2)], [0 0], 'LineWidth', 2, 'Color', [0 0 0]);
-%add title, axis labels, and legend
-title('ERPs')
-xlabel('Time(ms)')
-ylabel('Amplitude(µV)','linewidth', 2)
-legend(ERPhand,conditions,'Location', 'southeast')
-%rearrange line stacking order so that ERPs are in front
-uistack([h2 h3], 'bottom')
-uistack(h1, 'bottom')
+createERPPlot( conditions, data, xAxis, elec, compLatencyms, compWidth );
