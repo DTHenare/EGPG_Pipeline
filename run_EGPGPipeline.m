@@ -34,6 +34,9 @@ checkSetup(dataFolder, EGPGPath, selectedFile);
 
 %Preprocess each file in the data folder
 for i = 1:size(fileNames,1)
+    %Start a diary to capture command window text
+    diary([dataFolder '/Output/ProcessingInfo/Diary_' fileNames(i,1)  '.out'])
+    
     % if running the last person, write the methods section
     if i == size(fileNames,1)
         fid = fopen([dataFolder '/Output/ProcessingInfo/Methods.txt'],'wt');
@@ -48,6 +51,9 @@ for i = 1:size(fileNames,1)
     writeGroupOutput( currentFile, IndividualInfo, i, triggerNames, fileNames )
     %clear eeglab
     STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
+    
+    %Turn off current diary
+    diary off
 end
 fclose(fid);
 
