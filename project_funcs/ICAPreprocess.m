@@ -38,7 +38,7 @@ end
 
 %Downsample the data
 [ALLEEG, EEG, CURRENTSET] = downsampleData( ALLEEG, EEG, CURRENTSET, PARAMETERS.ICA.downsampleRate );
-appendMethods(fid, [' Data were downsampled to ' int2str(PARAMETERS.ICA.downsampleRate)  'Hz.']);
+appendMethods(fid, [' Data were downsampled to ' num2str(PARAMETERS.ICA.downsampleRate)  'Hz.']);
 
 %High pass filter the data
 [ALLEEG, EEG, CURRENTSET, filtText] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ICA.highpass PARAMETERS.ICA.lowpass], 3 );
@@ -69,7 +69,7 @@ end
 if epochAble
     %Epoch the events
     [ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ICA.epochMin, PARAMETERS.ICA.epochMax, currentFile, triggerNames );
-    appendMethods(fid, [' Data were then epoched from ' int2str(PARAMETERS.ICA.epochMin) ' prestimulus to ' int2str(PARAMETERS.ICA.epochMax) ' poststimulus.']);
+    appendMethods(fid, [' Data were then epoched from ' num2str(PARAMETERS.ICA.epochMin) ' prestimulus to ' num2str(PARAMETERS.ICA.epochMax) ' poststimulus.']);
     %identify bad epochs
     [ extremFails ] = identExtremeValues( EEG, -500, 500 );
     appendMethods(fid, [' Epochs containing gross artifact (+/-500 microvolts in any channel) were removed.']);

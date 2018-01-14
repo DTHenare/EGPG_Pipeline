@@ -38,7 +38,7 @@ end
 
 %Downsample the data
 [ALLEEG, EEG, CURRENTSET] = downsampleData( ALLEEG, EEG, CURRENTSET, PARAMETERS.ERP.downsampleRate );
-appendMethods(fid, [' Data were downsampled to ' int2str(PARAMETERS.ERP.downsampleRate)  'Hz.']);
+appendMethods(fid, [' Data were downsampled to ' num2str(PARAMETERS.ERP.downsampleRate)  'Hz.']);
 
 %High pass filter the data
 [ALLEEG, EEG, CURRENTSET, filtText] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ERP.highpass PARAMETERS.ERP.lowpass], 3 );
@@ -65,7 +65,7 @@ end
 
 %Epoch the events
 [ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ERP.epochMin, PARAMETERS.ERP.epochMax, currentFile, triggerNames );
-appendMethods(fid, [' Data were then epoched from ' int2str(PARAMETERS.ERP.epochMin) ' prestimulus to ' int2str(PARAMETERS.ERP.epochMax) ' poststimulus.']);
+appendMethods(fid, [' Data were then epoched from ' num2str(PARAMETERS.ERP.epochMin) ' prestimulus to ' num2str(PARAMETERS.ERP.epochMax) ' poststimulus.']);
 
 %Detect HEOG failures
 [ list, horizFails ] = detectHorizFails( EEG, PARAMETERS.horizThresh );
