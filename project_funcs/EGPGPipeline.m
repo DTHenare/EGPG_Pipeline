@@ -38,12 +38,12 @@ else
 end
 
 %ERP preprocess
-[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
+[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails, chanStruct ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
 
 %Use ICA cleaning if parameters say to, otherwise assign outputs NaN
 if PARAMETERS.runICA == 1 && ~eitherMissing
 %ERP ICA clean - load ERP, add weights, clean
-[ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels );
+[ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels, chanStruct );
 else
     numberCompsRejected = nan;
 end

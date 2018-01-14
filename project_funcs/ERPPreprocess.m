@@ -1,4 +1,4 @@
-function [ ALLEEG,EEG,CURRENTSET, badChannels, epochNum, horizFails ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid)
+function [ ALLEEG,EEG,CURRENTSET, badChannels, epochNum, horizFails, chanStruct ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid)
 %Processes an EEG data set in a way which is optimal for the production of
 %ERPs
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -49,7 +49,7 @@ EEG = pop_chanedit(EEG, 'load',{strcat(EGPGPath,'\project_docs\GSN-HydroCel-129.
 appendMethods(fid, [' Channel locations were loaded.']);
 
 %Interpolate bad channels
-[ALLEEG, EEG, CURRENTSET, badChannels] = fixBadChannels( ALLEEG, EEG, CURRENTSET );
+[ALLEEG, EEG, CURRENTSET, badChannels, chanStruct] = fixBadChannels( ALLEEG, EEG, CURRENTSET );
 appendMethods(fid, [' Bad channels were detected, removed, and replaced with a spherical interpolation of surrounding electrodes.']);
 
 %Average reference the data

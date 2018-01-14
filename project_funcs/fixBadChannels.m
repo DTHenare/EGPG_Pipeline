@@ -1,4 +1,4 @@
-function [ALLEEG, EEG, CURRENTSET, badChannels] = fixBadChannels( ALLEEG, EEG, CURRENTSET )
+function [ALLEEG, EEG, CURRENTSET, badChannels, chanStruct] = fixBadChannels( ALLEEG, EEG, CURRENTSET )
 %Finds, removes, and interpolates bad channels in the data
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab

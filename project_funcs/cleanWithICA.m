@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels )
+function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels, chanStruct )
 %Automatically detects and removes artifact ICA components using a number
 %of criteria.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -79,6 +79,11 @@ try
     %If any components have been identified as bad, reject them
     if ~isempty(ADJUSTarts)
         EEG = pop_subcomp( EEG, ADJUSTarts, 0);
+    end
+    
+    %Interpolate missing channels back in if necessary
+    if ~isempty(badChannels)
+        EEG = pop_interp(EEG, chanStruct, 'spherical');
     end
 catch
     %If something fails, just set everything to 0 and carry on.
