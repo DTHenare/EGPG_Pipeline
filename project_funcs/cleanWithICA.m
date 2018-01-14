@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid )
+function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels )
 %Automatically detects and removes artifact ICA components using a number
 %of criteria.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -14,7 +14,7 @@ function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG,
 %           rejected
 
 %% Extract output path and filename
-[ folderPath, fileName, fileExt ] = fileparts(currentFile);
+[ folderPath, fileName, ~ ] = fileparts(currentFile);
 
 %% Import ICA data
 EEG.icaweights = ICAStruct.icaweights;
@@ -65,6 +65,11 @@ end
 totalNumberOfFails=[];
 %% Reject with ADJUST
 try
+    %Remove bad channels if present
+    if ~isempty(badChannels)
+        EEG = pop_select( EEG,'nochannel',badChannels);
+    end
+    
     %Set output file location
     saveAdjust = strcat(folderPath,'\Output\ProcessingInfo\',fileName,'.txt');
     [ ADJUSTarts ] = ADJUST(EEG,saveAdjust);
