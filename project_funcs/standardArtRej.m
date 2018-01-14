@@ -35,6 +35,7 @@ try
 catch
     numFails = length(allFails);
     meanHEOG = nan;
+    [~, fileName] = fileparts(currentFile);
     disp(strcat('All files rejected for ',fileName,'_Cleaned'))
 end
 
