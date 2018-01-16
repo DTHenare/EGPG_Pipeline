@@ -38,7 +38,7 @@ end
 
 %Downsample the data
 [ALLEEG, EEG, CURRENTSET] = downsampleData( ALLEEG, EEG, CURRENTSET, PARAMETERS.ICA.downsampleRate );
-appendMethods(fid, [' Data were downsampled to ' num2str(PARAMETERS.ICA.downsampleRate)  'Hz.']);
+appendMethods(fid, [' Data were downsampled to ' num2str(PARAMETERS.ICA.downsampleRate)  ' Hz.']);
 
 %High pass filter the data
 [ALLEEG, EEG, CURRENTSET, textFilterType, textFilterImpl ] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ICA.highpass PARAMETERS.ICA.lowpass], 3 );
@@ -81,6 +81,7 @@ if epochAble
 else
     %do continuous cleaning
     epochNum = [];
+    appendMethods(fid, [' Data were not epoched in preparation for ICA (because there was an insufficient amount of data, or insufficient space between events, or both).']);
 end
 
 %% ICA
