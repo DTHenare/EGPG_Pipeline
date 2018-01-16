@@ -61,6 +61,7 @@ try
     EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
     appendMethods(fid, [' Line noise was removed using the CleanLine toolbox.']);
 catch
+    appendMethods(fid, [' CleanLine toolbox either absent or failed, CleanLine was therefore not implemented.']);
 end
 
 %Epoch the events
