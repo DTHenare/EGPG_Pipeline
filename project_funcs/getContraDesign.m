@@ -34,7 +34,7 @@ textWidth = allTableWidth + spacer + userTableWidth;
 textHeight = cellHeight*2;
 textPosX = allTablePosX;
 textPosY = allTablePosY+allTableHeight;
-textStr = 'Use the box on the right to define you contralateral control design. Type the event labels into the appropriate boxes and give each condition a name.';
+textStr = 'Use the box on the right to define your contralateral control design. Type the event labels into the appropriate boxes and give each condition a name.';
 
 %Define properties of the figure which will hold all objects
 scrsz = get(groot,'ScreenSize');
