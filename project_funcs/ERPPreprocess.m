@@ -42,7 +42,7 @@ appendMethods(fid, [' Data were downsampled to ' num2str(PARAMETERS.ERP.downsamp
 
 %High pass filter the data
 [ALLEEG, EEG, CURRENTSET, filtText] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ERP.highpass PARAMETERS.ERP.lowpass], 3 );
-appendMethods(fid, filtText);
+appendMethods(fid, [' Data were' textFilterType ' filtered from ' num2str(PARAMETERS.ICA.highpass) ' to ' num2str(PARAMETERS.ICA.lowpass) ' using' textFilterImpl '.' ] );
 
 %Load channel structure
 EEG = pop_chanedit(EEG, 'load',{strcat(EGPGPath,'\project_docs\GSN-HydroCel-129.sfp') 'filetype' 'autodetect'},'setref',{'4:132' 'Cz'},'changefield',{132 'datachan' 0});
