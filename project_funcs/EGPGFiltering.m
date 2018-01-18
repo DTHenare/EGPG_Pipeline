@@ -1,4 +1,4 @@
-function [ALLEEG, EEG, CURRENTSET, text] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, filterValue, filterType)
+function [ALLEEG, EEG, CURRENTSET, textFilterType, textFilterImpl] = EGPGFiltering(ALLEEG, EEG, CURRENTSET, filterValue, filterType)
 %Filters eeglab data using the ERPLab filter function. If ERPLab filter
 %doesn't work, it trys to use the new eeglab filter. If that doesn't work,
 %it uses the legacy eeglab filter.
@@ -18,21 +18,26 @@ function [ALLEEG, EEG, CURRENTSET, text] = EGPGFiltering(ALLEEG, EEG, CURRENTSET
 
 if filterType == 1
     EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff',  filterValue, 'Design', 'butter', 'Filter', 'highpass', 'Order',  4, 'RemoveDC', 'on' );
-    text = [' High pass filtered with a ' num2str(filterValue) 'Hz butterworth filter implemented in ERPLAB.'];
+    textFilterType = ' High pass';
+    textFilterImpl = ' butterworth filter implemented in ERPLAB';
 elseif filterType == 2
     EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff',  filterValue, 'Design', 'butter', 'Filter', 'lowpass', 'Order',  4, 'RemoveDC', 'on' );
-    text = [' Low pass filtered with a ' num2str(filterValue) 'Hz butterworth filter implemented in ERPLAB.'];
+    textFilterType = ' Low pass';
+    textFilterImpl = ' butterworth filter implemented in ERPLAB';
 elseif filterType == 3
     try
         EEG  = pop_basicfilter( EEG,  1:128 , 'Boundary', 'boundary', 'Cutoff', filterValue, 'Design', 'butter', 'Filter', 'bandpass', 'Order',  4, 'RemoveDC', 'on' );
-        text = [' Band pass filtered between ' num2str(filterValue(1)) ' and ' int2str(filterValue(2)) 'Hz using a butterworth filter implemented in ERPLAB.'];
+        textFilterType = ' Band pass';
+        textFilterImpl = ' butterworth filter implemented in ERPLAB';
     catch
         try
             EEG = pop_eegfiltnew(EEG, filterValue(1), filterValue(2));
-            text = [' Band pass filtered between ' num2str(filterValue(1)) ' and ' int2str(filterValue(2)) 'Hz using pop_eegfiltnew.'];
+            textFilterType = ' Band pass';
+            textFilterImpl = ' pop_eegfiltnew';
         catch
             EEG = pop_eegfilt( EEG, filterValue(1), filterValue(2), [], [0], 0, 0, 'fir1', 0);
-            text = [' Band pass filtered between ' num2str(filterValue(1)) ' and ' int2str(filterValue(2)) 'Hz using pop_eegfilt.'];
+            textFilterType = ' Band pass';
+            textFilterImpl = ' pop_eegfilt';
         end
     end
 else

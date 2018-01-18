@@ -41,8 +41,8 @@ end
 appendMethods(fid, [' Data were downsampled to ' num2str(PARAMETERS.ERP.downsampleRate)  'Hz.']);
 
 %High pass filter the data
-[ALLEEG, EEG, CURRENTSET, filtText] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ERP.highpass PARAMETERS.ERP.lowpass], 3 );
-appendMethods(fid, filtText);
+[ALLEEG, EEG, CURRENTSET, textFilterType, textFilterImpl] = EGPGFiltering( ALLEEG, EEG, CURRENTSET, [ PARAMETERS.ERP.highpass PARAMETERS.ERP.lowpass], 3 );
+appendMethods(fid, [' Data were' textFilterType ' filtered from ' num2str(PARAMETERS.ICA.highpass) ' to ' num2str(PARAMETERS.ICA.lowpass) ' using' textFilterImpl '.' ] );
 
 %Load channel structure
 EEG = pop_chanedit(EEG, 'load',{strcat(EGPGPath,'\project_docs\GSN-HydroCel-129.sfp') 'filetype' 'autodetect'},'setref',{'4:132' 'Cz'},'changefield',{132 'datachan' 0});
@@ -61,6 +61,7 @@ try
     EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
     appendMethods(fid, [' Line noise was removed using the CleanLine toolbox.']);
 catch
+    appendMethods(fid, [' CleanLine toolbox either absent or failed, CleanLine was therefore not implemented.']);
 end
 
 %Epoch the events
