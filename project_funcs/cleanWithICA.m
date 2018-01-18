@@ -25,11 +25,11 @@ appendMethods(fid, [' ICA weights were then copied over to this set of data in o
 
 if false
     %% Fit Dipoles for components
-    %C:\Program Files\MATLAB\R2013a\toolbox\eeglab13_1_1b\plugins\dipfit2.2\standard_BESA\
-    EEG = pop_dipfit_settings( EEG, 'hdmfile','C:\\Program Files\\MATLAB\\R2013a\\toolbox\\eeglab13_1_1b\\plugins\\dipfit2.2\\standard_BESA\\standard_BESA.mat','coordformat','Spherical','mrifile','C:\\Program Files\\MATLAB\\R2013a\\toolbox\\eeglab13_1_1b\\plugins\\dipfit2.2\\standard_BESA\\avg152t1.mat','chanfile','C:\\Program Files\\MATLAB\\R2013a\\toolbox\\eeglab13_1_1b\\plugins\\dipfit2.2\\standard_BESA\\standard-10-5-cap385.elp','coord_transform',[-0.25423 0 -8.4081 0 0.0027253 0 8.5946 -10.9643 10.4963] ,'chansel',[1:128] );
-    [ALLEEG, EEG] = eeg_store(ALLEEG, EEG, 0);
-    EEG = pop_multifit(EEG,[],'threshold',100,'plotopt',{'normlen' 'on'});
-    [ALLEEG, EEG] = eeg_store(ALLEEG, EEG, 0);
+        dipfitPath = fileparts(which('pop_dipfit_settings'))
+        EEG = pop_dipfit_settings( EEG, 'hdmfile',[dipfitPath '\\standard_BESA\\standard_BESA.mat'],'coordformat','Spherical','mrifile',[dipfitPath '\\standard_BESA\\avg152t1.mat'],'chanfile',[dipfitPath '\\standard_BESA\\standard-10-5-cap385.elp'],'coord_transform',[-0.25423 0 -8.4081 0 0.0027253 0 8.5946 -10.9643 10.4963] ,'chansel',[1:EEG.nbchan] );
+        [ALLEEG, EEG] = eeg_store(ALLEEG, EEG, 0);
+        EEG = pop_multifit(EEG,[],'threshold',100,'plotopt',{'normlen' 'on'});
+        [ALLEEG, EEG] = eeg_store(ALLEEG, EEG, 0);
     
     %% Remove poorly fitted components (high residual variance dipoles)
     rvFails=[];
