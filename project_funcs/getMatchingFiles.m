@@ -12,6 +12,9 @@ function [ fileNames,fileExt,segPresent ] = getMatchingFiles( inputFile )
 
 %Get properties of all matching files in the folder
 allMatches = dir(strcat(filePath,'\*',fileExt));
+%Sort allMatches into date order
+[~,sortOrder] = sort([allMatches(:).datenum]);
+allMatches = allMatches(sortOrder);
 
 %Make fileNum equal the number of matching files found in the folder
 fileNum = size(allMatches,1);
