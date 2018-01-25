@@ -1,4 +1,4 @@
-function [  ] = createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth )
+function [  ] = createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth, chanlocs )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
