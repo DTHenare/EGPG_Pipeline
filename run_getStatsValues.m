@@ -48,4 +48,4 @@ createERPPlot( conditions, data, xAxis, elec, compLatencyms, compWidth );
 %Create topoplots
 chanlocs =  load('C:\Users\dion\Desktop\EGPG_Pipeline\project_docs\chanlocs.mat');
 chanlocs = chanlocs.chanlocs;
-createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth, chanlocs );
+createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth, compWinMin, compWinMax, chanlocs );
