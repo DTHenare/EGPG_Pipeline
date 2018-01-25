@@ -44,3 +44,8 @@ writeMatrixToTxt( conditions, statsValues, fid);
 %Create output plots
 xAxis = -200:4:792;
 createERPPlot( conditions, data, xAxis, elec, compLatencyms, compWidth );
+
+%Create topoplots
+chanlocs =  load('C:\Users\Dion\Desktop\EGPG_Pipeline\project_docs\chanlocs.mat');
+chanlocs = chanlocs.chanlocs;
+createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth );
