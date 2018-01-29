@@ -1,4 +1,4 @@
-function [ statsValues ] = getStatsFromIndvWindow(data, conditions, compWinMin, compWinMax, elec)
+function [ statsValues ] = getStatsFromIndvWindow(data, conditions, compWinMin, compWinMax, elec, isNegative, indWin)
 %Quantifies component amplitude by searching a predefined window for each
 %individual's peak, and averaging the voltage from a small window around
 %the individual peak.
@@ -17,9 +17,18 @@ function [ statsValues ] = getStatsFromIndvWindow(data, conditions, compWinMin, 
 %Outputs:   statsValues = a participant by condition matrix holding the
 %           component amplitudes.
 
+sampFreq = 250;
+sampRate = sampFreq/1000;
+%Get half of window length and round to nearest number of samples
+halfSamp = round((indWin/2)/sampRate);
+
 numCond = length(conditions);
 numSubj = size(data{1},3);
 statsValues  = zeros(numSubj,numCond);
+
+if isNegative
+    data = cellfun(@(x) times(x,-1),data, 'UniformOutput',false);
+end
 
 for subj = 1:numSubj
     for cond = 1:numCond
@@ -29,7 +38,7 @@ for subj = 1:numSubj
             [ ~, indvPeak ] = max(condValues(compWinMin:compWinMax));
         end
         indvPeak = indvPeak+compWinMin;
-        condValues = mean(condValues(indvPeak-1:indvPeak+1,:,:),1);
+        condValues = mean(condValues(indvPeak-halfSamp:indvPeak+halfSamp,:,:),1);
         condValues = permute(condValues,[3,2,1]);
         statsValues(subj,cond) = condValues;
     end
