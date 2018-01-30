@@ -22,8 +22,8 @@ compWinMax = convertMsToSamp((compLatencyms+compWidth/2), blMin, sampFreq);
 %Create values table
 if indvPeaks == 0
     statsValues = getStatsFromGroupWindow(data, conditions, compWinMin, compWinMax, elec);
-elseif indvPeaks == 1
-    statsValues = getStatsFromIndvWindow(data, conditions, compWinMin, compWinMax, elec, 1, 10);
+else
+    statsValues = getStatsFromIndvWindow(data, conditions, compWinMin, compWinMax, elec, 1, indvPeaks);
 end
 
 %Write stats values to txt
@@ -40,4 +40,3 @@ chanlocs = chanlocs.chanlocs;
 createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth, compWinMin, compWinMax, chanlocs );
 
 end
-
