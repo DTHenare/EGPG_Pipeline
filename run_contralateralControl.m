@@ -4,22 +4,19 @@
 %file which contains the double subtracted data.
 
 %Pop up the file explorer for the user to select their study file
-[studyFile,studyFolder] = uigetfile('*.study', 'Select a study file');
+[studyFile,studyFolder] = uigetfile('*.mat', 'Select the defaultOutput file.');
 if (studyFolder == 0) & (studyFile == 0)
     error('Input file is not selected!')
 end
 
-eeglab;
-
 %Load study
-[STUDY ALLEEG] = pop_loadstudy('filename', studyFile, 'filepath', studyFolder);
-CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
+load([studyFolder studyFile])
 
 %Get necessary parameters
-channelList = {STUDY.changrp(:).name};
-chanlocs = EEG(1,1).chanlocs;
-conditions = STUDY.condition';
-blMin = EEG(1,1).xmin*1000;
+channelList = Output.channelList;
+chanlocs = Output.chanlocs;
+conditions = Output.conditions;
+blMin = Output.blMin;
 
 %Get contralateral design from user
 f = getContraDesign(conditions);
@@ -34,15 +31,11 @@ if isValid
     %Get electrode pairs
     electrodePairs = createElectrodeList( chanlocs );
     
-    %Create output object
-    Output = createOutputSheet(STUDY, ALLEEG, channelList, conditions);
-    
     %Perform contralateral control
-    Output = doubleSubtraction(Output, userData, electrodePairs);
+    Output = doubleSubtraction( Output, userData, electrodePairs );
     
     %Save output
-    save(strcat(studyFolder,'doubleSubOutput.mat'),'Output')
+    save([ studyFolder 'doubleSub' studyFile ],'Output');
 else
     disp(reasonFailed)
 end
-
