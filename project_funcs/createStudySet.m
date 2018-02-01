@@ -30,7 +30,9 @@ CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = [1:length(EEG)];
 %Create output object with all data for stats analysis
 conditions = STUDY.condition';
 channelList = {STUDY.changrp(:).name};
-Output = createOutputSheet( STUDY, ALLEEG, channelList, conditions );
+chanlocs = EEG(1,1).chanlocs;
+blMin = EEG(1,1).xmin*1000;
+Output = createOutputSheet( STUDY, ALLEEG, channelList, conditions, chanlocs, blMin );
 
 %Save output data
 save(strcat(dataFolder,'Output\defaultOutput.mat'),'Output')
