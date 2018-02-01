@@ -17,7 +17,7 @@ fid = fopen(saveFile,'wt');
 
 %Convert user values into data values
 compWinMin = convertMsToSamp((compLatencyms-compWidth/2), blMin, sampFreq);
-compWinMax = convertMsToSamp((compLatencyms+compWidth/2), blMin, sampFreq);
+compWinMax = convertMsToSamp((compLatencyms+compWidth/2), blMin, sampFreq); 
 
 %Create values table
 if indvPeaks == 0
