@@ -1,4 +1,4 @@
-function [ Output ] = createOutputSheet( STUDY, ALLEEG, channelList, conditions )
+function [ Output ] = createOutputSheet( STUDY, ALLEEG, channelList, conditions, chanlocs, blMin )
 %Outputs the study data into a struct which holds all of the data necessary
 %for doing statistical analyses.
 %Inputs:    STUDY = STUDY structure taken from eeglab
@@ -12,6 +12,15 @@ function [ Output ] = createOutputSheet( STUDY, ALLEEG, channelList, conditions 
 
 %Add condition labels to output
 Output.conditions = conditions;
+
+%Add chanlocs to output
+Output.chanlocs = chanlocs;
+
+%Add baseline min to output
+Output.blMin = blMin;
+
+%Add channel list to output
+Output.channelList = channelList;
 
 end
 
