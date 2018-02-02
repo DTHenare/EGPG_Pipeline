@@ -1,17 +1,16 @@
-function [  ] = getStatsValues( dataFolder, dataFile, elec, compLatencyms, compWidth, indvPeaks )
+function [  ] = getStatsValues( dataFolder, dataFile, elec, compLatencyms, compWidth, indvPeaks, UserSelection )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
 %Open data and extract necessary values
 Output = load(strcat(dataFolder,dataFile));
-data = Output.Output.allData;
-conditions = Output.Output.conditions;
+data = Output.Output.allData(UserSelection);
+conditions = Output.Output.conditions(UserSelection);
 blMin = -200;
 sampFreq = 250;
-N = size(data{1,1},3);
 
 %Create save file
-[~, fileName, fileExt] = fileparts(dataFile);
+[~, fileName, ~] = fileparts(dataFile);
 saveFile = strcat(dataFolder, fileName, '.txt');
 fid = fopen(saveFile,'wt');
 
@@ -28,15 +27,14 @@ end
 
 %Write stats values to txt
 %Add header with condition names
-writeMatrixToTxt( conditions, statsValues, fid);
+writeMatrixToTxt( conditions, statsValues, fid );
 
 %Create output plots
 xAxis = -200:4:792;
 createERPPlot( conditions, data, xAxis, elec, compLatencyms, compWidth );
 
 %Create topoplots
-chanlocs =  load('C:\Users\dhen061\Desktop\EGPG_Pipeline\project_docs\chanlocs.mat');
-chanlocs = chanlocs.chanlocs;
+chanlocs =  Output.Output.chanlocs;
 createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth, compWinMin, compWinMax, chanlocs );
 
 end
