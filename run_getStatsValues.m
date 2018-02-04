@@ -10,7 +10,7 @@ Output = load(strcat(dataFolder,dataFile));
 %Present list of triggers to the user for selection
 [UserSelection, OK] = listdlg('promptstring','Select the events that you''d like to include','ListString',Output.Output.conditions);
 if OK==0
-    error('you must select at least one event for epoching')
+    error('you must select at least one event')
 end
 
 %Get info from user
