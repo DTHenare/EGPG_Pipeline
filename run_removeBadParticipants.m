@@ -1,1 +1,0 @@
-%Make UI wrapper for removeBadParticipants
