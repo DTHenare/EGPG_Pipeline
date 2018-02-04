@@ -29,12 +29,14 @@ end
 %Add header with condition names
 writeMatrixToTxt( conditions, statsValues, fid );
 
-%Create output plots
-xAxis = -200:4:792;
-createERPPlot( conditions, data, xAxis, elec, compLatencyms, compWidth );
 
-%Create topoplots
-chanlocs =  Output.Output.chanlocs;
-createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth, compWinMin, compWinMax, chanlocs );
+%% Plotting now in sepearate script
+% %Create output plots
+% xAxis = -200:4:792;
+% createERPPlot( conditions, data, xAxis, elec, compLatencyms, compWidth );
+% 
+% %Create topoplots
+% chanlocs =  Output.Output.chanlocs;
+% createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth, compWinMin, compWinMax, chanlocs );
 
 end
