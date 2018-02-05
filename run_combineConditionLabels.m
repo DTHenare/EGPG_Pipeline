@@ -1,3 +1,4 @@
+function run_combineConditionLabels()
 %Pop up the file explorer for the user to select their output file
 [dataFile,dataFolder] = uigetfile('*.mat', 'Select an output file');
 if (dataFolder == 0) & (dataFile == 0)
@@ -28,3 +29,4 @@ end
 
 %Save the new data set
 save([dataFolder 'combined' dataFile],'curData')
+end

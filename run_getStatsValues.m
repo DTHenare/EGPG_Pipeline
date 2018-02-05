@@ -1,3 +1,4 @@
+function run_getStatsValues()
 %Pop up the file explorer for the user to select their output file
 [dataFile,dataFolder] = uigetfile('*.mat', 'Select an output file');
 if (dataFolder == 0) & (dataFile == 0)
@@ -24,3 +25,4 @@ indvPeaks = str2double(userInput(4));
 
 %Run getStatsValues
 getStatsValues( dataFolder, dataFile, elec, compLatencyms, compWidth, indvPeaks, UserSelection );
+end
