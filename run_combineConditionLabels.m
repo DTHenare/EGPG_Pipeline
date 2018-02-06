@@ -28,5 +28,6 @@ while userDecision == 1
 end
 
 %Save the new data set
-save([dataFolder 'combined' dataFile],'curData')
+Output = curData;
+save([dataFolder 'combined' dataFile],'Output')
 end
