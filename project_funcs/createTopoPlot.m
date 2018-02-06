@@ -2,9 +2,6 @@ function [  ] = createTopoPlot( conditions, data, xAxis, elec, compLatencyms, co
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
-%Start eeglab
-eeglab;
-
 numCond = length(conditions);
 figure;
 
