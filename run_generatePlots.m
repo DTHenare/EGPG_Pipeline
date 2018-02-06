@@ -42,8 +42,11 @@ compWinMin = convertMsToSamp((compLatencyms-compWidth/2), blMin, sampFreq);
 compWinMax = convertMsToSamp((compLatencyms+compWidth/2), blMin, sampFreq); 
 
 %% Make plots
-%Create output plots
 xAxis = -200:4:792;
+%Create GFP plot
+createGFPPlot( data, xAxis );
+
+%Create output plots
 createERPPlot( conditions, data, xAxis, elec, compLatencyms, compWidth );
 
 %Create topoplots
