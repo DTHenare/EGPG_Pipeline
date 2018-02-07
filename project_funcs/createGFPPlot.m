@@ -1,4 +1,4 @@
-function [  ] = createGFPPlot( data, xAxis )
+function [  ] = createGFPPlot( data, xAxis, chanLocs )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -10,24 +10,40 @@ GFP = std(data,0,2);
 Npeaks = 5;
 
 %Find all peaks and sort by prominence
-[ pks, locs, wdth, prom] = findpeaks( GFP );
+[ ~, ~, ~, prom] = findpeaks( GFP );
 sortProm = sort(prom,'descend');
 %Get min peak prominence for data
 MPP = sortProm(Npeaks);
-[ tppks, tplocs, tpwidth] = findpeaks( GFP, xAxis, 'MinPeakProminence',MPP);
+%Get data
+[ ~, locs, wdth ] = findpeaks( GFP, 'MinPeakProminence',MPP );
+[ tppks, tplocs, tpwidth ] = findpeaks( GFP, xAxis, 'MinPeakProminence',MPP);
 %Plot
-figure;
-findpeaks(GFP,xAxis,'Annotate','extents','MinPeakProminence',MPP)
+figure;subplot(2,5,2:4)
+findpeaks( GFP, xAxis, 'Annotate', 'extents', 'MinPeakProminence', MPP)
+title('Global field power')
+%Convert locs to text
 roundLocs = round(tplocs);
 locs2cell = num2cell(roundLocs);
 locs2str = cellfun(@num2str,locs2cell(:),'UniformOutput',false);
+%Covert widths to text
 roundWidth = round(tpwidth);
 width2cell = num2cell(roundWidth);
 width2str = cellfun(@num2str,width2cell(:),'UniformOutput',false);
-combinedText = strcat( locs2str, '-', width2str);
-text( tplocs, tppks, combinedText );
+%combine locs and width together for plotting
+combinedText = strcat('Peak: ', locs2str, 'ms Width: ', width2str, 'ms');
+%plot text on graph
+%text( tplocs, tppks, combinedText );
 
 %Plot topographies
-
+for curPlot = 1:5
+    topoStart = locs(curPlot)-(wdth(curPlot)/2);
+    topoEnd = locs(curPlot)+(wdth(curPlot)/2);
+    curData = mean(data(topoStart:topoEnd,:));
+    
+    subplot(2,5,curPlot+5)
+    topoplot(curData, chanLocs, 'electrodes','ptsnumbers');
+    title(combinedText(curPlot));
+    
+end
 
 end
