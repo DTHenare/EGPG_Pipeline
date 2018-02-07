@@ -32,7 +32,7 @@ data = cellfun(@(x) x(:,:,partSelection), Output.allData, 'UniformOutput' , fals
 conditions = Output.conditions(eventSelection); %Get user selected condition labels
 xAxis = -200:4:792;
 
-createGFPPlot( data, xAxis);
+createGFPPlot( data, xAxis, Output.chanlocs);
 
 end
 
