@@ -18,7 +18,7 @@ MPP = sortProm(Npeaks);
 [ ~, locs, wdth ] = findpeaks( GFP, 'MinPeakProminence',MPP );
 [ tppks, tplocs, tpwidth ] = findpeaks( GFP, xAxis, 'MinPeakProminence',MPP);
 %Plot
-figure;subplot(2,5,2:4)
+figure;subplot(2,5,1:3)
 findpeaks( GFP, xAxis, 'Annotate', 'extents', 'MinPeakProminence', MPP)
 title('Global field power')
 %Convert locs to text
@@ -33,6 +33,12 @@ width2str = cellfun(@num2str,width2cell(:),'UniformOutput',false);
 combinedText = strcat('Peak: ', locs2str, 'ms Width: ', width2str, 'ms');
 %plot text on graph
 %text( tplocs, tppks, combinedText );
+
+%Plot spatial GFP
+sGFP = std(data);
+subplot(2,5,4:5);
+topoplot(sGFP,chanLocs,'electrodes','ptsnumbers');
+title('Spatial GFP');
 
 %Plot topographies
 for curPlot = 1:5
