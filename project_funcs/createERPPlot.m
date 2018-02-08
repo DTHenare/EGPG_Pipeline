@@ -1,4 +1,4 @@
-function [  ] = createERPPlot(conditions, data, xAxis, elec, compLatencyms, compWidth )
+function [  ] = createERPPlot(conditions, data, xAxis, elec, compWinMin, compWinMax )
 %Creates a plot of ERPs for a given set of conditions at a given electrode
 %with the component of interest highlighted.
 %Inputs:    conditions = A cell array where each cell is one condition
@@ -25,9 +25,9 @@ ylim auto
 xl = xlim;
 yl = ylim;
 %Create component highlight
-recX = compLatencyms - (compWidth/2);
+recX = compWinMin*4-200;
 recY = yl(1);
-recWidth = compWidth;
+recWidth = (compWinMax-compWinMin)*4;
 recHeight = abs(yl(1))+abs(yl(2));
 
 %draw axis lines and line marking component of interest

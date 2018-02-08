@@ -1,4 +1,4 @@
-function [  ] = createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth, compWinMin, compWinMax, chanlocs )
+function [  ] = createTopoPlot( conditions, data, xAxis, elec, compWinMin, compWinMax, chanlocs )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -29,9 +29,9 @@ for cond = 1:numCond
     %reapply automatic axis limits
     xlim(ax(cond),[-200,800])
     ylim(ax(cond),[minY,maxY])
-    recX = compLatencyms - (compWidth/2);
+    recX = compWinMin*4-200;
     recY = minY;
-    recWidth = compWidth;
+    recWidth = (compWinMax-compWinMin)*4;
     recHeight = abs(minY)+abs(maxY);
     
     %draw axis lines and line marking component of interest

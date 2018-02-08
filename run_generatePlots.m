@@ -27,10 +27,10 @@ if OK==0
 end
 
 %Ask user for plotting parameters
-userInput = inputdlg({'Electrode Number','Component Latency (ms)', 'Component width (ms)'},'Define electrode and time window',1);
+userInput = inputdlg({'Electrode Number','Component Latency Min Time', 'Component Latency Max Time'},'Define electrode and time window',1);
 elec = str2num(userInput{1});
-compLatencyms = str2double(userInput(2));
-compWidth = str2double(userInput(3));
+compLatencyMin = str2double(userInput(2));
+compLatencyMax = str2double(userInput(3));
 
 %Configure data based on user input
 data = Output.allData(eventSelection); %Get user selected condition data
@@ -38,8 +38,8 @@ data = cellfun(@(x) x(:,:,partSelection), Output.allData, 'UniformOutput' , fals
 conditions = Output.conditions(eventSelection); %Get user selected condition labels
 blMin = -200;
 sampFreq = 250;
-compWinMin = convertMsToSamp((compLatencyms-compWidth/2), blMin, sampFreq);
-compWinMax = convertMsToSamp((compLatencyms+compWidth/2), blMin, sampFreq); 
+compWinMin = convertMsToSamp( compLatencyMin, blMin, sampFreq );
+compWinMax = convertMsToSamp( compLatencyMax, blMin, sampFreq );
 
 %% Make plots
 xAxis = -200:4:792;
@@ -47,9 +47,9 @@ xAxis = -200:4:792;
 %createGFPPlot( data, xAxis );
 
 %Create output plots
-createERPPlot( conditions, data, xAxis, elec, compLatencyms, compWidth );
+createERPPlot( conditions, data, xAxis, elec, compWinMin, compWinMax );
 
 %Create topoplots
 chanlocs =  Output.chanlocs;
-createTopoPlot( conditions, data, xAxis, elec, compLatencyms, compWidth, compWinMin, compWinMax, chanlocs );
+createTopoPlot( conditions, data, xAxis, elec, compWinMin, compWinMax, chanlocs );
 end

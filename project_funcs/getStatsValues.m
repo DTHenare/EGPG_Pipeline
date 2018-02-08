@@ -1,4 +1,4 @@
-function [  ] = getStatsValues( dataFolder, dataFile, elec, compLatencyms, compWidth, indvPeaks, UserSelection )
+function [  ] = getStatsValues( dataFolder, dataFile, elec, compWinMin, compWinMax, indvPeaks, UserSelection )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -15,8 +15,8 @@ saveFile = strcat(dataFolder, fileName, '.txt');
 fid = fopen(saveFile,'wt');
 
 %Convert user values into data values
-compWinMin = convertMsToSamp((compLatencyms-compWidth/2), blMin, sampFreq);
-compWinMax = convertMsToSamp((compLatencyms+compWidth/2), blMin, sampFreq); 
+compWinMin = convertMsToSamp(compWinMin, blMin, sampFreq);
+compWinMax = convertMsToSamp(compWinMax, blMin, sampFreq); 
 
 %Create values table
 if indvPeaks == 0
