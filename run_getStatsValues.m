@@ -15,14 +15,14 @@ if OK==0
 end
 
 %Get info from user
-userInput = inputdlg({'Electrode Number','Component Latency (ms)', 'Component width (ms)', 'Use individual peaks? Enter the individual window size or ''0'' to use a group window'},'Define electrode and time window',1);
+userInput = inputdlg({'Electrode Number','Component Latency Min (ms)', 'Component Latenycy Max (ms)', 'Use individual peaks? Enter the individual window size or ''0'' to use a group window'},'Define electrode and time window',1);
 elec = str2num(userInput{1});
-compLatencyms = str2double(userInput(2));
-compWidth = str2double(userInput(3));
+compWinMin = str2double(userInput(2));
+compWinMax = str2double(userInput(3));
 indvPeaks = str2double(userInput(4));
 
 %Check user data is acceptable
 
 %Run getStatsValues
-getStatsValues( dataFolder, dataFile, elec, compLatencyms, compWidth, indvPeaks, UserSelection );
+getStatsValues( dataFolder, dataFile, elec, compWinMin, compWinMax, indvPeaks, UserSelection );
 end
