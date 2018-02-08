@@ -22,7 +22,7 @@ compWinMax = convertMsToSamp(compWinMax, blMin, sampFreq);
 if indvPeaks == 0
     statsValues = getStatsFromGroupWindow(data, conditions, compWinMin, compWinMax, elec);
 else
-    statsValues = getStatsFromIndvWindow(data, conditions, compWinMin, compWinMax, elec, 1, indvPeaks);
+    statsValues = getStatsFromIndvWindow(data, conditions, compWinMin, compWinMax, elec, indvPeaks);
 end
 
 %Write stats values to txt

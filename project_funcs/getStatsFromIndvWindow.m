@@ -1,4 +1,4 @@
-function [ statsValues ] = getStatsFromIndvWindow(data, conditions, compWinMin, compWinMax, elec, isNegative, indWin)
+function [ statsValues ] = getStatsFromIndvWindow(data, conditions, compWinMin, compWinMax, elec, indWin)
 %Quantifies component amplitude by searching a predefined window for each
 %individual's peak, and averaging the voltage from a small window around
 %the individual peak.
@@ -26,7 +26,13 @@ numCond = length(conditions);
 numSubj = size(data{1},3);
 statsValues  = zeros(numSubj,numCond);
 
-if isNegative
+%Calculate the mean voltage for the selected window and electrodes
+windowMean = mean(mean(cat(4,data{:}),4),3);
+windowMean = mean(mean(windowMean(compWinMin:compWinMax,elec)),2);
+
+%If current component is negative, flip ERPs  (findpeaks finds positive
+%peaks only)
+if windowMean < 0
     data = cellfun(@(x) times(x,-1),data, 'UniformOutput',false);
 end
 
@@ -43,5 +49,11 @@ for subj = 1:numSubj
         statsValues(subj,cond) = condValues;
     end
 end
+
+%If the component is negative, flip the values back to negative
+if windowMean < 0
+    statsValues = -statsValues;
+end
+
 
 end
