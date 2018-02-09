@@ -23,6 +23,11 @@ indvPeaks = str2double(userInput(4));
 
 %Check user data is acceptable
 
+%Create generic output name
+%Create save file
+[~, fileName, ~] = fileparts(dataFile);
+saveFile = strcat(dataFolder, fileName, '.txt');
+
 %Run getStatsValues
-getStatsValues( dataFolder, dataFile, elec, compWinMin, compWinMax, indvPeaks, UserSelection );
+getStatsValues( dataFolder, dataFile, saveFile, elec, compWinMin, compWinMax, indvPeaks, UserSelection );
 end

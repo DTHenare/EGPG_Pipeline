@@ -1,4 +1,4 @@
-function [  ] = getStatsValues( dataFolder, dataFile, elec, compWinMin, compWinMax, indvPeaks, UserSelection )
+function [  ] = getStatsValues( dataFolder, dataFile, saveFile, elec, compWinMin, compWinMax, indvPeaks, UserSelection )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -10,8 +10,6 @@ blMin = -200;
 sampFreq = 250;
 
 %Create save file
-[~, fileName, ~] = fileparts(dataFile);
-saveFile = strcat(dataFolder, fileName, '.txt');
 fid = fopen(saveFile,'wt');
 
 %Convert user values into data values
