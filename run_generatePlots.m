@@ -34,7 +34,7 @@ compLatencyMax = str2double(userInput(3));
 
 %Configure data based on user input
 data = Output.allData(eventSelection); %Get user selected condition data
-data = cellfun(@(x) x(:,:,partSelection), Output.allData, 'UniformOutput' , false); %Get user selected participants
+data = cellfun(@(x) x(:,:,partSelection), data, 'UniformOutput' , false); %Get user selected participants
 conditions = Output.conditions(eventSelection); %Get user selected condition labels
 blMin = -200;
 sampFreq = 250;
