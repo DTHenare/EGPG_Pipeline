@@ -1,4 +1,4 @@
-function [ ] = run_plotGFPPlot( )
+function [ dataFolder, dataFile, eventSelection, partSelection, widthMin, widthMax ] = run_plotGFPPlot( )
 %Pop up the file explorer for the user to select their output file
 [dataFile,dataFolder] = uigetfile('*.mat', 'Select an output file');
 if (dataFolder == 0) & (dataFile == 0)
@@ -28,11 +28,11 @@ end
 
 %Configure data based on user input
 data = Output.allData(eventSelection); %Get user selected condition data
-data = cellfun(@(x) x(:,:,partSelection), Output.allData, 'UniformOutput' , false); %Get user selected participants
+data = cellfun(@(x) x(:,:,partSelection), data, 'UniformOutput' , false); %Get user selected participants
 conditions = Output.conditions(eventSelection); %Get user selected condition labels
 xAxis = -200:4:792;
 
-createGFPPlot( data, xAxis, Output.chanlocs);
+[ widthMin, widthMax ] = createGFPPlot( data, xAxis, Output.chanlocs);
 
 end
 
