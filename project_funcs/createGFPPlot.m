@@ -1,4 +1,4 @@
-function [  ] = createGFPPlot( data, xAxis, chanLocs )
+function [ widthMin, widthMax  ] = createGFPPlot( data, xAxis, chanLocs )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,6 +6,15 @@ function [  ] = createGFPPlot( data, xAxis, chanLocs )
 data = cat(4,data{:});
 data = mean(data,4);
 data = mean(data,3);
+
+%If contracontrolled, delete front half
+midlineInd = [chanLocs.Y]==0;
+midlineTotal = sum(sum(sum(data(:,midlineInd,:))));
+if midlineTotal == 0
+chanRefs = [chanLocs.X]<0;
+chanLocs = chanLocs(chanRefs);
+data = data(:,chanRefs);
+end
 GFP = std(data,0,2);
 Npeaks = 5;
 
@@ -25,7 +34,7 @@ title('Global field power')
 %Plot spatial GFP
 sGFP = std(data);
 subplot(2,5,4:5);
-topoplot(sGFP,chanLocs,'electrodes','ptsnumbers');
+topoplot(sGFP,chanLocs,'electrodes','ptslabels');
 title('Spatial GFP');
 
 %Get width indices
@@ -80,7 +89,7 @@ for curPlot = 1:5
     curData = mean(data(topoStart:topoEnd,:));
     
     subplot(2,5,curPlot+5)
-    topoplot(curData, chanLocs, 'electrodes','ptsnumbers');
+    topoplot(curData, chanLocs, 'electrodes','ptslabels');
     title(combinedText(curPlot));
     
 end
