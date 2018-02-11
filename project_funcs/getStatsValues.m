@@ -1,11 +1,12 @@
-function [  ] = getStatsValues( dataFolder, dataFile, saveFile, elec, compWinMin, compWinMax, indvPeaks, UserSelection )
+function [  ] = getStatsValues( dataFolder, dataFile, saveFile, elec, compWinMin, compWinMax, indvPeaks, eventSelection, partSelection )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
 %Open data and extract necessary values
-Output = load(strcat(dataFolder,dataFile));
-data = Output.Output.allData(UserSelection);
-conditions = Output.Output.conditions(UserSelection);
+load(strcat(dataFolder,dataFile));
+data = Output.allData(eventSelection);
+data = cellfun(@(x) x(:,:,partSelection), data, 'UniformOutput' , false); %Get user selected participants
+conditions = Output.conditions(eventSelection);
 blMin = -200;
 sampFreq = 250;
 
