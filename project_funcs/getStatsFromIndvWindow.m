@@ -18,7 +18,7 @@ function [ statsValues ] = getStatsFromIndvWindow(data, conditions, compWinMin, 
 %           component amplitudes.
 
 sampFreq = 250;
-sampRate = sampFreq/1000;
+sampRate = 1000/sampFreq;
 %Get half of window length and round to nearest number of samples
 halfSamp = round((indWin/2)/sampRate);
 
