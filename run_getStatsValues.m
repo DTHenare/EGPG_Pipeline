@@ -7,9 +7,21 @@ end
 
 %load the output file
 Output = load(strcat(dataFolder,dataFile));
+%Get number of participants
+numParticipants = size(Output.Output.allData{1},3);
+%Create cell array of list of participants
+listOfParts = num2cell(1:numParticipants);
+%Convert the numbers into strings for listdlg
+listOfParts = cellfun(@num2str,listOfParts,'UniformOutput',false);
+
+%Ask user which participants will be included
+[partSelection, OK] = listdlg('promptstring','Select the participants you''d like to include','ListString',listOfParts);
+if OK==0
+    error('You must select at least one participant for plotting')
+end
 
 %Present list of triggers to the user for selection
-[UserSelection, OK] = listdlg('promptstring','Select the events that you''d like to include','ListString',Output.Output.conditions);
+[eventSelection, OK] = listdlg('promptstring','Select the events that you''d like to include','ListString',Output.Output.conditions);
 if OK==0
     error('you must select at least one event')
 end
@@ -29,5 +41,5 @@ indvPeaks = str2double(userInput(4));
 saveFile = strcat(dataFolder, fileName, '.txt');
 
 %Run getStatsValues
-getStatsValues( dataFolder, dataFile, saveFile, elec, compWinMin, compWinMax, indvPeaks, UserSelection );
+getStatsValues( dataFolder, dataFile, saveFile, elec, compWinMin, compWinMax, indvPeaks, eventSelection, partSelection );
 end
