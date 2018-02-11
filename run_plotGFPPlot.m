@@ -34,5 +34,8 @@ xAxis = -200:4:792;
 
 [ widthMin, widthMax ] = createGFPPlot( data, xAxis, Output.chanlocs);
 
+widthMin = widthMin*4-200;
+widthMax = widthMax*4-200;
+
 end
 
