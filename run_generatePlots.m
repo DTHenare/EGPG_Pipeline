@@ -32,24 +32,6 @@ elec = str2num(userInput{1});
 compLatencyMin = str2double(userInput(2));
 compLatencyMax = str2double(userInput(3));
 
-%Configure data based on user input
-data = Output.allData(eventSelection); %Get user selected condition data
-data = cellfun(@(x) x(:,:,partSelection), data, 'UniformOutput' , false); %Get user selected participants
-conditions = Output.conditions(eventSelection); %Get user selected condition labels
-blMin = -200;
-sampFreq = 250;
-compWinMin = convertMsToSamp( compLatencyMin, blMin, sampFreq );
-compWinMax = convertMsToSamp( compLatencyMax, blMin, sampFreq );
+generatePlots( dataFolder, dataFile, partSelection, eventSelection, elec, compLatencyMin, compLatencyMax )
 
-%% Make plots
-xAxis = -200:4:792;
-%Create GFP plot
-%createGFPPlot( data, xAxis );
-
-%Create output plots
-createERPPlot( conditions, data, xAxis, elec, compWinMin, compWinMax );
-
-%Create topoplots
-chanlocs =  Output.chanlocs;
-createTopoPlot( conditions, data, xAxis, elec, compWinMin, compWinMax, chanlocs );
 end
