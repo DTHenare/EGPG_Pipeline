@@ -32,6 +32,6 @@ elec = str2num(userInput{1});
 compLatencyMin = str2double(userInput(2));
 compLatencyMax = str2double(userInput(3));
 
-generatePlots( dataFolder, dataFile, partSelection, eventSelection, elec, compLatencyMin, compLatencyMax )
+generatePlots( dataFolder, dataFile, partSelection, eventSelection, elec, compLatencyMin, compLatencyMax, 0, 'fig_' )
 
 end

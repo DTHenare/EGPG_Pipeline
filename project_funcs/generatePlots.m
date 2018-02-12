@@ -1,4 +1,4 @@
-function [  ] = generatePlots( dataFolder, dataFile, partSelection, eventSelection, elec, compLatencyMin, compLatencyMax )
+function [  ] = generatePlots( dataFolder, dataFile, partSelection, eventSelection, elec, compLatencyMin, compLatencyMax, savePlots, saveStem )
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -18,11 +18,17 @@ compWinMax = convertMsToSamp( compLatencyMax, blMin, sampFreq );
 xAxis = -200:4:792;
 
 %Create output plots
-createERPPlot( conditions, data, xAxis, elec, compWinMin, compWinMax );
+f1 = createERPPlot( conditions, data, xAxis, elec, compWinMin, compWinMax );
 
 %Create topoplots
 chanlocs =  Output.chanlocs;
-createTopoPlot( conditions, data, xAxis, elec, compWinMin, compWinMax, chanlocs );
+[ f2, f3 ] = createTopoPlot( conditions, data, xAxis, elec, compWinMin, compWinMax, chanlocs );
 
+%%Save plots
+if savePlots
+    savefig( f1, [saveStem 'ERPs.fig'] );
+    savefig( f2, [saveStem 'ERPandTOPO.fig'] );
+    savefig( f3, [saveStem 'AvgTopo.fig'] );
+end
 end
 

@@ -1,9 +1,9 @@
-function [  ] = createTopoPlot( conditions, data, xAxis, elec, compWinMin, compWinMax, chanlocs )
+function [ f1, f2 ] = createTopoPlot( conditions, data, xAxis, elec, compWinMin, compWinMax, chanlocs )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
 numCond = length(conditions);
-figure;
+f1 = figure;
 
 minY = 0;
 maxY = 0;
@@ -67,7 +67,7 @@ for cond = 1:numCond
 end
 
 %Plot grand average topo
-figure
+f2 = figure;
 grandTopo = mean(topoData,1);
 topoplot( grandTopo, chanlocs, 'electrodes', 'ptslabels', 'maplimits', [ topoMin, topoMax ] );
 

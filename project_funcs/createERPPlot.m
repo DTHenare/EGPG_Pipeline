@@ -1,4 +1,4 @@
-function [  ] = createERPPlot(conditions, data, xAxis, elec, compWinMin, compWinMax )
+function [ f ] = createERPPlot(conditions, data, xAxis, elec, compWinMin, compWinMax )
 %Creates a plot of ERPs for a given set of conditions at a given electrode
 %with the component of interest highlighted.
 %Inputs:    conditions = A cell array where each cell is one condition
@@ -10,7 +10,7 @@ function [  ] = createERPPlot(conditions, data, xAxis, elec, compWinMin, compWin
 %           compLatencyms = Latency of the component of interest.
 %           compWidth = width of the component of interest.
 numCond = length(conditions);
-figure;
+f = figure;
 
 for cond = 1:numCond
     plotData = mean(data{cond}(:,elec,:),2);
