@@ -25,7 +25,7 @@ for i = 1:size(userDesign,1)
     rightData = input.allData{rightIndex};
     
     %first subtraction
-    firstSubtraction = leftData-rightData;
+    firstSubtraction = rightData-leftData;
     
     leftHem = firstSubtraction(:,electrodePairs(:,1),:);
     rightHem = firstSubtraction(:,electrodePairs(:,2),:);
