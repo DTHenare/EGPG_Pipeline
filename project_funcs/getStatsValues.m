@@ -1,6 +1,7 @@
 function [  ] = getStatsValues( dataFolder, dataFile, saveFile, elec, compWinMin, compWinMax, indvPeaks, eventSelection, partSelection )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
+%getStatsValues( dataFolder, dataFile, ['Dist_p' int2str(i) '.txt'], elecs{i}, widthMin(i), widthMax(i), 10, eventSelection, partSelection )
 
 %Open data and extract necessary values
 load(strcat(dataFolder,dataFile));
