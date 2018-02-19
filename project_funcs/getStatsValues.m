@@ -17,6 +17,11 @@ fid = fopen(saveFile,'wt');
 compWinMin = convertMsToSamp(compWinMin, blMin, sampFreq);
 compWinMax = convertMsToSamp(compWinMax, blMin, sampFreq); 
 
+%Jack knife data
+if false
+    data = jackKnifeData(data);
+end
+
 %Create values table
 if indvPeaks == 0
     statsValues = getStatsFromGroupWindow(data, conditions, compWinMin, compWinMax, elec);
