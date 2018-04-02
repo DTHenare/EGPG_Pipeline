@@ -11,7 +11,7 @@ data = mean(data,3);
 midlineInd = [chanLocs.Y]==0;
 midlineTotal = sum(sum(sum(data(:,midlineInd,:))));
 if midlineTotal == 0
-chanRefs = [chanLocs.X]<0;
+chanRefs = [chanLocs.X]<=0;
 chanLocs = chanLocs(chanRefs);
 data = data(:,chanRefs);
 end
