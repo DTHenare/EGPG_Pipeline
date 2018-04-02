@@ -1,4 +1,4 @@
-function [ f ] = createERPPlot(conditions, data, xAxis, elec, compWinMin, compWinMax )
+function [ f, timeSeriesData ] = createERPPlot(conditions, data, xAxis, elec, compWinMin, compWinMax )
 %Creates a plot of ERPs for a given set of conditions at a given electrode
 %with the component of interest highlighted.
 %Inputs:    conditions = A cell array where each cell is one condition
@@ -16,6 +16,7 @@ for cond = 1:numCond
     plotData = mean(data{cond}(:,elec,:),2);
     ERPhand(cond) = plot(xAxis,mean(plotData(:,:,:),3),'linewidth', 2);
     hold on
+    timeSeriesData(:,cond) = mean(plotData(:,:,:),3);
 end
 
 %reapply automatic axis limits
@@ -31,7 +32,7 @@ recWidth = (compWinMax-compWinMin)*4;
 recHeight = abs(yl(1))+abs(yl(2));
 
 %draw axis lines and line marking component of interest
-h1 = rectangle('Position', [ recX recY recWidth recHeight ], 'EdgeColor', [0.75 0.75 0.75], 'FaceColor', [0.75 0.75 0.75] );   
+h1 = rectangle('Position', [ recX recY recWidth recHeight ], 'EdgeColor', [0.75 0.75 0.75], 'FaceColor', [0.75 0.75 0.75] );
 h2 = line([0 0], [yl(1) yl(2)], 'LineWidth', 2, 'Color', [0 0 0]);
 h3 = line([xl(1) xl(2)], [0 0], 'LineWidth', 2, 'Color', [0 0 0]);
 
