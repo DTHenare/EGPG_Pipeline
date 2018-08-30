@@ -58,18 +58,18 @@ appendMethods(fid, [' Data were then rereferenced to the average of all electrod
 
 % Attempt to remove line noise using CleanLine
 if false
-try
-    EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
-    appendMethods(fid, [' Line noise was removed using the CleanLine toolbox.']);
-catch
-    appendMethods(fid, [' CleanLine toolbox either absent or failed, CleanLine was therefore not implemented.']);
-end
+    try
+        EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
+        appendMethods(fid, [' Line noise was removed using the CleanLine toolbox.']);
+    catch
+        appendMethods(fid, [' CleanLine toolbox either absent or failed, CleanLine was therefore not implemented.']);
+    end
 end
 
 %% Check whether to epoch or run ICA on continuous
-[ epochAble ] = isEpochingAppropriate(EEG, EGPGPath, triggerNames);
+%[ epochAble ] = isEpochingAppropriate(EEG, EGPGPath, triggerNames);
 
-if epochAble
+if PARAMETERS.ICA.epochBeforeRUNICA
     %Epoch the events
     [ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ICA.epochMin, PARAMETERS.ICA.epochMax, currentFile, triggerNames );
     appendMethods(fid, [' Data were then epoched from ' num2str(PARAMETERS.ICA.epochMin) ' prestimulus to ' num2str(PARAMETERS.ICA.epochMax) ' poststimulus.']);
@@ -92,9 +92,15 @@ end
 dataRank = EEG.nbchan - (length(badChannels) + 1);
 
 %run ICA
-EEG = pop_runica(EEG, 'extended',1,'interupt','on', 'pca', [dataRank]);
-EEG = eeg_checkset(EEG);
-appendMethods(fid, [' ICA was then performed on the data, using the PCA option to reduce dimensions to account for the number of interpolated channels.']);
+if PARAMETERS.ICA.numComponents >= dataRank
+    EEG = pop_runica(EEG, 'extended',1,'interupt','on', 'pca', [dataRank]);
+    EEG = eeg_checkset(EEG);
+    appendMethods(fid, [' ICA was then performed on the data, using the PCA option to reduce dimensions to account for the number of interpolated channels.']);
+else
+    EEG = pop_runica(EEG, 'extended',1,'interupt','on', 'pca', [dataRank]);
+    EEG = eeg_checkset(EEG);
+    appendMethods(fid, [' ICA was then performed on the data, using the PCA option to reduce to ', num2str(PARAMETERS.ICA.numComponents), 'components.']);
+end
 
 %Save ICA weights to output variable
 ICAStruct.icaweights = EEG.icaweights;
