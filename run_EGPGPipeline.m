@@ -19,6 +19,8 @@ EGPGPath = fileparts(mfilename('fullpath'));
 
 %Open eeglab
 eeglab;
+%Set eeglab options
+pop_editoptions( 'option_storedisk', 1, 'option_savetwofiles', 1, 'option_saveversion6', 1, 'option_single', 0)
 
 %Pop-up list of triggers for user selection
 [ triggerNames ] = getTriggerNames(EGPGPath, dataFolder, selectedFile);
@@ -57,7 +59,10 @@ for i = 1:size(fileNames,1)
     %Turn off current diary
     diary off
 end
+
+try
 fclose(fid);
+end
 
 %Create the study!
 [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder, EGPGPath );
