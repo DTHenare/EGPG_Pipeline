@@ -24,9 +24,10 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 createOutputObjects( currentFile );
 
 %Check that ICA is possible
-adjustMissing = isempty(which('ADJUST'));
+%adjustMissing = isempty(which('ADJUST'));
+sasicaMissing = isempty(which('SASICA'));
 fieldtripMissing = isempty(which('ft_analysispipeline'));
-eitherMissing = max([adjustMissing fieldtripMissing]);
+eitherMissing = max([sasicaMissing fieldtripMissing]);
 
 %Run ICA if parameters say to, and toolboxes are available otherwise assign
 %outputs NaN
