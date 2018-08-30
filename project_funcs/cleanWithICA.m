@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels, chanStruct )
+function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels, chanStruct, PARAMETERS )
 %Automatically detects and removes artifact ICA components using a number
 %of criteria.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -64,6 +64,7 @@ if false
 end
 totalNumberOfFails=[];
 %% Reject with ADJUST
+if false
 try
     %Remove bad channels if present
     if ~isempty(badChannels)
@@ -90,23 +91,41 @@ catch
     ADJUSTarts = [];
     numADJUSTFails = 0;
 end
-
-if false
-    %load parameters file which holds SASICA prefereces
+end
+ADJUSTarts = [];
+    numADJUSTFails = 0;
+    
+%% Reject with SASICA
+if true
+    try
+    %Remove bad channels if present
+    if ~isempty(badChannels)
+        EEG = pop_select( EEG,'nochannel',badChannels);
+    end
     
     %Run sasica
-    eeg_SASICA(EEG,PARAMETERS.SASICA)
+    EEG = eeg_SASICA(EEG,PARAMETERS.SASICA);
     
     %Get indices of failed components
-    SASICAarts = find(EEG.reject.gcompreject==1)
+    SASICAarts = find(EEG.reject.gcompreject==1);
     %Count number of failed components
-    numSASICAFails = length(ADJUSTarts)
+    numSASICAFails = length(ADJUSTarts);
     %reject failed components
-    EEG=pop_subcomp(EEG, SASICAarts)
+    EEG=pop_subcomp(EEG, SASICAarts);
+    
+    appendMethods(fid, [' The SASICA toolbox was used in order to identify artifact components. All components identified as artifacts by SASICA were removed from the data.']);
+    
+    %Interpolate missing channels back in if necessary
+    if ~isempty(badChannels)
+        EEG = pop_interp(EEG, chanStruct, 'spherical');
+    end
+    catch
+        SASICAarts = [];
+        numSASICAFails = 0;
 end
     
 
 %Calculate the total number of rejected components
-totalNumberOfFails = totalNumberOfFails + numADJUSTFails;
+totalNumberOfFails = totalNumberOfFails + numADJUSTFails + numSASICAFails;
 end
 

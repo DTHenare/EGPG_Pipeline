@@ -43,7 +43,7 @@ end
 %Use ICA cleaning if parameters say to, otherwise assign outputs NaN
 if PARAMETERS.runICA == 1 && ~eitherMissing
 %ERP ICA clean - load ERP, add weights, clean
-[ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels, chanStruct );
+[ ALLEEG, EEG, CURRENTSET, numberCompsRejected ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels, chanStruct, PARAMETERS );
 else
     numberCompsRejected = nan;
 end
