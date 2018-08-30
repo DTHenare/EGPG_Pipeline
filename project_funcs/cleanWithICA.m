@@ -91,6 +91,21 @@ catch
     numADJUSTFails = 0;
 end
 
+if false
+    %load parameters file which holds SASICA prefereces
+    
+    %Run sasica
+    eeg_SASICA(EEG,PARAMETERS.SASICA)
+    
+    %Get indices of failed components
+    SASICAarts = find(EEG.reject.gcompreject==1)
+    %Count number of failed components
+    numSASICAFails = length(ADJUSTarts)
+    %reject failed components
+    EEG=pop_subcomp(EEG, SASICAarts)
+end
+    
+
 %Calculate the total number of rejected components
 totalNumberOfFails = totalNumberOfFails + numADJUSTFails;
 end
