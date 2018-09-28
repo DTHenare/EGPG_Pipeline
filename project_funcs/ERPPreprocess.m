@@ -29,7 +29,7 @@ load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 [ALLEEG, EEG, CURRENTSET] = importEEGData( ALLEEG, EEG, CURRENTSET, currentFile, segPresent );
 
 %Combine triggers if using 300amp
-if PARAMETERS.amp == 300                              
+if PARAMETERS.amp == 300
     EEG.event=combineMultipleTriggers(EEG.event);
 end
 
@@ -58,23 +58,27 @@ appendMethods(fid, [' Data were then rereferenced to the average of all electrod
 
 % Attempt to remove line noise using CleanLine
 if false
-try
-    EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
-    appendMethods(fid, [' Line noise was removed using the CleanLine toolbox.']);
-catch
-    appendMethods(fid, [' CleanLine toolbox either absent or failed, CleanLine was therefore not implemented.']);
-end
+    try
+        EEG = pop_cleanline(EEG, 'bandwidth',2,'chanlist',[1:EEG.nbchan] ,'computepower',0,'linefreqs',[50 100] ,'normSpectrum',0,'p',0.01,'pad',2,'plotfigures',0,'scanforlines',1,'sigtype','Channels','tau',100,'verb',1,'winsize',4,'winstep',4);
+        appendMethods(fid, [' Line noise was removed using the CleanLine toolbox.']);
+    catch
+        appendMethods(fid, [' CleanLine toolbox either absent or failed, CleanLine was therefore not implemented.']);
+    end
 end
 
 %Epoch the events
 [ALLEEG, EEG, CURRENTSET, epochNum] = epochEvents( ALLEEG, EEG, CURRENTSET,  PARAMETERS.ERP.epochMin, PARAMETERS.ERP.epochMax, currentFile, triggerNames );
 appendMethods(fid, [' Data were then epoched from ' num2str(PARAMETERS.ERP.epochMin) ' prestimulus to ' num2str(PARAMETERS.ERP.epochMax) ' poststimulus.']);
 
-%Detect HEOG failures
-[ list, horizFails ] = detectHorizFails( EEG, PARAMETERS.horizThresh );
-appendMethods(fid, [' Epochs containing horizontal eye movements were identified as any epoch containing a greater than 32 microvolt difference between electrodes location at the outer canthi of each eye.']);
-
-%reject bad epochs
-EEG = pop_rejepoch( EEG, list, 0);
+%Detect HEOG failures if needed
+if PARAMETERS.ERP.identifyfHEOG
+    [ list, horizFails ] = detectHorizFails( EEG, PARAMETERS.horizThresh );
+    appendMethods(fid, [' Epochs containing horizontal eye movements were identified as any epoch containing a greater than 32 microvolt difference between electrodes location at the outer canthi of each eye.']);
+    
+    %reject bad epochs
+    EEG = pop_rejepoch( EEG, list, 0);
+else
+    horizFails = -1;
+end
 
 end
