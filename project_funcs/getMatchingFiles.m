@@ -30,14 +30,23 @@ curTest=1;
 %for all other files, only store them if they don't look like segments of
 %the previous file
 for i = 2:fileNum
-    %does the start of the file names match?
-    startMatch = strcmp(allMatches(i,1).name(1:end-7),allMatches(curTest,1).name(1:end-7));
-    %Does the date recorded match?
-    dateMatch = strcmp(allMatches(i,1).date(1:end-8),allMatches(curTest,1).date(1:end-8));
-    %does the curTest end in 3 integers?
-    preMatchEGITemplate = ~isempty(str2num(allMatches(curTest,1).name(end-6:end-4)));
-    %does the file i end in 3 integers?
-    iMatchEGITemplate = ~isempty(str2num(allMatches(i,1).name(end-6:end-4)));
+    %if the file name is long enough to possibly be a segmented file...
+    if length(allMatches(curTest,1).name)>6 && length(allMatches(i,1).name)>6
+        %does the start of the file names match?
+        startMatch = strcmp(allMatches(i,1).name(1:end-7),allMatches(curTest,1).name(1:end-7));
+        %Does the date recorded match?
+        dateMatch = strcmp(allMatches(i,1).date(1:end-8),allMatches(curTest,1).date(1:end-8));
+        %does the curTest end in 3 integers?
+        preMatchEGITemplate = ~isempty(str2num(allMatches(curTest,1).name(end-6:end-4)));
+        %does the file i end in 3 integers?
+        iMatchEGITemplate = ~isempty(str2num(allMatches(i,1).name(end-6:end-4)));
+    else
+        %Set all to false if file name is too short to consider segments
+        startMatch = 0;
+        dateMatch = 0;
+        preMatchEGITemplate = 0;
+        iMatchEGITemplate = 0;
+    end
     if startMatch && dateMatch && preMatchEGITemplate && iMatchEGITemplate
         segPresent = 1;
     else
