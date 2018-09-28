@@ -79,8 +79,10 @@ if PARAMETERS.ICA.epochBeforeRUNICA
     %reject bad epochs
     EEG = pop_rejepoch( EEG, extremFails, 0);
     %Apply improbability test
+    try
     EEG = pop_jointprob(EEG,1,[1:EEG.nbchan] ,6,2,0,1,0,[],0);
     appendMethods(fid, [' An improbability test was applied to the data and epochs which failed were removed.']);
+    end
 else
     %do continuous cleaning
     epochNum = [];
