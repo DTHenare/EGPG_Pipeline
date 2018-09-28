@@ -38,7 +38,7 @@ Output = createOutputSheet( STUDY, ALLEEG, channelList, conditions, chanlocs, bl
 save(strcat(dataFolder,'Output\defaultOutput.mat'),'Output')
 
 %Create useful plots for time and electrode selection
-createStudyOutput( STUDY, ALLEEG, triggerNames, acceptedFiles, dataFolder, blMin );
+%createStudyOutput( STUDY, ALLEEG, triggerNames, acceptedFiles, dataFolder, blMin );
 
 %Clear eeglab
 STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
