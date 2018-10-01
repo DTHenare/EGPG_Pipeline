@@ -1,10 +1,11 @@
-%function run_EGPGPipeline()
 %This script provides a user friendly wrapper for the EGPG pipeline. When
 %run, it pops open a file explorer for the user to navigate to a data file.
 %It then runs the pipeilne for all matching files within the selected
 %folder. It also performs a number of checks on the data in order to check
 %that everything has been set up appropriately.
 
+
+try
 %Pop up the file explorer for the user to select their file
 [selectedFile,dataFolder] = uigetfile({'*.*',  'All Files (*.*)'});
 if (dataFolder == 0) & (selectedFile == 0)
@@ -22,6 +23,14 @@ eeglab;
 %Set eeglab options
 pop_editoptions( 'option_storedisk', 1, 'option_savetwofiles', 1, 'option_saveversion6', 1, 'option_single', 0)
 
+%Check whether parameters are loaded
+if ~exist('PARAMETERS','var')
+    defaultParams = 1;
+else
+    load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
+    defaultParams = 0;
+end
+
 %Pop-up list of triggers for user selection
 [ triggerNames ] = getTriggerNames(PARAMETERS, dataFolder, selectedFile);
 
@@ -35,11 +44,6 @@ end
 %Check setup is appropriate
 checkSetup( selectedFile);
 
-%Check whether parameters are loaded
-if ~exist('PARAMETERS','var')
-    error('Parameters not found, you may be running this incorrectly, contact me: dionhenare@gmail.com')
-end
-
 %Preprocess each file in the data folder
 for i = 1:size(fileNames,1)
     %Start a diary to capture command window text
@@ -47,17 +51,23 @@ for i = 1:size(fileNames,1)
     diary(diaryName);
     
     % if running the last person, write the methods section
-    if i == size(fileNames,1)
+    if i == size(fileNames,1) && ~defaultParams
         fid = fopen([dataFolder '/Output/ProcessingInfo/Methods.txt'],'wt');
+    elseif i == size(fileNames,1) && defaultParams
+        nonMethods = fopen([dataFolder '/Output/ProcessingInfo/Methods.txt'],'wt');
+        appendMethods(nonMethods, ['Methods could not be written. It looks like this was run using default parameters which are not be optimised for your data. Please contact me if you would like to use my pipeline: dionhenare@gmail.com '])
     else
         fid = -1;
     end
+    
     %create path of current file
     currentFile = strcat(dataFolder,fileNames{i,1},fileExt);
     %Run pipeline
-    [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, PARAMETERS, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
+    [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, PARAMETERS, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid, defaultParams);
     %Add current file's output to the group data
+    if ~defaultParams
     writeGroupOutput( currentFile, IndividualInfo, i, triggerNames, fileNames )
+    end
     %clear eeglab
     STUDY = []; CURRENTSTUDY = 0; ALLEEG = []; EEG=[]; CURRENTSET=[];
     
@@ -71,5 +81,11 @@ end
 
 %Create the study!
 [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder, EGPGPath );
+if ~defaultParams
 save(strcat(dataFolder,'/Output/ProcessingInfo/participantsExcludedFromSTUDY.mat'),'failedFiles');
-%end
+end
+
+catch
+    disp('Some kinda error stopped me!')
+    clear PARAMETERS
+end
