@@ -23,7 +23,7 @@ eeglab;
 pop_editoptions( 'option_storedisk', 1, 'option_savetwofiles', 1, 'option_saveversion6', 1, 'option_single', 0)
 
 %Pop-up list of triggers for user selection
-[ triggerNames ] = getTriggerNames(EGPGPath, dataFolder, selectedFile);
+[ triggerNames ] = getTriggerNames(PARAMETERS, dataFolder, selectedFile);
 
 %Ask for the size of the delay
 delaySize = inputdlg('Input the total timing delay (in ms)');
