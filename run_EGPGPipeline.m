@@ -35,6 +35,11 @@ end
 %Check setup is appropriate
 checkSetup(dataFolder, EGPGPath, selectedFile);
 
+%Check whether parameters are loaded
+if ~exist('PARAMETERS','var')
+    error('Parameters not found, you may be running this incorrectly, contact me: dionhenare@gmail.com')
+end
+
 %Preprocess each file in the data folder
 for i = 1:size(fileNames,1)
     %Start a diary to capture command window text
