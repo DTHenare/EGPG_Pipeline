@@ -33,7 +33,7 @@ if length(delaySize)>1
 end
 
 %Check setup is appropriate
-checkSetup(dataFolder, EGPGPath, selectedFile);
+checkSetup( selectedFile);
 
 %Check whether parameters are loaded
 if ~exist('PARAMETERS','var')
