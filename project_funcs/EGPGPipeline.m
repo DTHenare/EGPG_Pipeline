@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid)
+function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, PARAMETERS, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid)
 %This function runs the entire EGPG preprocessing pipeline.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -18,7 +18,7 @@ function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG,
 %           individuals
 
 %Load parameter file
-load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
+%load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 
 %Create output folders and files
 createOutputObjects( currentFile );
@@ -32,14 +32,14 @@ eitherMissing = max([sasicaMissing fieldtripMissing]);
 %Run ICA if parameters say to, and toolboxes are available otherwise assign
 %outputs NaN
 if PARAMETERS.runICA == 1 && ~eitherMissing
-[ ICAStruct, ICAbadChannels, ICAepochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
+[ ICAStruct, ICAbadChannels, ICAepochNum ] = ICAPreprocess(ALLEEG, EEG, CURRENTSET, PARAMETERS, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
 else
     ICAbadChannels = nan;
     ICAepochNum = nan;
 end
 
 %ERP preprocess
-[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails, chanStruct ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
+[ ALLEEG, EEG, CURRENTSET, badChannels, epochNum, horizFails, chanStruct ] = ERPPreprocess(ALLEEG, EEG, CURRENTSET, PARAMETERS, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
 
 %Use ICA cleaning if parameters say to, otherwise assign outputs NaN
 if PARAMETERS.runICA == 1 && ~eitherMissing

@@ -50,7 +50,7 @@ for i = 1:size(fileNames,1)
     %create path of current file
     currentFile = strcat(dataFolder,fileNames{i,1},fileExt);
     %Run pipeline
-    [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
+    [ ALLEEG,EEG,CURRENTSET,IndividualInfo ] = EGPGPipeline(ALLEEG, EEG, CURRENTSET, PARAMETERS, currentFile, EGPGPath, triggerNames, segPresent, delaySize, fid);
     %Add current file's output to the group data
     writeGroupOutput( currentFile, IndividualInfo, i, triggerNames, fileNames )
     %clear eeglab
