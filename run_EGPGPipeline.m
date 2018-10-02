@@ -26,8 +26,8 @@ pop_editoptions( 'option_storedisk', 1, 'option_savetwofiles', 1, 'option_saveve
 %Check whether parameters are loaded
 if ~exist('PARAMETERS','var')
     defaultParams = 1;
-else
     load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
+else
     defaultParams = 0;
 end
 
@@ -56,6 +56,7 @@ for i = 1:size(fileNames,1)
     elseif i == size(fileNames,1) && defaultParams
         nonMethods = fopen([dataFolder '/Output/ProcessingInfo/Methods.txt'],'wt');
         appendMethods(nonMethods, ['Methods could not be written. It looks like this was run using default parameters which are not be optimised for your data. Please contact me if you would like to use my pipeline: dionhenare@gmail.com '])
+        fid = -1;
     else
         fid = -1;
     end
@@ -77,6 +78,10 @@ end
 
 try
 fclose(fid);
+catch
+    try
+        fclose(nonMethods);
+    end
 end
 
 %Create the study!
