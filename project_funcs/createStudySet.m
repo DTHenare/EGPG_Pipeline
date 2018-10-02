@@ -1,4 +1,4 @@
-function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, triggerNames, fileNames, dataFolder, EGPGPath )
+function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, PARAMETERS, triggerNames, fileNames, dataFolder )
 %Create the study structure used for group analysis in eeglab
 %Inputs:    STUDY = STUDY structure produced by eeglab
 %           ALLEEG = ALLEEG structure produced by eeglab
@@ -11,8 +11,7 @@ function [ failedFiles ] = createStudySet(STUDY, ALLEEG, EEG, CURRENTSET, trigge
 %Output:    failedFiles = vector of filename for those files that weren't
 %           loaded into the study (because of missing conditions)
 
-%Load parameter file
-load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
+%Get baseline from parameters
 blMin = PARAMETERS.ERP.epochMin;
 
 %Create the cell array required for the std_editset function
