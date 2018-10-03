@@ -56,7 +56,7 @@ end
 %EEG = pop_reref( EEG, [56 99] ,'keepref','on');
 
 %Extract conditions
-extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames);
+epochsPerCond = extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames);
 
 %Write processing stats to output file
 if ~defaultParams
