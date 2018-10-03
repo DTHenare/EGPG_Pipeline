@@ -21,6 +21,7 @@ GroupInfo.epochNum(fileNum,1) = IndividualInfo.epochNum;
 GroupInfo.horizFails{fileNum,1} = IndividualInfo.horizFails;
 GroupInfo.numGenFails(fileNum,1) = IndividualInfo.numGenFails;
 GroupInfo.meanHEOG(fileNum,1) = IndividualInfo.meanHEOG;
+GroupInfo.epochsPerCond(fileNum,:) = IndividualInfo.epochsPerCond;
 
 %Save into the processingInfo folder
 save(strcat(filePath,'\Output\ProcessingInfo\GroupInfo.mat'),'GroupInfo')

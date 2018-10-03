@@ -60,7 +60,7 @@ epochsPerCond = extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerN
 
 %Write processing stats to output file
 if ~defaultParams
-IndividualInfo = writeIndvOutput( currentFile, badChannels, epochNum, horizFails, numGenFails, meanHEOG, ICAbadChannels, ICAepochNum, numberCompsRejected);
+IndividualInfo = writeIndvOutput( currentFile, badChannels, epochNum, horizFails, numGenFails, meanHEOG, ICAbadChannels, ICAepochNum, numberCompsRejected, epochsPerCond);
 end
 
 end

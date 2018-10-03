@@ -7,6 +7,8 @@ function [ epochsPerCond ] = extractConditions(ALLEEG, EEG, CURRENTSET, currentF
 %           currentFile = path of the EEG file which will be processed
 %           triggeNames = cell array containing list of event names that
 %           will be epoched
+%Output:    epochsPerCond = vector holding the number of trial left in each
+%           condition
 
 %Get path information from current file
 [ filePath, fileName ] = fileparts(currentFile);
@@ -23,6 +25,7 @@ for i = 1:length(triggerNames)
         [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, CURRENTSET,'retrieve',1,'study',0);
         EEG = eeg_checkset( EEG );
     catch
+        epochsPerCond(i)=0;
         disp(strcat('No remaining epochs have the event type: ', triggerNames{i}))
     end
 end

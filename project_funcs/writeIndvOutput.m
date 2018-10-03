@@ -1,4 +1,4 @@
-function [ IndividualInfo ] = writeIndvOutput( currentFile, badChannels, epochNum, horizFails, numGenFails, meanHEOG, ICAbadChannels, ICAepochNum, numberCompsRejected)
+function [ IndividualInfo ] = writeIndvOutput( currentFile, badChannels, epochNum, horizFails, numGenFails, meanHEOG, ICAbadChannels, ICAepochNum, numberCompsRejected, epochsPerCond)
 %Writes summary statistics of the preprocessing procedure to a .mat file
 %Inputs:    currentFile = path of the input file
 %           fileNum = number indicating which file form the current
@@ -30,6 +30,7 @@ IndividualInfo.meanHEOG = meanHEOG;
 IndividualInfo.ICAbadChannels = ICAbadChannels;
 IndividualInfo.ICAepochNum = ICAepochNum;
 IndividualInfo.numberCompsRejected = numberCompsRejected;
+IndividualInfo.epochsPerCond = epochsPerCond;
 
 %Save into the processingInfo folder
 save(strcat(filePath,'\Output\ProcessingInfo\',fileName,'-IndividualInfo.mat'),'IndividualInfo')
