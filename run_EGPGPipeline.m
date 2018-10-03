@@ -90,7 +90,9 @@ try
         save(strcat(dataFolder,'/Output/ProcessingInfo/participantsExcludedFromSTUDY.mat'),'failedFiles');
     end
     
-catch
+catch MException
+    clear EEG.data
+    save('errorFile.mat')
     disp('Some kinda error stopped me!')
     clear PARAMETERS
 end
