@@ -1,4 +1,4 @@
-function [  ] = extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames)
+function [ epochsPerCond ] = extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerNames)
 %Separates a file into a set of conditions. Creates a separate file for
 %each trigger name and saves to the OutputConditions folder.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -19,6 +19,7 @@ for i = 1:length(triggerNames)
         EEG = pop_epoch( EEG, {  triggerNames{i}  }, [EEG.xmin EEG.xmax], 'newname', strcat(fileName,'-',triggerNames{i}), 'epochinfo', 'yes');
         [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, 1,'savenew',strcat(conditionsSaveLocation,fileName,'-',triggerNames{i},'.set'),'gui','off');
         EEG = eeg_checkset( EEG );
+        epochsPerCond(i)=size(EEG.data,3);
         [ALLEEG EEG CURRENTSET] = pop_newset(ALLEEG, EEG, CURRENTSET,'retrieve',1,'study',0);
         EEG = eeg_checkset( EEG );
     catch
