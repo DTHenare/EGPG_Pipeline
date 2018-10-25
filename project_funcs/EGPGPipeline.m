@@ -19,6 +19,8 @@ function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG,
 
 %Load parameter file
 %load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
+%Load chanlocs
+load(strcat(EGPGPath,'\project_docs\chanlocs.mat'));
 
 %Create output folders and files
 createOutputObjects( currentFile );
@@ -50,7 +52,7 @@ else
 end
 
 %Run standard artificact rejection
-[ ALLEEG, EEG, CURRENTSET, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG, CURRENTSET, currentFile, fid );
+[ ALLEEG, EEG, CURRENTSET, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG, CURRENTSET, chanlocs, currentFile, fid );
 
 %Rereference
 %EEG = pop_reref( EEG, [56 99] ,'keepref','on');
