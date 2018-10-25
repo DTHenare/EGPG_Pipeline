@@ -1,4 +1,4 @@
-function [  ALLEEG, EEG, CURRENTSET, numFails, meanHEOG ] = standardArtRej(ALLEEG, EEG, CURRENTSET, chanlocs,currentFile, fid )
+function [  ALLEEG, EEG, CURRENTSET, numFails, meanHEOG ] = standardArtRej(ALLEEG, EEG, CURRENTSET,currentFile, fid )
 %identifies epochs which contain artifact and removes them.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
 %           EEG = EEG structure produced by eeglab
@@ -20,8 +20,6 @@ allFails = extremFails;
 %Remove failed epochs (if all epochs are bad then skip file)
 try
     EEG = pop_rejepoch( EEG, allFails, 0);
-    %interpolate missing channels
-    EEG = pop_interp(EEG,chanlocs,'spherical');
     
     %create variable to output number of rejected epochs
     numFails = length(allFails);

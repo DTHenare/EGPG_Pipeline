@@ -52,7 +52,7 @@ else
 end
 
 %Run standard artificact rejection
-[ ALLEEG, EEG, CURRENTSET, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG, CURRENTSET, chanlocs, currentFile, fid );
+[ ALLEEG, EEG, CURRENTSET, numGenFails, meanHEOG ] = standardArtRej( ALLEEG, EEG, CURRENTSET, currentFile, fid );
 
 %Rereference
 %EEG = pop_reref( EEG, [56 99] ,'keepref','on');

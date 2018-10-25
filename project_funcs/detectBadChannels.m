@@ -1,4 +1,4 @@
-function [ badChannels ] = detectBadChannels( EEG )
+function [ badChannels, EEG ] = detectBadChannels( EEG )
 %Detects bad channels in the data using a range of tests and outputs the
 %names of the bad channels.
 %Inputs:    EEG = EEG structure produced by eeglab

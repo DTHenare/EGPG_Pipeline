@@ -12,7 +12,7 @@ function [ALLEEG, EEG, CURRENTSET, badChannels, chanStruct] = fixBadChannels( AL
 chanStruct = EEG.chanlocs;
 
 %Identify bad channels
-[ badChannels ] = detectBadChannels( EEG );
+[ badChannels, EEG ] = detectBadChannels( EEG );
 
 %If there are any bad channels, remove and interpolate them
 if ~isempty(badChannels)
