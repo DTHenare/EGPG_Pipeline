@@ -14,8 +14,8 @@ chanStruct = EEG.chanlocs;
 %Identify bad channels
 [ badChannels ] = detectBadChannels( EEG );
 %Remove HEOGs if they were selected
-badChannels = badChannels(strcmp('E125',badChannels))=[];
-badChannels = badChannels(strcmp('E128',badChannels))=[];
+badChannels(strcmp('E125',badChannels))=[];
+badChannels(strcmp('E128',badChannels))=[];
 
 %If there are any bad channels, remove and interpolate them
 if ~isempty(badChannels)
