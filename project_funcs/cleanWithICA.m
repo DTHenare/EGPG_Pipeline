@@ -104,7 +104,8 @@ if true
         end
         
         %Run sasica
-        EEG = eeg_SASICA(EEG,PARAMETERS.SASICA);
+        %EEG = eeg_SASICA(EEG,PARAMETERS.SASICA);
+        [EEG] = SASICA(EEG,'MARA_enable',0,'FASTER_enable',1,'FASTER_blinkchanname','E8 E126','ADJUST_enable',1,'chancorr_enable',0,'chancorr_channames','E17','chancorr_corthresh','auto 4','EOGcorr_enable',1,'EOGcorr_Heogchannames','E125 E128','EOGcorr_corthreshH','auto 3','EOGcorr_Veogchannames','E8 E126','EOGcorr_corthreshV','auto 3','resvar_enable',0,'resvar_thresh',15,'SNR_enable',0,'SNR_snrcut',1,'SNR_snrBL',[-Inf 0] ,'SNR_snrPOI',[0 Inf] ,'trialfoc_enable',1,'trialfoc_focaltrialout','auto 1','focalcomp_enable',1,'focalcomp_focalICAout','auto 0','autocorr_enable',1,'autocorr_autocorrint',20,'autocorr_dropautocorr','auto 2','opts_noplot',0,'opts_nocompute',0,'opts_FontSize',14);
         
         %Get indices of failed components
         SASICAarts = find(EEG.reject.gcompreject==1);
