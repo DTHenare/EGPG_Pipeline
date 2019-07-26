@@ -16,7 +16,7 @@ try
     EGPGPath = fileparts(mfilename('fullpath'));
     
     %Create list of files that will be processed
-    [testPath,testName,testExt] = fileparts(inputFile);
+    [testPath,testName,testExt] = fileparts(selectedFile);
     %Get properties of all matching files in the folder
     allMatches = dir(strcat(testPath,'\*',testExt));
     [ fileNames,fileExt, segPresent ] = getMatchingFiles(strcat(dataFolder, selectedFile));
