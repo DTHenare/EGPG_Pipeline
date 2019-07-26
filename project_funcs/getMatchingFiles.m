@@ -60,7 +60,7 @@ end
 %all of the fileNames should end in 1 otherwise they won't load
 if segPresent == 1
     for i = 1:length(fileNames)
-        if str2num(fileNamesi}(end)) ~= 1
+        if str2num(fileNames{i}(end)) ~= 1
             error('The files in your data folder look like they''re segmented netsstation files, but I''m having trouble identifying all of the initial files for each participant. Make sure each participant has a file ending in 001. If that''s already true then let me know and send the error file to me! dionhenare@gmail.com')
         end
     end

@@ -15,10 +15,9 @@ try
     %Get path of pipeline folder
     EGPGPath = fileparts(mfilename('fullpath'));
     
-    %Create list of files that will be processed
-    [testPath,testName,testExt] = fileparts(selectedFile);
-    %Get properties of all matching files in the folder
-    allMatches = dir(strcat(testPath,'\*',testExt));
+    %Get properties of all RAW files in the data folder (this is helpful
+    %info in case of error)
+    allMatches = dir(strcat(dataFolder,'*.RAW'));
     [ fileNames,fileExt, segPresent ] = getMatchingFiles(strcat(dataFolder, selectedFile));
     
     %Open eeglab
