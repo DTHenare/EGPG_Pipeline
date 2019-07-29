@@ -35,7 +35,8 @@ for i = 2:fileNum
         %does the start of the file names match?
         startMatch = strcmp(allMatches(i,1).name(1:end-7),allMatches(curTest,1).name(1:end-7));
         %Does the date recorded match?
-        dateMatch = strcmp(allMatches(i,1).date(1:end-8),allMatches(curTest,1).date(1:end-8));
+        %dateMatch = strcmp(allMatches(i,1).date(1:end-8),allMatches(curTest,1).date(1:end-8));
+        dateMatch = true;
         %does the curTest end in 3 integers?
         preMatchEGITemplate = ~isempty(str2num(allMatches(curTest,1).name(end-6:end-4)));
         %does the file i end in 3 integers?
