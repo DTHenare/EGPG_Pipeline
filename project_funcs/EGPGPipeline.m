@@ -17,6 +17,7 @@ function [ ALLEEG, EEG, CURRENTSET, IndividualInfo ] = EGPGPipeline(ALLEEG, EEG,
 %           IndividualInfo = struct containing proessing statistics for
 %           individuals
 
+try
 %Load parameter file
 %load(strcat(EGPGPath,'\project_docs\Parameters.mat'));
 %Load chanlocs
@@ -63,6 +64,12 @@ epochsPerCond = extractConditions(ALLEEG, EEG, CURRENTSET, currentFile, triggerN
 %Write processing stats to output file
 if ~defaultParams
 IndividualInfo = writeIndvOutput( currentFile, badChannels, epochNum, horizFails, numGenFails, meanHEOG, ICAbadChannels, ICAepochNum, numberCompsRejected, epochsPerCond);
+end
+
+catch IException
+    save('internalError.mat')
+    disp('Some kinda error stopped me!')
+    clear PARAMETERS
 end
 
 end
