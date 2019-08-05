@@ -1,4 +1,4 @@
-function [ ALLEEG, EEG, CURRENTSET, totalNumberOfFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels, chanStruct, PARAMETERS )
+function [ ALLEEG, EEG, CURRENTSET, numADJUSTFails ] = cleanWithICA( ALLEEG, EEG, CURRENTSET, ICAStruct, currentFile, fid, badChannels, chanStruct, PARAMETERS )
 %Automatically detects and removes artifact ICA components using a number
 %of criteria.
 %Inputs:    ALLEEG = ALLEEG structure produced by eeglab
@@ -64,12 +64,16 @@ if false
 end
 totalNumberOfFails=[];
 %% Reject with ADJUST
-if false
+if true
     try
         %Remove bad channels if present
         if ~isempty(badChannels)
             EEG = pop_select( EEG,'nochannel',badChannels);
         end
+        
+        %Create ica activations
+        EEG.icaact = reshape(EEG.icaweights*EEG.icasphere*reshape(EEG.data,[size(EEG.data,1)...
+size(EEG.data,2)*size(EEG.data,3)]),[32 size(EEG.data,2) size(EEG.data,3)]);
         
         %Set output file location
         saveAdjust = strcat(folderPath,'\Output\ProcessingInfo\',fileName,'.txt');
@@ -92,11 +96,11 @@ if false
         numADJUSTFails = 0;
     end
 end
-ADJUSTarts = [];
-numADJUSTFails = 0;
+% ADJUSTarts = [];
+% numADJUSTFails = 0;
 
 %% Reject with SASICA
-if true
+if false
     try
         %Remove bad channels if present
         if ~isempty(badChannels)
