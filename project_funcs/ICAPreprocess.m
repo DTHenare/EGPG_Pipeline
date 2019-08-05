@@ -99,7 +99,7 @@ if PARAMETERS.ICA.numComponents >= dataRank
     EEG = eeg_checkset(EEG);
     appendMethods(fid, [' ICA was then performed on the data, using the PCA option to reduce dimensions to account for the number of interpolated channels.']);
 else
-    EEG = pop_runica(EEG, 'extended',1,'interupt','on', 'pca', [dataRank]);
+    EEG = pop_runica(EEG, 'extended',1,'interupt','on', 'pca', PARAMETERS.ICA.numComponents);
     EEG = eeg_checkset(EEG);
     appendMethods(fid, [' ICA was then performed on the data, using the PCA option to reduce to ', num2str(PARAMETERS.ICA.numComponents), 'components.']);
 end
