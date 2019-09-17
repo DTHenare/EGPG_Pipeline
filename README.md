@@ -25,7 +25,7 @@ It will include:
 
 # Contributing
 
-If you would like to contribute to this project then send me an email (dhen061@aucklanduni.ac.nz) and let me know what you'd like to do.
+If you would like to contribute to this project then send me an email (dion.henare@uni-marburg.de) and let me know what you'd like to do.
 
 # Dependencies
 
